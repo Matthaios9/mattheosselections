@@ -122,9 +122,12 @@ export const adminUserInput = registerInput.extend({ role: z.enum(USER_ROLES).de
 export const userRoleInput = z.object({ role: z.enum(USER_ROLES) });
 export const userStatusInput = z.object({ status: z.enum(USER_STATUSES) });
 
+const requiredText = (max, message) => z.string().trim().min(1, message).max(max);
+
 /**
- * Checkout request: the cart, the delivery country (sets the shipping fee), an optional note
- * and the storefront page to return to. Kustom Checkout collects the customer's details.
+ * Checkout request: the cart, the customer's contact details and delivery address (also the billing
+ * address at Klarna), the delivery country (sets the shipping fee), an optional note and the
+ * storefront page to return to.
  */
 export const checkoutInput = z.object({
   items: z
@@ -137,22 +140,29 @@ export const checkoutInput = z.object({
     )
     .min(1, 'Your cart is empty')
     .max(50),
+  firstName: requiredText(100, 'First name is required'),
+  lastName: requiredText(100, 'Last name is required'),
+  email: z.email('Enter a valid email address').trim().toLowerCase(),
+  phone: z.string().trim().min(5, 'Enter a valid phone number').max(30),
+  street: requiredText(200, 'Street address is required'),
+  street2: text(200),
+  postalCode: requiredText(20, 'Postal code is required'),
+  city: requiredText(100, 'City is required'),
   country: z.enum(SHIPPING_COUNTRIES).default('SE'),
   note: text(1000),
   locale: z.string().max(5).default('en'),
   returnPath: z.string().max(200).default(''),
 });
 
-/** The Kustom checkout order id from the confirmation redirect. */
-export const confirmPaymentInput = z.object({
-  orderId: z.string().regex(/^[A-Za-z0-9-]{8,64}$/, 'Invalid order reference'),
-});
+const klarnaReference = z.string().regex(/^[A-Za-z0-9-]{8,100}$/, 'Invalid payment reference');
 
-/** The order Kustom posts to the validation callback (only the fields we check). */
-export const kustomValidationInput = z
-  .object({
-    order_lines: z.array(z.object({ type: z.string(), reference: z.string().optional(), quantity: z.number() }).passthrough()),
-  })
-  .passthrough();
+/** The Klarna payment session and the authorization token from Klarna's widget. */
+export const confirmPaymentInput = z.object({ sessionId: klarnaReference, authorizationToken: klarnaReference });
+
+/** Klarna's authorization callback. */
+export const klarnaAuthorizationInput = z.object({ session_id: klarnaReference, authorization_token: klarnaReference });
+
+/** Klarna's notification about an order it was reviewing (only the field we use). */
+export const klarnaNotificationInput = z.object({ order_id: klarnaReference });
 
 export const uploadSignatureInput = z.object({ target: z.enum(UPLOAD_TARGETS) });

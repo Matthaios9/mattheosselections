@@ -2,7 +2,7 @@ import mongoose from 'mongoose';
 import { getModel } from './shared.js';
 
 export const ORDER_STATUSES = ['pending', 'processing', 'shipped', 'delivered', 'cancelled'];
-// 'authorized': reserved by Kustom at checkout, captured (→ 'paid') when the order ships.
+// 'authorized': reserved by Klarna at checkout, captured (→ 'paid') when the order ships.
 export const PAYMENT_STATUSES = ['unpaid', 'authorized', 'paid', 'refunded'];
 
 const orderItemSchema = new mongoose.Schema(
@@ -52,9 +52,9 @@ const orderSchema = new mongoose.Schema(
     currency: { type: String, default: 'SEK' },
     status: { type: String, enum: ORDER_STATUSES, default: 'pending', index: true },
     paymentStatus: { type: String, enum: PAYMENT_STATUSES, default: 'unpaid' },
-    // 'kustom' for Kustom Checkout; older orders: 'invoice' (manual) or 'card' (previous Stripe integration)
+    // 'klarna' for Klarna Payments; older orders: 'kustom' (Kustom Checkout), 'invoice' (manual) or 'card' (Stripe)
     paymentMethod: { type: String, default: 'invoice' },
-    kustomOrderId: { type: String, unique: true, sparse: true },
+    klarnaOrderId: { type: String, unique: true, sparse: true },
     locale: { type: String, default: 'en' },
     customerNote: { type: String, default: '' },
     adminNote: { type: String, default: '' },

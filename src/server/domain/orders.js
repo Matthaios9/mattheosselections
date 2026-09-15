@@ -3,7 +3,7 @@ import { connectToDatabase } from '@/server/db';
 import { Order, Product } from '@/server/models';
 import { calculateShipping } from '@/utils/shipping';
 import { releaseStock, reserveStock } from './inventory';
-import { PaymentUpdateError, settleKustomPayment } from './settlement';
+import { PaymentUpdateError, settleKlarnaPayment } from './settlement';
 import { escapeRegex, isObjectId, pageParams, pageResult, toId, toIso } from '@/server/utils';
 
 export function serializeOrder(doc) {
@@ -37,7 +37,7 @@ export function serializeOrder(doc) {
     status: doc.status,
     paymentStatus: doc.paymentStatus,
     paymentMethod: doc.paymentMethod,
-    kustomOrderId: doc.kustomOrderId ?? '',
+    klarnaOrderId: doc.klarnaOrderId ?? '',
     locale: doc.locale,
     customerNote: doc.customerNote ?? '',
     adminNote: doc.adminNote ?? '',
@@ -144,7 +144,7 @@ export async function listOrdersForUser(userId, limit = 50) {
 /**
  * Change an order's status. Cancelling returns its items to stock; reopening a
  * cancelled order reserves the stock again (fails if it is no longer available).
- * Kustom payments follow along: shipping captures the payment, cancelling voids or refunds it.
+ * Klarna payments follow along: shipping captures the payment, cancelling voids or refunds it.
  * Returns { ok, order } or { ok: false, reason: 'not-found' | 'insufficient-stock' | 'payment', item?, message? }.
  */
 export async function updateOrderStatus(id, { status, note }, admin) {
@@ -159,7 +159,7 @@ export async function updateOrderStatus(id, { status, note }, admin) {
 
   let paymentNote = null;
   try {
-    paymentNote = await settleKustomPayment(order, status);
+    paymentNote = await settleKlarnaPayment(order, status);
   } catch (error) {
     if (error instanceof PaymentUpdateError) return { ok: false, reason: 'payment', message: error.message };
     throw error;

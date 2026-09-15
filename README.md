@@ -1,7 +1,7 @@
 # Mattheos Selections
 
 Storefront and admin panel for Mattheos Selections — Greek honey, olive oil and superfoods, sold from Stockholm.
-Next.js 16 (App Router, JavaScript), React-Bootstrap, MongoDB (Mongoose), Cloudinary image uploads and Kustom Checkout payments.
+Next.js 16 (App Router, JavaScript), React-Bootstrap, MongoDB (Mongoose), Cloudinary image uploads and Klarna payments.
 The storefront is available in English, Swedish and Greek.
 
 ## Getting started
@@ -20,7 +20,7 @@ npm run dev               # http://localhost:3000 (storefront) · /admin (admin 
 | `npm run lint`         | ESLint (Next.js + React Compiler rules)       |
 | `npm run create-admin` | Create an admin account from the command line |
 
-Environment variables are documented in [`.env.example`](.env.example) (MongoDB, JWT secret, Cloudinary, Kustom Checkout,
+Environment variables are documented in [`.env.example`](.env.example) (MongoDB, JWT secret, Cloudinary, Klarna,
 Google sign-in and the admin allow-list).
 
 ## Architecture
@@ -45,7 +45,7 @@ src/
 │   ├── auth/             Sessions (httpOnly JWT cookie), Google sign-in, admin allow-list, current user
 │   ├── models/           Mongoose models
 │   ├── validation.js     Request schemas (zod)
-│   └── kustom.js · cloudinary.js · db.js · search.js · utils.js
+│   └── klarna.js · cloudinary.js · db.js · search.js · utils.js
 └── proxy.js              Locale redirects and the optimistic admin gate
 ```
 
@@ -77,7 +77,7 @@ src/
 | Auth | `POST /api/auth/login` · `POST /api/auth/register` · `POST /api/auth/logout` · `GET /api/auth/me` |
 | Admin auth | `POST /api/admin/auth/google` (Sign in with Google — the only way into the panel) |
 | Catalogue (public) | `GET /api/products` — `locale, q, category, price, sizes, stock=in, featured, ids, sort, page, pageSize, facets` |
-| Checkout | `POST /api/checkout` (→ Kustom Checkout snippet) · `POST /api/checkout/confirm` · `POST /api/kustom/push` · `POST /api/kustom/validate` |
+| Checkout | `POST /api/checkout` (→ Klarna payment session) · `POST /api/checkout/confirm` · `POST /api/klarna/authorization` · `POST /api/klarna/notification` |
 | Admin | `/api/admin/products[/:id]` · `/api/admin/categories[/:id]` · `/api/admin/orders[/:id]` · `/api/admin/users[/:id][/orders]` · `GET /api/admin/stats[/orders]` · `POST /api/admin/uploads/signature` |
 
 Errors are always `{ "error": { "code", "message", "fieldErrors?" } }` with a matching HTTP status.
@@ -91,20 +91,27 @@ Errors are always `{ "error": { "code", "message", "fieldErrors?" } }` with a ma
 5. UI → a component that loads data with `useApiQuery` (and `useUrlParams` for list filters), reusing the shared
    building blocks (`AdminTable`, `FilterBar`, `QueryState`, `TextField`, `useFormState`…).
 
-## Payments and stock (Kustom Checkout)
+## Payments and stock (Klarna)
 
-Payments use **Kustom Checkout** (formerly Klarna Checkout), embedded in the checkout modal:
+Payments use **Klarna Payments**, like the WooCommerce shop (plugin "Klarna Payments for WooCommerce"): a regular
+checkout form, then Klarna's payment options (Pay now, Pay later, Pay over time) in Klarna's widget.
 
-1. The customer picks the delivery country (which sets the shipping fee) and can add a note.
-2. `POST /api/checkout` re-prices the cart from the database and creates a Kustom checkout order; the modal
-   renders Kustom's checkout, where the customer enters their details and chooses how to pay.
-3. After the purchase Kustom redirects to `?payment=success&order_id=…` and also sends a push notification to
-   `/api/kustom/push`. Whichever arrives first creates the order, takes the items out of stock and acknowledges
-   the order at Kustom (so it's never created twice).
-4. The money is only **reserved** at checkout (payment status *Authorized*). Marking the order as *Shipped* in the
+1. The customer enters their contact details and delivery address, picks the delivery country (which sets the
+   shipping fee) and can add a note.
+2. `POST /api/checkout` re-prices the cart from the database, keeps it with those details and opens a Klarna
+   payment session for the customer's country; the modal shows Klarna's payment options and widget.
+3. The customer approves the payment in Klarna's pop-up. The modal sends the authorization to
+   `POST /api/checkout/confirm`, and Klarna also sends it to `/api/klarna/authorization`. Whichever arrives first
+   takes the items out of stock and places the order at Klarna (so it's never placed twice). If an item sold out in
+   the meantime, the authorization is released and nothing is charged.
+4. The customer passes through Klarna's redirect page and lands back on the shop with `?payment=success&order=…`.
+5. The money is only **reserved** at checkout (payment status *Authorized*). Marking the order as *Shipped* in the
    admin **captures** it (*Paid*); cancelling voids the reservation, or refunds a captured payment.
 
-On an HTTPS domain Kustom also calls `/api/kustom/validate` just before payment, so nobody pays for an item that
-sold out in the meantime. Set `KUSTOM_USERNAME`, `KUSTOM_PASSWORD` and `KUSTOM_API_URL`
-(`https://api.playground.kustom.co` for testing, `https://api.kustom.co` live). Prices include Swedish VAT at
-`storeConfig.vatRate` (`src/config/site.js`), and the checkout links to the terms page set in `siteConfig.termsPath`.
+If Klarna places an order under review, its timeline says so and Klarna's decision arrives at
+`/api/klarna/notification`: a rejected order is cancelled and its items return to stock. Klarna only calls the two
+callback URLs on an HTTPS domain. Klarna only accepts a country's own currency, so with SEK prices it pays for
+Swedish addresses; elsewhere the checkout says Klarna isn't available yet. Set `KLARNA_USERNAME`, `KLARNA_PASSWORD`
+(API credentials from the Klarna Merchant Portal, the same Klarna account as the WooCommerce shop) and
+`KLARNA_API_URL` (`https://api.playground.klarna.com` for testing, `https://api.klarna.com` live). Prices include
+Swedish VAT at `storeConfig.vatRate` (`src/config/site.js`).

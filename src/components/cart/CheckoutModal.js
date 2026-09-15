@@ -9,29 +9,48 @@ import Modal from 'react-bootstrap/Modal';
 import Spinner from 'react-bootstrap/Spinner';
 import { PiArrowLeft, PiCheck, PiLockSimple, PiWarningCircle, PiX } from 'react-icons/pi';
 import CartLine from './CartLine';
-import KustomCheckout from './KustomCheckout';
+import KlarnaPayment from './KlarnaPayment';
+import TextField from '@/components/common/TextField';
+import { useAuth } from '@/context/AuthContext';
 import { useStoreCart } from '@/context/CartContext';
 import { useUI } from '@/context/UIContext';
 import { useFormState } from '@/hooks/useFormState';
 import { useI18n } from '@/i18n/I18nProvider';
 import { confirmPayment, startCheckout } from '@/services/checkout';
 import { calculateShipping, SHIPPING_COUNTRIES } from '@/utils/shipping';
+import { email, minLength, required } from '@/utils/validation';
 import styles from './CheckoutModal.module.css';
 
+const EMPTY_DETAILS = {
+  firstName: '',
+  lastName: '',
+  email: '',
+  phone: '',
+  street: '',
+  street2: '',
+  postalCode: '',
+  city: '',
+  country: 'SE',
+  note: '',
+};
+
+const CONFIRM_ERRORS = { 'sold-out': 'checkout.soldOut', declined: 'checkout.errors.declined' };
+
 /**
- * Checkout in two steps:
- * 1. details — order summary, delivery country (sets the shipping fee) and an optional note;
- * 2. payment — Kustom Checkout (embedded) collects the customer's details and payment.
- * After paying, Kustom redirects to ?payment=success&order_id=…, the order is created and the
- * items are taken out of stock. ?payment=unavailable means Kustom's last stock check stopped it.
+ * Checkout in two steps, like the WooCommerce shop with Klarna Payments:
+ * 1. details — contact details, delivery address and country (sets the shipping fee), an optional note;
+ * 2. payment — Klarna's payment options and widget; the customer approves the payment with Klarna.
+ * The order is then placed and the items taken out of stock. Klarna's redirect page brings the
+ * customer back here with ?payment=success&order=…, which shows the confirmation.
  */
 export default function CheckoutModal() {
   const { t, href, price, locale } = useI18n();
+  const { user } = useAuth();
   const { checkoutOpen, openCheckout, closeCheckout } = useUI();
   const cart = useStoreCart();
-  const form = useFormState({ country: 'SE', note: '' });
+  const form = useFormState(EMPTY_DETAILS);
   const [status, setStatus] = useState('details'); // details | opening | payment | confirming | confirmed | failed
-  const [snippet, setSnippet] = useState(null);
+  const [payment, setPayment] = useState(null); // { sessionId, clientToken, categories, address }
   const [serverError, setServerError] = useState(null);
   const [outcome, setOutcome] = useState(null); // { number } when confirmed, { message } when failed
 
@@ -39,46 +58,41 @@ export default function CheckoutModal() {
   const shipping = calculateShipping(cart.subtotal, form.values.country);
   const total = cart.subtotal + shipping;
   const busy = status === 'opening' || status === 'confirming';
+  const errorText = (name) => form.errors[name] && t(form.errors[name]);
 
-  const handlePaymentReturn = useEffectEvent(async (payment, orderId) => {
+  const showConfirmation = useEffectEvent((number) => {
+    cart.emptyCart();
+    setOutcome({ number });
+    setStatus('confirmed');
     openCheckout();
-    if (payment === 'unavailable') {
-      setOutcome({ message: t('checkout.soldOutBeforePayment') });
-      setStatus('failed');
-      return;
-    }
-    setStatus('confirming');
-    try {
-      const result = await confirmPayment(orderId);
-      if (result.soldOut) {
-        setOutcome({ message: t('checkout.soldOut') });
-        setStatus('failed');
-        return;
-      }
-      cart.emptyCart();
-      setOutcome({ number: result.orderNumber });
-      setStatus('confirmed');
-    } catch {
-      setOutcome({ message: t('checkout.errors.confirmFailed') });
-      setStatus('failed');
-    }
   });
 
-  // Back from Kustom: read the result once, then clean the URL so a refresh doesn't repeat it.
+  // Back from Klarna's redirect: show the confirmation once, then clean the URL so a refresh doesn't repeat it.
   useEffect(() => {
     const timer = setTimeout(() => {
       const params = new URLSearchParams(window.location.search);
-      const payment = params.get('payment');
-      const orderId = params.get('order_id');
-      if (!(payment === 'success' && orderId) && payment !== 'unavailable') return;
+      const number = params.get('order');
+      if (params.get('payment') !== 'success' || !number) return;
       params.delete('payment');
-      params.delete('order_id');
+      params.delete('order');
       const query = params.toString();
       window.history.replaceState(window.history.state, '', `${window.location.pathname}${query ? `?${query}` : ''}`);
-      handlePaymentReturn(payment, orderId);
+      showConfirmation(number);
     });
     return () => clearTimeout(timer);
   }, []);
+
+  // Signed-in customers start with their name and email filled in.
+  const prefill = () => {
+    if (!user) return;
+    const [first = '', ...rest] = (user.name ?? '').trim().split(/\s+/);
+    form.setValues((values) => ({
+      ...values,
+      firstName: values.firstName || first,
+      lastName: values.lastName || rest.join(' '),
+      email: values.email || user.email,
+    }));
+  };
 
   const showCheckoutError = (error) => {
     const problems = error.details?.problems;
@@ -92,6 +106,10 @@ export default function CheckoutModal() {
         })
         .filter(Boolean);
       setServerError(t('checkout.errors.itemsUnavailable', { items: [...new Set(names)].join(', ') }));
+    } else if (error.code === 'country-unavailable') {
+      setServerError(t('checkout.errors.countryUnavailable', { country: countryNames.of(form.values.country) }));
+    } else if (error.fieldErrors) {
+      setServerError(t('checkout.errors.checkDetails'));
     } else {
       setServerError(t(error.code === 'payments-unavailable' ? 'checkout.errors.paymentUnavailable' : 'checkout.errors.unavailable'));
     }
@@ -99,17 +117,27 @@ export default function CheckoutModal() {
 
   const submit = async (event) => {
     event.preventDefault();
+    const valid = form.validate({
+      firstName: [required('auth.errors.required')],
+      lastName: [required('auth.errors.required')],
+      email: [required('auth.errors.required'), email('auth.errors.email')],
+      phone: [required('auth.errors.required'), minLength(5, 'checkout.errors.phone')],
+      street: [required('auth.errors.required')],
+      postalCode: [required('auth.errors.required')],
+      city: [required('auth.errors.required')],
+    });
+    if (!valid) return;
+
     setStatus('opening');
     setServerError(null);
     try {
-      const checkout = await startCheckout({
+      const session = await startCheckout({
+        ...form.values,
         items: cart.items.map((item) => ({ productId: String(item.productId), variantId: item.variantId, quantity: item.quantity })),
-        country: form.values.country,
-        note: form.values.note,
         locale,
         returnPath: window.location.pathname,
       });
-      setSnippet(checkout.snippet);
+      setPayment(session);
       setStatus('payment');
     } catch (error) {
       setStatus('details');
@@ -117,15 +145,33 @@ export default function CheckoutModal() {
     }
   };
 
+  // The customer approved the payment in Klarna's widget: place the order.
+  const handleApproved = async (authorizationToken) => {
+    setStatus('confirming');
+    try {
+      const result = await confirmPayment(payment.sessionId, authorizationToken);
+      cart.emptyCart();
+      if (result.redirectUrl) {
+        window.location.assign(result.redirectUrl); // Klarna sends the customer back with ?payment=success
+        return;
+      }
+      setOutcome({ number: result.orderNumber });
+      setStatus('confirmed');
+    } catch (error) {
+      setOutcome({ message: t(CONFIRM_ERRORS[error.code] ?? 'checkout.errors.confirmFailed') });
+      setStatus('failed');
+    }
+  };
+
   const backToDetails = () => {
-    setSnippet(null);
+    setPayment(null);
     setStatus('details');
   };
 
-  // Closing the modal abandons an open Kustom checkout; the cart may change before it's reopened.
+  // Closing the modal abandons an open Klarna payment; the cart may change before it's reopened.
   const handleExited = () => {
     if (status === 'confirmed') form.reset();
-    setSnippet(null);
+    setPayment(null);
     setOutcome(null);
     setServerError(null);
     setStatus('details');
@@ -134,6 +180,7 @@ export default function CheckoutModal() {
   return (
     <Modal
       show={checkoutOpen}
+      onShow={prefill}
       onHide={busy ? undefined : closeCheckout}
       onExited={handleExited}
       centered
@@ -190,7 +237,7 @@ export default function CheckoutModal() {
         </Modal.Body>
       )}
 
-      {status === 'payment' && (
+      {status === 'payment' && payment && (
         <>
           <Modal.Header className={styles.header}>
             <div>
@@ -204,7 +251,13 @@ export default function CheckoutModal() {
             <button type="button" className={styles.backLink} onClick={backToDetails}>
               <PiArrowLeft className="flip-rtl" aria-hidden="true" /> {t('checkout.back')}
             </button>
-            <KustomCheckout snippet={snippet} />
+            <KlarnaPayment
+              clientToken={payment.clientToken}
+              categories={payment.categories}
+              address={payment.address}
+              amount={price(total)}
+              onApproved={handleApproved}
+            />
           </Modal.Body>
         </>
       )}
@@ -228,7 +281,73 @@ export default function CheckoutModal() {
                   </Alert>
                 )}
                 <fieldset className={styles.fieldset}>
+                  <legend className={styles.legend}>{t('checkout.contactTitle')}</legend>
+                  <div className={styles.row}>
+                    <TextField
+                      id="checkout-first-name"
+                      label={t('checkout.fields.firstName')}
+                      autoComplete="given-name"
+                      {...form.field('firstName')}
+                      error={errorText('firstName')}
+                    />
+                    <TextField
+                      id="checkout-last-name"
+                      label={t('checkout.fields.lastName')}
+                      autoComplete="family-name"
+                      {...form.field('lastName')}
+                      error={errorText('lastName')}
+                    />
+                  </div>
+                  <TextField
+                    id="checkout-email"
+                    type="email"
+                    label={t('checkout.fields.email')}
+                    autoComplete="email"
+                    {...form.field('email')}
+                    error={errorText('email')}
+                  />
+                  <TextField
+                    id="checkout-phone"
+                    type="tel"
+                    label={t('checkout.fields.phone')}
+                    autoComplete="tel"
+                    {...form.field('phone')}
+                    error={errorText('phone')}
+                  />
+                </fieldset>
+
+                <fieldset className={styles.fieldset}>
                   <legend className={styles.legend}>{t('checkout.shippingTitle')}</legend>
+                  <TextField
+                    id="checkout-street"
+                    label={t('checkout.fields.street')}
+                    autoComplete="address-line1"
+                    {...form.field('street')}
+                    error={errorText('street')}
+                  />
+                  <TextField
+                    id="checkout-street2"
+                    label={t('checkout.fields.street2')}
+                    autoComplete="address-line2"
+                    {...form.field('street2')}
+                    error={errorText('street2')}
+                  />
+                  <div className={styles.row}>
+                    <TextField
+                      id="checkout-postal-code"
+                      label={t('checkout.fields.postalCode')}
+                      autoComplete="postal-code"
+                      {...form.field('postalCode')}
+                      error={errorText('postalCode')}
+                    />
+                    <TextField
+                      id="checkout-city"
+                      label={t('checkout.fields.city')}
+                      autoComplete="address-level2"
+                      {...form.field('city')}
+                      error={errorText('city')}
+                    />
+                  </div>
                   <Form.Group controlId="checkout-country">
                     <Form.Label>{t('checkout.fields.country')}</Form.Label>
                     <Form.Select {...form.field('country')} autoComplete="country">

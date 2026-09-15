@@ -24,7 +24,7 @@ const orderUpdate = z.union([
 
 /**
  * PATCH /api/admin/orders/:id — one change at a time:
- *   { status, note }   fulfilment status (cancelling returns the items to stock; for Kustom orders
+ *   { status, note }   fulfilment status (cancelling returns the items to stock; for Klarna orders
  *                      shipping captures the payment and cancelling voids or refunds it)
  *   { paymentStatus }  payment status
  *   { adminNote }      internal note

@@ -14,25 +14,26 @@ import { updateAdminNote, updateOrderStatus, updatePaymentStatus } from '@/servi
  */
 
 const PAYMENT_METHOD_NOTES = {
-  kustom:
-    'Paid with Kustom Checkout. The money is reserved at checkout and captured when you mark the order as shipped; cancelling the order cancels or refunds it.',
+  klarna:
+    'Paid with Klarna. The money is reserved at checkout and captured when you mark the order as shipped; cancelling the order cancels or refunds it.',
+  kustom: 'Paid with Kustom Checkout (the previous payment provider). Captures, cancellations and refunds are made there.',
   card: 'Paid by card through the previous payment provider (Stripe). Refunds are made there.',
   invoice: 'Placed before online payments were enabled — update this manually when payment is received.',
 };
 
-/** What a status change will also do: stock and, for Kustom orders, the payment. */
+/** What a status change will also do: stock and, for Klarna orders, the payment. */
 function StatusChangeHint({ order, nextStatus }) {
   if (nextStatus === order.status) return null;
-  const kustom = order.paymentMethod === 'kustom';
+  const klarna = order.paymentMethod === 'klarna';
   let hint = null;
   if (nextStatus === 'cancelled') {
-    hint = kustom && order.paymentStatus === 'authorized'
-      ? 'Cancelling puts the items back in stock and cancels the payment at Kustom — the customer is not charged.'
-      : kustom && order.paymentStatus === 'paid'
-        ? 'Cancelling puts the items back in stock and refunds the full payment through Kustom.'
+    hint = klarna && order.paymentStatus === 'authorized'
+      ? 'Cancelling puts the items back in stock and cancels the payment at Klarna — the customer is not charged.'
+      : klarna && order.paymentStatus === 'paid'
+        ? 'Cancelling puts the items back in stock and refunds the full payment through Klarna.'
         : 'Cancelling puts the items back in stock.';
-  } else if (kustom && order.paymentStatus === 'authorized' && ['shipped', 'delivered'].includes(nextStatus)) {
-    hint = 'This captures the payment at Kustom — the customer is charged now.';
+  } else if (klarna && order.paymentStatus === 'authorized' && ['shipped', 'delivered'].includes(nextStatus)) {
+    hint = 'This captures the payment at Klarna — the customer is charged now.';
   }
   return hint ? <Form.Text>{hint}</Form.Text> : null;
 }
@@ -116,7 +117,7 @@ export function PaymentStatusCard({ order, onUpdated }) {
           ))}
         </Form.Select>
         <Form.Text>{PAYMENT_METHOD_NOTES[order.paymentMethod] ?? PAYMENT_METHOD_NOTES.invoice}</Form.Text>
-        {order.kustomOrderId && <p className="small text-muted-ms mt-2 mb-0">Kustom order ID: {order.kustomOrderId}</p>}
+        {order.klarnaOrderId && <p className="small text-muted-ms mt-2 mb-0">Klarna order ID: {order.klarnaOrderId}</p>}
       </div>
     </section>
   );

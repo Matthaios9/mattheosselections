@@ -1,7 +1,0 @@
-.checkout {
-  min-height: 24rem;
-}
-
-.checkout :global(iframe) {
-  width: 100%;
-}
