@@ -110,8 +110,9 @@ checkout form, then Klarna's payment options (Pay now, Pay later, Pay over time)
 
 If Klarna places an order under review, its timeline says so and Klarna's decision arrives at
 `/api/klarna/notification`: a rejected order is cancelled and its items return to stock. Klarna only calls the two
-callback URLs on an HTTPS domain. Klarna only accepts a country's own currency, so with SEK prices it pays for
-Swedish addresses; elsewhere the checkout says Klarna isn't available yet. Set `KLARNA_USERNAME`, `KLARNA_PASSWORD`
+callback URLs on an HTTPS domain. The payment session is opened for the customer's country with the SEK amount,
+like the WooCommerce shop: the shop's Klarna account accepts customers in the other delivery countries too (if
+Klarna refuses a country, the checkout says Klarna isn't available there yet). Set `KLARNA_USERNAME`, `KLARNA_PASSWORD`
 (API credentials from the Klarna Merchant Portal, the same Klarna account as the WooCommerce shop) and
 `KLARNA_API_URL` (`https://api.playground.klarna.com` for testing, `https://api.klarna.com` live). Prices include
 Swedish VAT at `storeConfig.vatRate` (`src/config/site.js`).

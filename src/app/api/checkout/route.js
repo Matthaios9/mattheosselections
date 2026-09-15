@@ -15,7 +15,8 @@ function returnPathFor(path, locale) {
 function paymentProviderError(error, country) {
   if (!(error instanceof KlarnaError)) throw error;
   console.error('[checkout]', error.message, error.correlationId ? `(correlation ${error.correlationId})` : '');
-  // Klarna only accepts a country's own currency, so it refuses a SEK payment for an address abroad.
+  // Klarna accepts customers abroad for SEK orders (as in the WooCommerce shop), but refuses a session
+  // for a country it isn't set up for in the Klarna agreement.
   if (error.status === 400 && country !== 'SE') {
     throw conflict('Klarna is not available for addresses in this country.', 'country-unavailable');
   }
