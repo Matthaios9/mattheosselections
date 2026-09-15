@@ -1,0 +1,62 @@
+.logo {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.7rem;
+  color: var(--ms-ink);
+  flex-shrink: 0;
+}
+
+.logo:hover {
+  color: var(--ms-ink);
+}
+
+.mark {
+  width: 40px;
+  height: auto;
+  transition: transform 0.6s var(--ms-ease-out);
+}
+
+.logo:hover .mark {
+  transform: rotate(-8deg) scale(1.04);
+}
+
+.wordmark {
+  display: flex;
+  flex-direction: column;
+  line-height: 1;
+}
+
+.name {
+  font-family: var(--ms-font-serif);
+  font-size: 1.55rem;
+  font-weight: 500;
+  letter-spacing: -0.01em;
+}
+
+.sub {
+  margin-top: 0.2rem;
+  font-size: 0.58rem;
+  font-weight: 700;
+  letter-spacing: 0.42em;
+  text-transform: uppercase;
+  color: var(--ms-honey-deep);
+}
+
+.light,
+.light:hover {
+  color: #fff;
+}
+
+.light .sub {
+  color: var(--ms-honey-bright);
+}
+
+@media (max-width: 380px) {
+  .mark {
+    width: 34px;
+  }
+
+  .name {
+    font-size: 1.35rem;
+  }
+}

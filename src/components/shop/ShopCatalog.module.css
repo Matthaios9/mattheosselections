@@ -1,0 +1,270 @@
+.shop {
+  padding-block: clamp(2rem, 4vw, 3.5rem) var(--ms-section-y);
+}
+
+/* Category chips (mobile/tablet) ----------------------------------------- */
+
+.chips {
+  display: flex;
+  gap: 0.5rem;
+  margin-bottom: 1.25rem;
+  overflow-x: auto;
+  scrollbar-width: none;
+  padding-bottom: 0.2rem;
+}
+
+.chips::-webkit-scrollbar {
+  display: none;
+}
+
+.chip {
+  flex-shrink: 0;
+  padding: 0.55rem 1.1rem;
+  border: 1px solid var(--ms-line-strong);
+  border-radius: var(--ms-radius-pill);
+  background: transparent;
+  font-size: 0.85rem;
+  font-weight: 600;
+  color: var(--ms-ink);
+  white-space: nowrap;
+  transition:
+    background-color 0.25s var(--ms-ease),
+    color 0.25s var(--ms-ease),
+    border-color 0.25s var(--ms-ease);
+}
+
+.chipActive {
+  background: var(--ms-ink);
+  border-color: var(--ms-ink);
+  color: #fff;
+}
+
+/* Layout -------------------------------------------------------------------- */
+
+.layout {
+  display: grid;
+  gap: 2.5rem;
+}
+
+@media (min-width: 992px) {
+  .layout {
+    grid-template-columns: 260px minmax(0, 1fr);
+    gap: 3rem;
+  }
+}
+
+@media (min-width: 1200px) {
+  .layout {
+    grid-template-columns: 280px minmax(0, 1fr);
+    gap: 3.5rem;
+  }
+}
+
+.sidebar {
+  position: sticky;
+  top: calc(var(--ms-header-h) + 1.5rem);
+  align-self: start;
+  max-height: calc(100vh - var(--ms-header-h) - 3rem);
+  overflow-y: auto;
+  scrollbar-width: thin;
+  padding-inline-end: 0.25rem;
+}
+
+.sidebarHead,
+.offcanvasHead {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  margin-bottom: 0.75rem;
+}
+
+.sidebarTitle {
+  margin: 0;
+  font-size: 1.75rem;
+}
+
+.clearLink {
+  padding: 0;
+  border: 0;
+  background: none;
+  font-size: 0.8rem;
+  font-weight: 700;
+  color: var(--ms-ink);
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+
+.main {
+  min-width: 0;
+}
+
+/* Toolbar --------------------------------------------------------------- */
+
+.toolbar {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.75rem;
+  align-items: center;
+}
+
+.search {
+  flex: 1 1 280px;
+}
+
+.toolbarActions {
+  display: flex;
+  gap: 0.6rem;
+}
+
+@media (max-width: 575.98px) {
+  .toolbarActions {
+    width: 100%;
+  }
+
+  .toolbarActions > * {
+    flex: 1;
+  }
+
+  .toolbarActions :global(.dropdown-toggle) {
+    width: 100%;
+  }
+}
+
+.filterButton {
+  --bs-btn-padding-y: 0;
+  height: 3rem;
+  font-size: 0.875rem;
+}
+
+.filterCount {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 1.35rem;
+  height: 1.35rem;
+  padding-inline: 0.35rem;
+  border-radius: var(--ms-radius-pill);
+  background: var(--ms-honey);
+  color: #fff;
+  font-size: 0.7rem;
+  font-weight: 800;
+}
+
+.meta {
+  display: flex;
+  flex-direction: column;
+  gap: 0.85rem;
+  margin: 1.5rem 0 2rem;
+}
+
+.count {
+  margin: 0;
+  font-size: 0.875rem;
+  color: var(--ms-muted);
+}
+
+/* Pagination -------------------------------------------------------------- */
+
+.pagination {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1rem;
+  margin-top: clamp(3rem, 6vw, 4.5rem);
+  text-align: center;
+}
+
+.paginationText {
+  margin: 0;
+  font-size: 0.85rem;
+  font-weight: 600;
+  color: var(--ms-muted);
+}
+
+.progress {
+  width: min(260px, 70%);
+  margin-bottom: 0.5rem;
+}
+
+.allLoaded {
+  margin: 0;
+  font-family: var(--ms-font-serif);
+  font-style: italic;
+  font-size: 1.15rem;
+  color: var(--ms-muted);
+}
+
+/* Empty state ------------------------------------------------------------- */
+
+.empty {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.85rem;
+  padding: clamp(3rem, 7vw, 5rem) 1.5rem;
+  border: 1px dashed var(--ms-line-strong);
+  border-radius: var(--ms-radius-lg);
+  text-align: center;
+}
+
+.emptyIcon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 4.5rem;
+  height: 4.5rem;
+  margin-bottom: 0.5rem;
+  border-radius: 50%;
+  background: var(--ms-sand);
+  color: var(--ms-honey-deep);
+  font-size: 1.75rem;
+}
+
+.emptyTitle {
+  margin: 0;
+  font-size: 1.75rem;
+}
+
+.emptyText {
+  margin: 0 0 0.75rem;
+  max-width: 26rem;
+  color: var(--ms-muted);
+}
+
+/* Offcanvas (mobile filters) ---------------------------------------------- */
+
+.offcanvas {
+  --bs-offcanvas-width: min(400px, 92vw);
+}
+
+.offcanvasHead {
+  margin: 0;
+  padding: 1.1rem 1.25rem;
+  border-bottom: 1px solid var(--ms-line);
+}
+
+.offcanvasBody {
+  padding: 0.5rem 1.25rem 1.25rem;
+}
+
+.offcanvasFoot {
+  display: grid;
+  grid-template-columns: 1fr 1.4fr;
+  gap: 0.6rem;
+  padding: 1rem 1.25rem 1.25rem;
+  border-top: 1px solid var(--ms-line);
+  background: var(--ms-surface);
+}
+
+.offcanvasFoot :global(.btn) {
+  --bs-btn-padding-x: 0.75rem;
+  font-size: 0.85rem;
+}
+
+/* Current results stay visible (dimmed) while the next query loads */
+.loading {
+  opacity: 0.6;
+  pointer-events: none;
+  transition: opacity 0.2s ease;
+}

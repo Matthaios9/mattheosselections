@@ -1,0 +1,121 @@
+.grid {
+  display: grid;
+  gap: clamp(3rem, 6vw, 5.5rem);
+  align-items: center;
+}
+
+@media (min-width: 992px) {
+  .grid {
+    grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+  }
+}
+
+.visual {
+  position: relative;
+  padding-bottom: 3rem;
+  padding-inline-end: 3rem;
+}
+
+.mainImage {
+  position: relative;
+  aspect-ratio: 4 / 4.6;
+  overflow: hidden;
+  border-radius: var(--ms-radius-lg);
+}
+
+.mainImage img {
+  transition: transform 1.4s var(--ms-ease-out);
+}
+
+.visual:hover .mainImage img {
+  transform: scale(1.04);
+}
+
+.portrait {
+  position: absolute;
+  bottom: 0;
+  inset-inline-end: 0;
+  width: 38%;
+  aspect-ratio: 3 / 4;
+  overflow: hidden;
+  border: 6px solid var(--ms-bg);
+  border-radius: 999px 999px var(--ms-radius) var(--ms-radius);
+  box-shadow: var(--ms-shadow);
+}
+
+.caption {
+  position: absolute;
+  top: 1.25rem;
+  inset-inline-start: 1.25rem;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  padding: 0.5rem 0.9rem;
+  border-radius: var(--ms-radius-pill);
+  background: rgba(255, 255, 255, 0.92);
+  backdrop-filter: blur(8px);
+  font-size: 0.75rem;
+  font-weight: 700;
+  color: var(--ms-ink);
+}
+
+.copy {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 1.2rem;
+}
+
+.paragraph {
+  margin: 0;
+  font-size: 1.02rem;
+  line-height: 1.8;
+  color: var(--ms-muted);
+}
+
+.signature {
+  display: flex;
+  flex-direction: column;
+  gap: 0.1rem;
+  margin-top: 0.25rem;
+}
+
+.signatureName {
+  font-family: var(--ms-font-serif);
+  font-style: italic;
+  font-size: 1.7rem;
+  color: var(--ms-honey-deep);
+}
+
+.signatureRole {
+  font-size: 0.72rem;
+  font-weight: 700;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--ms-muted);
+}
+
+.stats {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 1rem;
+  width: 100%;
+  margin: 0.5rem 0;
+  padding-block: 1.5rem;
+  border-block: 1px solid var(--ms-line);
+}
+
+.stats dt {
+  font-family: var(--ms-font-serif);
+  font-size: clamp(1.7rem, 3vw, 2.4rem);
+  font-weight: 500;
+  line-height: 1;
+  color: var(--ms-ink);
+}
+
+.stats dd {
+  margin: 0.45rem 0 0;
+  font-size: 0.78rem;
+  line-height: 1.4;
+  color: var(--ms-muted);
+}

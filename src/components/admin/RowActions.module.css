@@ -1,0 +1,116 @@
+.toggle {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 2.25rem;
+  height: 2.25rem;
+  padding: 0;
+  border: 1px solid var(--ms-line);
+  border-radius: var(--ms-radius-sm);
+  background: #fff;
+  box-shadow: 0 1px 2px rgba(28, 25, 21, 0.06);
+  color: var(--ms-muted);
+  font-size: 1.2rem;
+  transition:
+    background-color 0.2s var(--ms-ease),
+    border-color 0.2s var(--ms-ease),
+    color 0.2s var(--ms-ease),
+    box-shadow 0.2s var(--ms-ease);
+}
+
+/* Bootstrap's caret — the dots are the affordance */
+.toggle::after {
+  display: none !important;
+}
+
+.toggle:hover {
+  border-color: var(--ms-line-strong);
+  background: var(--ms-sand);
+  color: var(--ms-ink);
+}
+
+.toggle:focus-visible {
+  outline: 2px solid var(--ms-honey);
+  outline-offset: 2px;
+}
+
+.toggle[aria-expanded='true'] {
+  border-color: var(--ms-ink);
+  background: var(--ms-ink);
+  box-shadow: 0 6px 16px -8px rgba(28, 25, 21, 0.55);
+  color: #fff;
+}
+
+.toggle:disabled {
+  opacity: 0.65;
+}
+
+/* Fixed from the first frame, so Popper measures against the viewport (see popperConfig) */
+.menu:global(.dropdown-menu) {
+  position: fixed;
+}
+
+.menu {
+  --bs-dropdown-font-size: 0.85rem;
+  min-width: 14rem;
+  padding: 0.4rem;
+  border-radius: 12px;
+  box-shadow:
+    0 22px 44px -18px rgba(28, 25, 21, 0.35),
+    0 2px 6px rgba(28, 25, 21, 0.06);
+}
+
+.title {
+  max-width: 17rem;
+  overflow: hidden;
+  padding: 0.45rem 0.7rem 0.4rem;
+  font-size: 0.66rem;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  text-overflow: ellipsis;
+  text-transform: uppercase;
+  white-space: nowrap;
+  color: var(--ms-subtle);
+}
+
+.item {
+  display: flex;
+  align-items: center;
+  gap: 0.65rem;
+  padding: 0.5rem 0.7rem;
+  border-radius: 8px;
+  font-weight: 600;
+  color: var(--ms-ink);
+}
+
+.icon {
+  flex-shrink: 0;
+  font-size: 1.05rem;
+  color: var(--ms-muted);
+  transition: color 0.2s var(--ms-ease);
+}
+
+.item:hover .icon,
+.item:focus .icon {
+  color: var(--ms-ink);
+}
+
+.danger,
+.danger .icon,
+.danger:hover .icon,
+.danger:focus .icon {
+  color: var(--ms-danger);
+}
+
+.danger:hover,
+.danger:focus,
+.danger:active {
+  background: #fbefec;
+  color: var(--ms-danger);
+}
+
+.divider {
+  margin: 0.35rem 0.3rem;
+  border-color: var(--ms-line);
+  opacity: 1;
+}

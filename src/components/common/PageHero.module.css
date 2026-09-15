@@ -1,0 +1,96 @@
+.wrap {
+  padding-inline: clamp(0rem, 1.2vw, 1rem);
+  padding-top: clamp(0rem, 1vw, 0.75rem);
+}
+
+.frame {
+  position: relative;
+  display: flex;
+  align-items: flex-end;
+  overflow: hidden;
+  isolation: isolate;
+  border-radius: 0;
+  background: var(--ms-ink);
+}
+
+@media (min-width: 768px) {
+  .frame {
+    border-radius: var(--ms-radius-lg);
+  }
+}
+
+.md .frame {
+  min-height: clamp(420px, 62vh, 620px);
+}
+
+.sm .frame {
+  min-height: clamp(340px, 46vh, 460px);
+}
+
+.image {
+  object-fit: cover;
+  z-index: -2;
+  animation: heroZoom 1.8s var(--ms-ease-out) both;
+}
+
+@keyframes heroZoom {
+  from {
+    transform: scale(1.08);
+  }
+  to {
+    transform: scale(1);
+  }
+}
+
+.overlay {
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  background:
+    linear-gradient(180deg, rgba(20, 16, 11, 0.35) 0%, rgba(20, 16, 11, 0) 30%),
+    linear-gradient(0deg, rgba(20, 16, 11, 0.82) 0%, rgba(20, 16, 11, 0.45) 45%, rgba(20, 16, 11, 0.1) 100%);
+}
+
+.content {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  gap: 2rem;
+  align-self: stretch;
+  padding-block: clamp(1.5rem, 3vw, 2.25rem) clamp(2.5rem, 5vw, 4rem);
+  color: #fff;
+}
+
+.overlap .content {
+  padding-bottom: calc(clamp(2.5rem, 5vw, 4rem) + clamp(2.5rem, 6vw, 4.5rem));
+}
+
+.breadcrumb {
+  color: rgba(255, 255, 255, 0.9);
+}
+
+.breadcrumb :global(.breadcrumb-item + .breadcrumb-item::before) {
+  color: rgba(255, 255, 255, 0.55);
+}
+
+.copy {
+  display: flex;
+  flex-direction: column;
+  gap: 1.1rem;
+  max-width: 46rem;
+  margin-top: auto;
+}
+
+.title {
+  margin: 0;
+  color: #fff;
+}
+
+.text {
+  margin: 0;
+  max-width: 38rem;
+  font-size: clamp(1rem, 1.25vw, 1.15rem);
+  line-height: 1.7;
+  color: rgba(255, 255, 255, 0.8);
+}

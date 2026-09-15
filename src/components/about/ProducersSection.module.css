@@ -1,0 +1,99 @@
+.grid {
+  display: grid;
+  gap: clamp(3rem, 6vw, 5rem);
+  align-items: center;
+}
+
+@media (min-width: 992px) {
+  .grid {
+    grid-template-columns: minmax(0, 0.9fr) minmax(0, 1.1fr);
+  }
+}
+
+.copy {
+  display: flex;
+  flex-direction: column;
+  gap: 1.25rem;
+}
+
+.text {
+  margin: 0;
+  font-size: 1.04rem;
+  line-height: 1.85;
+  color: var(--ms-muted);
+}
+
+.points {
+  display: flex;
+  flex-direction: column;
+  gap: 0.85rem;
+  margin: 0.5rem 0 0;
+  padding: 1.5rem 0 0;
+  list-style: none;
+  border-top: 1px solid var(--ms-line);
+}
+
+.points li {
+  display: flex;
+  align-items: center;
+  gap: 0.85rem;
+  font-weight: 600;
+  color: var(--ms-ink);
+}
+
+.check {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  width: 1.75rem;
+  height: 1.75rem;
+  border-radius: 50%;
+  background: var(--ms-ink);
+  color: var(--ms-honey-bright);
+  font-size: 0.85rem;
+}
+
+.visual {
+  position: relative;
+  min-height: clamp(360px, 42vw, 560px);
+  overflow: visible;
+}
+
+.visual > img {
+  border-radius: var(--ms-radius-lg);
+}
+
+.caption {
+  position: absolute;
+  top: 1.25rem;
+  inset-inline-start: 1.25rem;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  padding: 0.5rem 0.95rem;
+  border-radius: var(--ms-radius-pill);
+  background: rgba(255, 255, 255, 0.92);
+  backdrop-filter: blur(8px);
+  font-size: 0.78rem;
+  font-weight: 700;
+  color: var(--ms-ink);
+}
+
+.jar {
+  position: absolute;
+  bottom: -2rem;
+  inset-inline-start: -1.5rem;
+  width: clamp(120px, 16vw, 180px);
+  aspect-ratio: 1 / 1;
+  overflow: hidden;
+  border: 6px solid var(--ms-bg);
+  border-radius: var(--ms-radius);
+  box-shadow: var(--ms-shadow-lg);
+}
+
+@media (max-width: 575.98px) {
+  .jar {
+    inset-inline-start: 1rem;
+  }
+}

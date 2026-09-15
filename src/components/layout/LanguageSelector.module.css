@@ -1,0 +1,123 @@
+.toggle {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  height: 2.75rem;
+  padding-inline: 0.8rem;
+  border: 1px solid transparent;
+  border-radius: var(--ms-radius-pill);
+  background: transparent;
+  color: var(--ms-ink);
+  font-size: 0.8rem;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  transition:
+    background-color 0.25s var(--ms-ease),
+    border-color 0.25s var(--ms-ease);
+}
+
+/* Hide Bootstrap's caret (incl. the higher-specificity `.dropup` variant) — we render our own. */
+.toggle::after {
+  display: none !important;
+}
+
+.toggle:hover,
+.toggle[aria-expanded='true'] {
+  background: rgba(28, 25, 21, 0.05);
+}
+
+.globe {
+  font-size: 1.2rem;
+}
+
+.caret {
+  font-size: 0.75rem;
+  transition: transform 0.3s var(--ms-ease);
+}
+
+.toggle[aria-expanded='true'] .caret {
+  transform: rotate(180deg);
+}
+
+.menu {
+  min-width: 13rem;
+}
+
+.header {
+  padding-inline: 0.75rem;
+  font-size: 0.66rem;
+  font-weight: 700;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--ms-muted);
+}
+
+.item {
+  display: flex !important;
+  align-items: center;
+  gap: 0.75rem;
+}
+
+.code {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 2rem;
+  height: 1.5rem;
+  border-radius: var(--ms-radius-xs);
+  background: var(--ms-sand);
+  font-size: 0.66rem;
+  font-weight: 800;
+  letter-spacing: 0.06em;
+  color: var(--ms-ink);
+}
+
+.label {
+  flex: 1;
+  font-weight: 600;
+}
+
+.check {
+  color: var(--ms-honey-deep);
+}
+
+/* Footer variant (dark background) */
+.footer .toggle {
+  border-color: rgba(255, 255, 255, 0.18);
+  color: rgba(255, 255, 255, 0.9);
+  padding-inline: 1rem;
+}
+
+.footer .toggle:hover,
+.footer .toggle[aria-expanded='true'] {
+  background: rgba(255, 255, 255, 0.08);
+}
+
+/* Segmented variant (mobile menu) */
+.segmented {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 0.25rem;
+  padding: 0.25rem;
+  border-radius: var(--ms-radius-pill);
+  background: var(--ms-sand-deep);
+}
+
+.segmented button {
+  padding: 0.6rem 0.4rem;
+  border: 0;
+  border-radius: var(--ms-radius-pill);
+  background: transparent;
+  color: var(--ms-muted);
+  font-size: 0.82rem;
+  font-weight: 700;
+  transition:
+    background-color 0.25s var(--ms-ease),
+    color 0.25s var(--ms-ease);
+}
+
+.segmented .segmentActive {
+  background: #fff;
+  color: var(--ms-ink);
+  box-shadow: var(--ms-shadow-sm);
+}

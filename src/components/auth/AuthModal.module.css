@@ -1,0 +1,285 @@
+.dialog {
+  max-width: min(900px, calc(100vw - 1.5rem));
+}
+
+.close {
+  position: absolute;
+  top: 1rem;
+  inset-inline-end: 1rem;
+  z-index: 5;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 2.5rem;
+  height: 2.5rem;
+  border: 0;
+  border-radius: 50%;
+  background: var(--ms-sand);
+  color: var(--ms-ink);
+  font-size: 1.15rem;
+  transition: transform 0.3s var(--ms-ease);
+}
+
+.close:hover {
+  transform: rotate(90deg);
+}
+
+.layout {
+  display: grid;
+  grid-template-columns: 1fr;
+  min-height: 560px;
+}
+
+@media (min-width: 768px) {
+  .layout {
+    grid-template-columns: 0.9fr 1.1fr;
+  }
+}
+
+/* Brand panel ------------------------------------------------------------ */
+
+.brand {
+  position: relative;
+  display: none;
+  overflow: hidden;
+  isolation: isolate;
+  color: #fff;
+}
+
+@media (min-width: 768px) {
+  .brand {
+    display: flex;
+    align-items: flex-end;
+  }
+}
+
+.brandImage {
+  object-fit: cover;
+  z-index: -2;
+}
+
+.brandOverlay {
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  background: linear-gradient(0deg, rgba(20, 16, 11, 0.9) 5%, rgba(20, 16, 11, 0.35) 55%, rgba(20, 16, 11, 0.15));
+}
+
+.brandContent {
+  display: flex;
+  flex-direction: column;
+  gap: 0.85rem;
+  padding: 2.25rem;
+}
+
+.brandTitle {
+  margin: 0;
+  font-family: var(--ms-font-serif);
+  font-size: 2rem;
+  line-height: 1.1;
+  color: #fff;
+}
+
+.brandText {
+  margin: 0;
+  font-size: 0.9rem;
+  line-height: 1.65;
+  color: rgba(255, 255, 255, 0.78);
+}
+
+.brandPoints {
+  display: flex;
+  flex-direction: column;
+  gap: 0.45rem;
+  margin: 0.4rem 0 0;
+  padding: 0;
+  list-style: none;
+  font-size: 0.85rem;
+  color: rgba(255, 255, 255, 0.9);
+}
+
+.brandPoints li {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.brandPoints svg {
+  color: var(--ms-honey-bright);
+}
+
+/* Form panel ------------------------------------------------------------- */
+
+.panel {
+  display: flex;
+  align-items: center;
+  padding: 2.75rem 1.5rem 2rem;
+}
+
+@media (min-width: 576px) {
+  .panel {
+    padding: 3rem 2.75rem 2.5rem;
+  }
+}
+
+.view,
+.success {
+  width: 100%;
+  animation: viewIn 0.45s var(--ms-ease-out) both;
+}
+
+@keyframes viewIn {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+.form {
+  display: flex;
+  flex-direction: column;
+  gap: 1.1rem;
+}
+
+.formHeader {
+  display: flex;
+  flex-direction: column;
+  gap: 0.35rem;
+  margin-bottom: 0.4rem;
+}
+
+.title {
+  margin: 0;
+  font-size: clamp(1.8rem, 3vw, 2.2rem);
+}
+
+.subtitle {
+  margin: 0;
+  font-size: 0.92rem;
+  color: var(--ms-muted);
+}
+
+.iconBadge {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 3rem;
+  height: 3rem;
+  margin-bottom: 0.5rem;
+  border-radius: 50%;
+  background: var(--ms-honey-soft);
+  color: var(--ms-honey-deep);
+  font-size: 1.35rem;
+}
+
+.labelRow {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 1rem;
+}
+
+.passwordWrap {
+  position: relative;
+}
+
+.passwordWrap :global(.form-control) {
+  padding-inline-end: 3rem;
+}
+
+.passwordWrap :global(.form-control.is-invalid) {
+  background-image: none;
+}
+
+.reveal {
+  position: absolute;
+  top: 0.35rem;
+  inset-inline-end: 0.35rem;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 2.4rem;
+  height: 2.4rem;
+  border: 0;
+  border-radius: var(--ms-radius-xs);
+  background: transparent;
+  color: var(--ms-muted);
+  font-size: 1.1rem;
+}
+
+.reveal:hover {
+  color: var(--ms-ink);
+}
+
+.twoCol {
+  display: grid;
+  gap: 1.1rem;
+}
+
+@media (min-width: 576px) {
+  .twoCol {
+    grid-template-columns: 1fr 1fr;
+  }
+}
+
+.textLink {
+  padding: 0;
+  border: 0;
+  background: none;
+  font-size: 0.85rem;
+  font-weight: 700;
+  color: var(--ms-ink);
+  text-decoration: underline;
+  text-decoration-color: var(--ms-honey);
+  text-underline-offset: 4px;
+}
+
+.textLink:hover {
+  color: var(--ms-honey-deep);
+}
+
+.back {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  align-self: flex-start;
+  text-decoration: none;
+}
+
+.switch {
+  margin: 0.25rem 0 0;
+  text-align: center;
+  font-size: 0.88rem;
+  color: var(--ms-muted);
+}
+
+.terms {
+  margin: -0.35rem 0 0;
+  text-align: center;
+  font-size: 0.75rem;
+  color: var(--ms-subtle);
+}
+
+.success {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1.1rem;
+  text-align: center;
+}
+
+.successIcon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 4.5rem;
+  height: 4.5rem;
+  border-radius: 50%;
+  background: var(--ms-honey-soft);
+  color: var(--ms-honey-deep);
+  font-size: 2rem;
+}

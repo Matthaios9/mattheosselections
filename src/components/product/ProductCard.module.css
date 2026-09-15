@@ -1,0 +1,295 @@
+.card {
+  --bs-card-border-width: 0;
+  --bs-card-bg: transparent;
+  --bs-card-spacer-x: 0;
+  --bs-card-spacer-y: 0;
+  height: 100%;
+  border-radius: 0;
+}
+
+/* Media ------------------------------------------------------------------- */
+
+.media {
+  position: relative;
+  aspect-ratio: 1 / 1;
+  overflow: hidden;
+  border-radius: var(--ms-radius);
+  background: var(--ms-sand);
+  isolation: isolate;
+}
+
+.imageButton {
+  position: absolute;
+  inset: 0;
+  padding: 0;
+  border: 0;
+  background: none;
+  cursor: pointer;
+}
+
+.image {
+  object-fit: cover;
+  transition:
+    transform 1.1s var(--ms-ease-out),
+    filter 0.6s var(--ms-ease);
+  animation: imageIn 0.6s var(--ms-ease) both;
+}
+
+@keyframes imageIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+.card:hover .image {
+  transform: scale(1.06);
+}
+
+.unavailable .image {
+  filter: grayscale(0.6) opacity(0.75);
+}
+
+.badges {
+  position: absolute;
+  top: 0.8rem;
+  inset-inline-start: 0.8rem;
+  display: flex;
+  gap: 0.4rem;
+  pointer-events: none;
+}
+
+.badge {
+  padding: 0.42rem 0.7rem;
+  border-radius: var(--ms-radius-pill);
+  font-size: 0.64rem;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  background: #fff;
+  color: var(--ms-ink);
+  box-shadow: var(--ms-shadow-sm);
+}
+
+.badge-bestseller {
+  background: var(--ms-ink);
+  color: #fff;
+}
+
+.badge-signature {
+  background: var(--ms-honey-bright);
+  color: var(--ms-ink);
+}
+
+.badge-limited {
+  background: var(--ms-aegean);
+  color: #fff;
+}
+
+.badge-new {
+  background: var(--ms-olive);
+  color: #fff;
+}
+
+.badge-gift {
+  background: #fff;
+  color: var(--ms-honey-deep);
+}
+
+.badgeMuted {
+  background: rgba(255, 255, 255, 0.92);
+  color: var(--ms-muted);
+}
+
+.wishlist {
+  position: absolute;
+  top: 0.7rem;
+  inset-inline-end: 0.7rem;
+}
+
+.quickView {
+  position: absolute;
+  inset-inline: 0.8rem;
+  bottom: 0.8rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.45rem;
+  padding: 0.7rem 1rem;
+  border: 0;
+  border-radius: var(--ms-radius-pill);
+  background: rgba(255, 255, 255, 0.94);
+  backdrop-filter: blur(8px);
+  color: var(--ms-ink);
+  font-size: 0.8rem;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  box-shadow: var(--ms-shadow-sm);
+  opacity: 0;
+  transform: translateY(12px);
+  transition:
+    opacity 0.4s var(--ms-ease),
+    transform 0.4s var(--ms-ease),
+    background-color 0.3s var(--ms-ease);
+}
+
+.quickView:hover {
+  background: #fff;
+}
+
+@media (hover: hover) and (min-width: 768px) {
+  .card:hover .quickView {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+/* Body -------------------------------------------------------------------- */
+
+.body {
+  display: flex;
+  flex-direction: column;
+  gap: 0.55rem;
+  padding: 1.1rem 0.15rem 0;
+}
+
+.meta {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.5rem;
+  min-height: 1rem;
+}
+
+.stock,
+.lowStock {
+  margin-inline-start: auto;
+  font-size: 0.7rem;
+  font-weight: 700;
+  white-space: nowrap;
+}
+
+.stock {
+  font-weight: 600;
+  color: var(--ms-muted);
+}
+
+.lowStock {
+  color: var(--ms-honey-deep);
+}
+
+.category {
+  font-size: 0.68rem;
+  font-weight: 700;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--ms-honey-deep);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.name {
+  margin: 0;
+  font-size: 1.28rem;
+  line-height: 1.2;
+}
+
+.name button {
+  padding: 0;
+  border: 0;
+  background: none;
+  font: inherit;
+  color: var(--ms-ink);
+  text-align: start;
+  background-image: linear-gradient(currentColor, currentColor);
+  background-size: 0% 1px;
+  background-position: 0 100%;
+  background-repeat: no-repeat;
+  transition: background-size 0.45s var(--ms-ease);
+}
+
+.name button:hover {
+  background-size: 100% 1px;
+}
+
+.options {
+  min-height: 1.75rem;
+  display: flex;
+  align-items: center;
+}
+
+.sizeLabel {
+  font-size: 0.78rem;
+  font-weight: 600;
+  color: var(--ms-muted);
+}
+
+.footer {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.75rem;
+  margin-top: auto;
+  padding-top: 0.35rem;
+}
+
+.price {
+  font-size: 1.05rem;
+  font-weight: 700;
+  color: var(--ms-ink);
+  font-variant-numeric: tabular-nums;
+  white-space: nowrap;
+}
+
+.addButton {
+  --bs-btn-padding-x: 1rem;
+  --bs-btn-padding-y: 0.55rem;
+  flex-shrink: 0;
+}
+
+@media (max-width: 575.98px) {
+  .body {
+    padding-top: 0.85rem;
+    gap: 0.45rem;
+  }
+
+  .name {
+    font-size: 1.08rem;
+  }
+
+  .footer {
+    flex-direction: column;
+    align-items: stretch;
+    gap: 0.6rem;
+  }
+
+  .addButton {
+    --bs-btn-padding-x: 0.5rem;
+    --bs-btn-padding-y: 0.6rem;
+    width: 100%;
+  }
+
+  .price {
+    font-size: 0.95rem;
+  }
+
+  .badges {
+    top: 0.55rem;
+    inset-inline-start: 0.55rem;
+  }
+
+  .badge {
+    padding: 0.32rem 0.55rem;
+    font-size: 0.56rem;
+  }
+
+  .wishlist {
+    top: 0.45rem;
+    inset-inline-end: 0.45rem;
+    width: 2.1rem;
+    height: 2.1rem;
+    font-size: 1rem;
+  }
+}

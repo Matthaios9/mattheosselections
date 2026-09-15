@@ -1,0 +1,31 @@
+.bar {
+  position: relative;
+  z-index: 1031;
+  background: var(--ms-ink);
+  color: rgba(255, 255, 255, 0.86);
+}
+
+.carousel {
+  height: 2.4rem;
+}
+
+.carousel :global(.carousel-inner),
+.item {
+  height: 100%;
+}
+
+.message {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 2.4rem;
+  margin: 0;
+  padding-inline: 1rem;
+  font-size: 0.76rem;
+  font-weight: 600;
+  letter-spacing: 0.04em;
+  text-align: center;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}

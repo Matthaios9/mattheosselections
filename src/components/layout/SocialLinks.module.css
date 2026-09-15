@@ -1,0 +1,42 @@
+.list {
+  display: flex;
+  gap: 0.5rem;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.link {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 2.5rem;
+  height: 2.5rem;
+  border: 1px solid var(--ms-line-strong);
+  border-radius: 50%;
+  color: var(--ms-ink);
+  font-size: 1.15rem;
+  transition:
+    background-color 0.3s var(--ms-ease),
+    color 0.3s var(--ms-ease),
+    border-color 0.3s var(--ms-ease),
+    transform 0.3s var(--ms-ease);
+}
+
+.link:hover {
+  background: var(--ms-ink);
+  border-color: var(--ms-ink);
+  color: #fff;
+  transform: translateY(-2px);
+}
+
+.light .link {
+  border-color: rgba(255, 255, 255, 0.2);
+  color: rgba(255, 255, 255, 0.85);
+}
+
+.light .link:hover {
+  background: var(--ms-honey-bright);
+  border-color: var(--ms-honey-bright);
+  color: var(--ms-ink);
+}

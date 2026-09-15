@@ -1,0 +1,145 @@
+.aside {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+/* Map --------------------------------------------------------------------- */
+
+.mapCard {
+  overflow: hidden;
+  border: 1px solid var(--ms-line);
+  border-radius: var(--ms-radius-lg);
+  background: var(--ms-surface);
+}
+
+.map {
+  position: relative;
+  aspect-ratio: 16 / 10;
+  background: var(--ms-sand);
+}
+
+.map iframe {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  border: 0;
+  filter: grayscale(0.55) sepia(0.18) contrast(0.95);
+}
+
+.mapInfo {
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: 1rem;
+  padding: 1.25rem 1.4rem;
+}
+
+.mapTitle {
+  margin: 0 0 0.3rem;
+  font-family: var(--ms-font-serif);
+  font-size: 1.3rem;
+  color: var(--ms-ink);
+}
+
+.mapAddress {
+  display: flex;
+  align-items: center;
+  gap: 0.35rem;
+  margin: 0;
+  font-size: 0.88rem;
+  font-weight: 600;
+  color: var(--ms-ink);
+}
+
+.mapNote {
+  margin: 0.2rem 0 0;
+  font-size: 0.8rem;
+  color: var(--ms-muted);
+}
+
+.directions {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.3rem;
+  flex-shrink: 0;
+  font-size: 0.82rem;
+  font-weight: 700;
+  color: var(--ms-ink);
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+
+/* Wholesale ---------------------------------------------------------------- */
+
+.wholesale {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 0.75rem;
+  padding: 1.75rem 1.6rem;
+  border-radius: var(--ms-radius-lg);
+  background: var(--ms-ink);
+  background-image: radial-gradient(circle at 100% 0%, rgba(224, 168, 74, 0.22), transparent 55%);
+  scroll-margin-top: calc(var(--ms-header-h) + 2rem);
+}
+
+.wholesaleIcon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 3rem;
+  height: 3rem;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.08);
+  color: var(--ms-honey-bright);
+  font-size: 1.35rem;
+}
+
+.wholesaleTitle {
+  margin: 0.25rem 0 0;
+  font-family: var(--ms-font-serif);
+  font-size: 1.6rem;
+  line-height: 1.15;
+  color: #fff;
+}
+
+.wholesaleText {
+  margin: 0 0 0.5rem;
+  font-size: 0.9rem;
+  line-height: 1.7;
+  color: rgba(255, 255, 255, 0.72);
+}
+
+@media (max-width: 575.98px) {
+  .wholesale :global(.btn) {
+    width: 100%;
+  }
+}
+
+/* Social -------------------------------------------------------------------- */
+
+.social {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 1rem;
+  padding: 1.4rem 1.6rem;
+  border-radius: var(--ms-radius-lg);
+  background: var(--ms-sand);
+}
+
+.socialTitle {
+  margin: 0;
+  font-family: var(--ms-font-serif);
+  font-size: 1.3rem;
+  color: var(--ms-ink);
+}
+
+.socialText {
+  margin: 0.15rem 0 0;
+  font-size: 0.82rem;
+  color: var(--ms-muted);
+}

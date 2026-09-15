@@ -1,0 +1,80 @@
+.group {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.35rem;
+}
+
+/* ToggleButtonGroup applies .btn-group radius resets — restore independent pills */
+.group > :global(.btn) {
+  flex: 0 0 auto;
+  border-radius: var(--ms-radius-pill) !important;
+  margin: 0 !important;
+}
+
+.option {
+  --bs-btn-color: var(--ms-muted);
+  --bs-btn-bg: transparent;
+  --bs-btn-border-color: var(--ms-line-strong);
+  --bs-btn-hover-color: var(--ms-ink);
+  --bs-btn-hover-bg: var(--ms-surface);
+  --bs-btn-hover-border-color: var(--ms-ink);
+  --bs-btn-active-color: #fff;
+  --bs-btn-active-bg: var(--ms-ink);
+  --bs-btn-active-border-color: var(--ms-ink);
+  font-weight: 600;
+  white-space: nowrap;
+}
+
+:global(.btn-check:checked) + .option {
+  color: #fff;
+  background: var(--ms-ink);
+  border-color: var(--ms-ink);
+}
+
+.soldOut {
+  --bs-btn-disabled-color: var(--ms-subtle);
+  --bs-btn-disabled-bg: transparent;
+  --bs-btn-disabled-border-color: var(--ms-line);
+  --bs-btn-disabled-opacity: 1;
+  text-decoration: line-through;
+}
+
+.sm .option {
+  --bs-btn-padding-x: 0.6rem;
+  --bs-btn-padding-y: 0.22rem;
+  --bs-btn-font-size: 0.72rem;
+}
+
+.md .option {
+  --bs-btn-padding-x: 1.1rem;
+  --bs-btn-padding-y: 0.5rem;
+  --bs-btn-font-size: 0.85rem;
+}
+
+/* Options with a stock line underneath ("Large" / "20 in stock") */
+.stacked.group > :global(.btn) {
+  border-radius: 0.85rem !important;
+}
+
+.stacked .option {
+  display: inline-flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.15rem;
+  min-width: 6.5rem;
+  line-height: 1.15;
+}
+
+.optionStock {
+  font-size: 0.7rem;
+  font-weight: 600;
+  opacity: 0.75;
+}
+
+.stacked .soldOut {
+  text-decoration: none;
+}
+
+.stacked .soldOut .optionLabel {
+  text-decoration: line-through;
+}

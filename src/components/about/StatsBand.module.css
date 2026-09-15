@@ -1,0 +1,44 @@
+.band {
+  padding-block: clamp(3.5rem, 7vw, 5.5rem);
+  background: var(--ms-ink);
+  background-image: radial-gradient(circle at 15% 0%, rgba(224, 168, 74, 0.16), transparent 45%),
+    radial-gradient(circle at 90% 100%, rgba(29, 74, 107, 0.45), transparent 50%);
+}
+
+.grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 2.5rem 1.5rem;
+  margin: 0;
+}
+
+@media (min-width: 992px) {
+  .grid {
+    grid-template-columns: repeat(4, 1fr);
+  }
+}
+
+.item {
+  display: flex;
+  flex-direction: column;
+  gap: 0.6rem;
+  padding-inline-start: 1.25rem;
+  border-inline-start: 1px solid rgba(255, 255, 255, 0.14);
+}
+
+.value {
+  font-family: var(--ms-font-serif);
+  font-size: clamp(2.6rem, 5vw, 4.25rem);
+  font-weight: 500;
+  line-height: 1;
+  letter-spacing: -0.02em;
+  color: var(--ms-honey-bright);
+}
+
+.label {
+  margin: 0;
+  max-width: 14rem;
+  font-size: 0.88rem;
+  line-height: 1.5;
+  color: rgba(255, 255, 255, 0.72);
+}

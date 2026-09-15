@@ -1,0 +1,36 @@
+.bar {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  padding: 1rem 1.25rem;
+  border-bottom: 1px solid var(--ms-line);
+}
+
+.search {
+  position: relative;
+  flex: 1 1 240px;
+}
+
+.search :global(.form-control) {
+  padding-inline-start: 2.4rem;
+}
+
+.icon {
+  position: absolute;
+  top: 50%;
+  inset-inline-start: 0.85rem;
+  transform: translateY(-50%);
+  color: var(--ms-muted);
+  pointer-events: none;
+}
+
+.select {
+  flex: 0 1 190px;
+}
+
+@media (max-width: 575.98px) {
+  .select,
+  .bar > :global(.btn) {
+    flex: 1 1 100%;
+  }
+}

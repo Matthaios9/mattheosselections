@@ -1,0 +1,164 @@
+.navbar {
+  --bs-navbar-padding-y: 0;
+  z-index: 1030;
+  background: rgba(251, 248, 243, 0.86);
+  backdrop-filter: saturate(1.4) blur(14px);
+  -webkit-backdrop-filter: saturate(1.4) blur(14px);
+  border-bottom: 1px solid transparent;
+  transition:
+    border-color 0.35s var(--ms-ease),
+    box-shadow 0.35s var(--ms-ease),
+    background-color 0.35s var(--ms-ease);
+}
+
+.scrolled {
+  background: rgba(251, 248, 243, 0.94);
+  border-bottom-color: var(--ms-line);
+  box-shadow: 0 12px 30px -24px rgba(28, 25, 21, 0.4);
+}
+
+.inner {
+  display: flex;
+  align-items: stretch;
+  justify-content: space-between;
+  gap: 1rem;
+  height: var(--ms-header-h);
+  flex-wrap: nowrap;
+}
+
+.start,
+.actions {
+  display: flex;
+  align-items: center;
+}
+
+.start {
+  gap: 0.25rem;
+  min-width: 0;
+}
+
+.menuButton {
+  margin-inline-start: -0.6rem;
+}
+
+.actions {
+  gap: 0.15rem;
+  margin-inline-end: -0.5rem;
+}
+
+@media (min-width: 992px) {
+  .start,
+  .actions {
+    flex: 1 1 0;
+  }
+
+  .actions {
+    justify-content: flex-end;
+  }
+}
+
+/* Primary navigation ------------------------------------------------------ */
+
+.nav {
+  align-items: stretch;
+  gap: 0.35rem;
+}
+
+.navItem {
+  display: flex;
+  align-items: center;
+}
+
+.navLink {
+  position: relative;
+  display: inline-flex !important;
+  align-items: center;
+  gap: 0.3rem;
+  padding: 0.5rem 0.9rem !important;
+  font-size: 0.92rem;
+  font-weight: 600;
+  color: var(--ms-ink) !important;
+  white-space: nowrap;
+}
+
+.navLink::after {
+  content: '';
+  position: absolute;
+  inset-inline: 0.9rem;
+  bottom: 0.2rem;
+  height: 1.5px;
+  background: var(--ms-honey);
+  transform: scaleX(0);
+  transform-origin: left;
+  transition: transform 0.45s var(--ms-ease);
+}
+
+[dir='rtl'] .navLink::after {
+  transform-origin: right;
+}
+
+.navLink:hover::after,
+.navLink:global(.active)::after {
+  transform: scaleX(1);
+}
+
+.caret {
+  font-size: 0.7rem;
+  transition: transform 0.3s var(--ms-ease);
+}
+
+.hasMega:hover .caret,
+.hasMega:focus-within .caret {
+  transform: rotate(180deg);
+}
+
+.hasMega:hover > :global(div),
+.hasMega:focus-within > :global(div) {
+  opacity: 1;
+  visibility: visible;
+  transform: none;
+  transition-delay: 0s;
+}
+
+/* Cart badge --------------------------------------------------------------- */
+
+.cartButton {
+  margin-inline-start: 0.1rem;
+}
+
+.badge {
+  position: absolute;
+  top: 0.35rem;
+  inset-inline-end: 0.2rem;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 1.15rem;
+  height: 1.15rem;
+  padding-inline: 0.3rem;
+  border-radius: var(--ms-radius-pill);
+  background: var(--ms-honey);
+  color: #fff;
+  font-size: 0.62rem;
+  font-weight: 800;
+  line-height: 1;
+  animation: bump 0.5s var(--ms-ease-out);
+}
+
+@keyframes bump {
+  0% {
+    transform: scale(0.4);
+  }
+  60% {
+    transform: scale(1.25);
+  }
+  100% {
+    transform: scale(1);
+  }
+}
+
+@media (max-width: 575.98px) {
+  .inner {
+    height: 66px;
+  }
+}

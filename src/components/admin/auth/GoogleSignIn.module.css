@@ -1,0 +1,45 @@
+.wrap {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.buttonArea {
+  position: relative;
+  display: flex;
+  justify-content: center;
+  min-height: 44px;
+}
+
+.button {
+  display: flex;
+  justify-content: center;
+  width: 100%;
+  max-width: 400px;
+}
+
+.placeholder,
+.verifying {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  border-radius: 999px;
+  font-size: 0.9rem;
+  font-weight: 600;
+  color: var(--ms-muted);
+}
+
+.verifying {
+  background: rgba(255, 255, 255, 0.92);
+  color: var(--ms-ink);
+}
+
+.note {
+  margin: 0;
+  font-size: 0.8rem;
+  color: var(--ms-muted);
+  text-align: center;
+}

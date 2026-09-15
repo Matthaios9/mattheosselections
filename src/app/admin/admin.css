@@ -1,0 +1,272 @@
+/* Admin panel — shares the storefront tokens (globals.css) with a calmer, denser layout. */
+
+.admin-body {
+  --admin-sidebar-w: 264px;
+  --admin-bg: #f6f3ee;
+  background: var(--admin-bg);
+  font-size: 0.9375rem;
+}
+
+.admin-body main {
+  overflow-x: visible;
+}
+
+.admin-card {
+  min-width: 0; /* let wide tables scroll inside the card instead of stretching the page */
+  border: 1px solid var(--ms-line);
+  border-radius: var(--ms-radius);
+  background: var(--ms-surface);
+  box-shadow: 0 1px 2px rgba(28, 25, 21, 0.03);
+}
+
+.admin-card-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  padding: 1.1rem 1.35rem;
+  border-bottom: 1px solid var(--ms-line);
+}
+
+.admin-card-title {
+  margin: 0;
+  font-family: var(--ms-font-sans);
+  font-size: 0.95rem;
+  font-weight: 700;
+  letter-spacing: 0;
+  color: var(--ms-ink);
+}
+
+.admin-card-body {
+  padding: 1.35rem;
+}
+
+/* Tables ------------------------------------------------------------------ */
+
+.admin-table-wrap {
+  overflow-x: auto;
+}
+
+/* List pages keep a steady height so a short list doesn't collapse the card */
+.admin-table-wrap.is-list {
+  min-height: 22rem;
+}
+
+/* Previous rows stay visible (dimmed) while the next page loads */
+.admin-table-wrap.is-loading {
+  opacity: 0.55;
+  pointer-events: none;
+  transition: opacity 0.2s ease;
+}
+
+.admin-table {
+  --bs-table-bg: transparent;
+  --bs-table-hover-bg: #faf7f2;
+  --bs-table-border-color: var(--ms-line);
+  margin: 0;
+  font-size: 0.875rem;
+  vertical-align: middle;
+}
+
+.admin-table > thead th {
+  padding: 0.8rem 1rem;
+  border-bottom-width: 1px;
+  background: #fbf9f5;
+  font-size: 0.7rem;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--ms-muted);
+  white-space: nowrap;
+}
+
+.admin-table > tbody td {
+  padding: 0.85rem 1rem;
+  color: var(--ms-text);
+}
+
+.admin-table > tbody tr:last-child td {
+  border-bottom: 0;
+}
+
+.admin-table .cell-strong {
+  font-weight: 700;
+  color: var(--ms-ink);
+}
+
+.admin-table .cell-muted {
+  font-size: 0.8rem;
+  color: var(--ms-muted);
+}
+
+.admin-table a.row-link {
+  color: var(--ms-ink);
+  font-weight: 700;
+}
+
+.admin-table a.row-link:hover {
+  color: var(--ms-honey-deep);
+}
+
+.admin-thumb {
+  position: relative;
+  flex-shrink: 0;
+  width: 2.75rem;
+  height: 2.75rem;
+  overflow: hidden;
+  border-radius: var(--ms-radius-xs);
+  background: var(--ms-sand);
+}
+
+.admin-thumb img {
+  object-fit: cover;
+}
+
+/* Status pills ---------------------------------------------------------------- */
+
+.status-pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+  padding: 0.25rem 0.6rem;
+  border-radius: 999px;
+  font-size: 0.72rem;
+  font-weight: 700;
+  line-height: 1.3;
+  white-space: nowrap;
+}
+
+.status-pill::before {
+  content: '';
+  width: 0.4rem;
+  height: 0.4rem;
+  border-radius: 50%;
+  background: currentColor;
+}
+
+.status-pill.tone-neutral {
+  background: #efebe4;
+  color: #5d554a;
+}
+
+.status-pill.tone-warning {
+  background: #fbf0d9;
+  color: #8a5a12;
+}
+
+.status-pill.tone-info {
+  background: #e4eef6;
+  color: #1d4a6b;
+}
+
+.status-pill.tone-accent {
+  background: #ece6f7;
+  color: #5b3d99;
+}
+
+.status-pill.tone-success {
+  background: #e5f1e7;
+  color: #2f6b3f;
+}
+
+.status-pill.tone-danger {
+  background: #f8e3de;
+  color: #9b3825;
+}
+
+/* Solid fills matching the pill tones (bars, dots) */
+.fill-neutral { background: #a39a8d; }
+.fill-warning { background: #d99a2b; }
+.fill-info { background: #2f6b95; }
+.fill-accent { background: #7a5bc0; }
+.fill-success { background: #4f8f5f; }
+.fill-danger { background: #c0533d; }
+
+/* Forms ----------------------------------------------------------------------- */
+
+.admin-body .form-control,
+.admin-body .form-select {
+  padding: 0.6rem 0.85rem;
+  font-size: 0.9rem;
+}
+
+.admin-body .form-label {
+  font-size: 0.8rem;
+}
+
+.admin-body .form-text {
+  font-size: 0.75rem;
+  color: var(--ms-muted);
+}
+
+.admin-body .btn {
+  --bs-btn-padding-x: 1.1rem;
+  --bs-btn-padding-y: 0.55rem;
+  --bs-btn-font-size: 0.875rem;
+}
+
+.admin-body .btn-sm {
+  --bs-btn-padding-x: 0.75rem;
+  --bs-btn-padding-y: 0.35rem;
+  --bs-btn-font-size: 0.8rem;
+}
+
+.admin-body .btn-ms-danger {
+  --bs-btn-color: #fff;
+  --bs-btn-bg: var(--ms-danger);
+  --bs-btn-border-color: var(--ms-danger);
+  --bs-btn-hover-color: #fff;
+  --bs-btn-hover-bg: #983a27;
+  --bs-btn-hover-border-color: #983a27;
+  --bs-btn-active-bg: #983a27;
+  --bs-btn-active-border-color: #983a27;
+  --bs-btn-disabled-bg: var(--ms-danger);
+  --bs-btn-disabled-border-color: var(--ms-danger);
+}
+
+.admin-body .nav-tabs {
+  --bs-nav-tabs-border-color: var(--ms-line);
+  --bs-nav-tabs-link-active-color: var(--ms-ink);
+  --bs-nav-tabs-link-active-bg: var(--ms-surface);
+  --bs-nav-tabs-link-active-border-color: var(--ms-line) var(--ms-line) var(--ms-surface);
+  --bs-nav-link-color: var(--ms-muted);
+  --bs-nav-link-hover-color: var(--ms-ink);
+  --bs-nav-link-font-size: 0.82rem;
+  --bs-nav-link-font-weight: 700;
+}
+
+.admin-body .pagination {
+  --bs-pagination-color: var(--ms-ink);
+  --bs-pagination-hover-color: var(--ms-ink);
+  --bs-pagination-hover-bg: var(--ms-sand);
+  --bs-pagination-active-bg: var(--ms-ink);
+  --bs-pagination-active-border-color: var(--ms-ink);
+  --bs-pagination-border-color: var(--ms-line);
+  --bs-pagination-focus-box-shadow: 0 0 0 0.2rem rgba(198, 138, 46, 0.25);
+  --bs-pagination-font-size: 0.85rem;
+  margin: 0;
+}
+
+.admin-body .dropdown-menu {
+  --bs-dropdown-font-size: 0.875rem;
+}
+
+.admin-empty {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 3rem 1.5rem;
+  text-align: center;
+  color: var(--ms-muted);
+}
+
+.admin-empty svg {
+  font-size: 2rem;
+  color: var(--ms-honey-deep);
+}
+
+.admin-empty strong {
+  font-size: 1rem;
+  color: var(--ms-ink);
+}

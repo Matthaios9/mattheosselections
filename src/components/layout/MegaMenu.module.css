@@ -1,0 +1,153 @@
+.panel {
+  position: absolute;
+  top: 100%;
+  inset-inline: 0;
+  padding-block: 2rem 2.25rem;
+  border-top: 1px solid var(--ms-line);
+  border-bottom: 1px solid var(--ms-line);
+  background: var(--ms-bg);
+  box-shadow: 0 30px 50px -35px rgba(28, 25, 21, 0.35);
+  opacity: 0;
+  visibility: hidden;
+  transform: translateY(-6px);
+  transition:
+    opacity 0.3s var(--ms-ease),
+    transform 0.35s var(--ms-ease),
+    visibility 0s linear 0.35s;
+  transition-delay: 0.08s;
+}
+
+.grid {
+  display: grid;
+  grid-template-columns: 1.1fr 1fr 1fr 0.9fr;
+  gap: 1.75rem;
+}
+
+.column {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+}
+
+.heading {
+  margin: 0;
+  font-size: 0.68rem;
+  font-weight: 700;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--ms-muted);
+}
+
+.list {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.link {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 1rem;
+  padding-block: 0.45rem;
+  font-family: var(--ms-font-serif);
+  font-size: 1.35rem;
+  color: var(--ms-ink);
+  border-bottom: 1px solid transparent;
+}
+
+.link:hover {
+  color: var(--ms-honey-deep);
+}
+
+.count {
+  font-family: var(--ms-font-sans);
+  font-size: 0.72rem;
+  font-weight: 600;
+  color: var(--ms-subtle);
+}
+
+.tile {
+  position: relative;
+  display: flex;
+  align-items: flex-end;
+  min-height: 240px;
+  overflow: hidden;
+  border-radius: var(--ms-radius);
+  isolation: isolate;
+  color: #fff;
+}
+
+.tileImage {
+  object-fit: cover;
+  z-index: -2;
+  transition: transform 0.9s var(--ms-ease-out);
+}
+
+.tile:hover .tileImage {
+  transform: scale(1.06);
+}
+
+.tileOverlay {
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  background: linear-gradient(0deg, rgba(20, 16, 11, 0.75), rgba(20, 16, 11, 0) 60%);
+}
+
+.tileText {
+  display: flex;
+  flex-direction: column;
+  gap: 0.15rem;
+  padding: 1.1rem 1.2rem;
+}
+
+.tileName {
+  font-family: var(--ms-font-serif);
+  font-size: 1.5rem;
+  line-height: 1.1;
+}
+
+.tileDesc {
+  font-size: 0.8rem;
+  color: rgba(255, 255, 255, 0.8);
+}
+
+.pick {
+  display: flex;
+  flex-direction: column;
+  gap: 0.55rem;
+  color: var(--ms-ink);
+}
+
+.pick:hover {
+  color: var(--ms-ink);
+}
+
+.pickImage {
+  position: relative;
+  display: block;
+  aspect-ratio: 1 / 1;
+  overflow: hidden;
+  border-radius: var(--ms-radius);
+  background: var(--ms-sand);
+}
+
+.pickImage img {
+  transition: transform 0.9s var(--ms-ease-out);
+}
+
+.pick:hover .pickImage img {
+  transform: scale(1.05);
+}
+
+.pickName {
+  font-family: var(--ms-font-serif);
+  font-size: 1.15rem;
+  line-height: 1.2;
+}
+
+.pickPrice {
+  font-size: 0.85rem;
+  font-weight: 700;
+}

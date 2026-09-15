@@ -1,0 +1,198 @@
+.drawer {
+  --bs-offcanvas-width: min(460px, 100vw);
+  display: flex;
+  flex-direction: column;
+}
+
+.header {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 1rem;
+  padding: 1.5rem 1.5rem 1.1rem;
+  border-bottom: 1px solid var(--ms-line);
+}
+
+.title {
+  margin: 0;
+  font-size: 1.85rem;
+}
+
+.count {
+  font-size: 0.8rem;
+  font-weight: 600;
+  color: var(--ms-muted);
+}
+
+.body {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  padding: 1.25rem 1.5rem;
+}
+
+.lines {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+/* Upsell ---------------------------------------------------------------- */
+
+.upsell {
+  margin-top: 1rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.6rem;
+}
+
+.upsellTitle {
+  margin: 0 0 0.25rem;
+  font-size: 0.7rem;
+  font-weight: 700;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--ms-muted);
+}
+
+.upsellItem {
+  display: flex;
+  align-items: center;
+  gap: 0.85rem;
+  padding: 0.6rem;
+  border: 1px solid var(--ms-line);
+  border-radius: var(--ms-radius);
+  background: var(--ms-surface);
+}
+
+.upsellThumb {
+  position: relative;
+  flex-shrink: 0;
+  width: 3.5rem;
+  aspect-ratio: 1 / 1;
+  overflow: hidden;
+  border-radius: var(--ms-radius-xs);
+}
+
+.upsellInfo {
+  flex: 1;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 0.15rem;
+}
+
+.upsellName {
+  font-family: var(--ms-font-serif);
+  font-size: 1rem;
+  color: var(--ms-ink);
+  line-height: 1.2;
+}
+
+.upsellPrice {
+  font-size: 0.78rem;
+  color: var(--ms-muted);
+}
+
+.upsellAdd {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  width: 2.3rem;
+  height: 2.3rem;
+  border: 1px solid var(--ms-line-strong);
+  border-radius: var(--ms-radius-pill);
+  background: transparent;
+  color: var(--ms-ink);
+  transition:
+    background-color 0.25s var(--ms-ease),
+    color 0.25s var(--ms-ease),
+    border-color 0.25s var(--ms-ease);
+}
+
+.upsellAdd:hover {
+  background: var(--ms-ink);
+  border-color: var(--ms-ink);
+  color: #fff;
+}
+
+/* Footer ---------------------------------------------------------------- */
+
+.footer {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+  padding: 1.25rem 1.5rem 1.5rem;
+  border-top: 1px solid var(--ms-line);
+  background: var(--ms-surface);
+}
+
+.subtotal {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  font-size: 1rem;
+  color: var(--ms-ink);
+}
+
+.subtotal strong {
+  font-size: 1.3rem;
+  font-variant-numeric: tabular-nums;
+}
+
+.note {
+  margin: 0;
+  font-size: 0.8rem;
+  color: var(--ms-muted);
+}
+
+.continue {
+  align-self: center;
+  padding: 0.25rem;
+  border: 0;
+  background: none;
+  font-size: 0.85rem;
+  font-weight: 600;
+  color: var(--ms-ink);
+  text-decoration: underline;
+  text-underline-offset: 4px;
+}
+
+/* Empty state ----------------------------------------------------------- */
+
+.empty {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 0.9rem;
+  padding: 2rem;
+  text-align: center;
+}
+
+.emptyIcon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 5rem;
+  height: 5rem;
+  margin-bottom: 0.5rem;
+  border-radius: 50%;
+  background: var(--ms-sand);
+  color: var(--ms-honey-deep);
+  font-size: 2rem;
+}
+
+.emptyTitle {
+  margin: 0;
+  font-size: 1.6rem;
+}
+
+.emptyText {
+  margin: 0 0 0.75rem;
+  max-width: 18rem;
+  color: var(--ms-muted);
+  font-size: 0.92rem;
+}

@@ -1,0 +1,128 @@
+.grid {
+  display: grid;
+  gap: 1rem;
+}
+
+@media (min-width: 1200px) {
+  .grid {
+    grid-template-columns: minmax(0, 1.7fr) minmax(0, 1fr);
+    align-items: start;
+  }
+}
+
+.main,
+.side {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  min-width: 0;
+}
+
+.totals {
+  display: flex;
+  flex-direction: column;
+  gap: 0.4rem;
+  margin: 0;
+  padding: 1rem 1.35rem 1.25rem;
+  border-top: 1px solid var(--ms-line);
+}
+
+.totals > div {
+  display: flex;
+  justify-content: space-between;
+  font-size: 0.9rem;
+}
+
+.totals dt {
+  font-weight: 500;
+  color: var(--ms-muted);
+}
+
+.totals dd {
+  margin: 0;
+  font-weight: 600;
+  color: var(--ms-ink);
+}
+
+.grand {
+  margin-top: 0.35rem;
+  padding-top: 0.75rem;
+  border-top: 1px solid var(--ms-line);
+}
+
+.grand dt,
+.grand dd {
+  font-size: 1.05rem;
+  font-weight: 800;
+  color: var(--ms-ink);
+}
+
+.timeline {
+  position: relative;
+  margin: 0;
+  padding: 1.25rem 1.35rem 0.5rem;
+  list-style: none;
+}
+
+.timeline li {
+  position: relative;
+  display: flex;
+  gap: 1rem;
+  padding-bottom: 1.1rem;
+}
+
+.timeline li:not(:last-child)::before {
+  content: '';
+  position: absolute;
+  top: 1rem;
+  bottom: 0;
+  inset-inline-start: 0.3rem;
+  width: 1px;
+  background: var(--ms-line-strong);
+}
+
+.dot {
+  flex-shrink: 0;
+  width: 0.65rem;
+  height: 0.65rem;
+  margin-top: 0.35rem;
+  border-radius: 50%;
+  background: var(--ms-honey);
+  box-shadow: 0 0 0 4px var(--ms-honey-soft);
+}
+
+.note {
+  margin: 0.35rem 0 0;
+  font-size: 0.875rem;
+  color: var(--ms-ink);
+}
+
+.by {
+  margin: 0.15rem 0 0;
+  font-size: 0.75rem;
+  color: var(--ms-muted);
+}
+
+.contact {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+  margin: 0;
+  padding: 1.25rem 1.35rem;
+  list-style: none;
+  font-size: 0.875rem;
+}
+
+.contact li {
+  display: flex;
+  align-items: flex-start;
+  gap: 0.6rem;
+  word-break: break-word;
+}
+
+.contact svg {
+  flex-shrink: 0;
+  margin-top: 0.15rem;
+  font-size: 1.1rem;
+  color: var(--ms-honey-deep);
+}

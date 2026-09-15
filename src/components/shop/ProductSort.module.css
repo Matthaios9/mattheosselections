@@ -1,0 +1,42 @@
+.toggle {
+  --bs-btn-padding-x: 1.15rem;
+  --bs-btn-padding-y: 0;
+  height: 3rem;
+  font-size: 0.875rem;
+  white-space: nowrap;
+}
+
+.toggle::after {
+  margin-inline-start: 0.35rem;
+}
+
+.prefix {
+  color: var(--ms-muted);
+  font-weight: 500;
+}
+
+.value {
+  font-weight: 700;
+}
+
+.menu {
+  min-width: 14rem;
+}
+
+.item {
+  display: flex !important;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  font-weight: 500;
+}
+
+.item svg {
+  color: var(--ms-honey-deep);
+}
+
+@media (max-width: 575.98px) {
+  .prefix {
+    display: none;
+  }
+}

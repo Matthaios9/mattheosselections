@@ -1,0 +1,42 @@
+.tabs {
+  margin-bottom: 0;
+  padding-inline: 1.35rem;
+  padding-top: 0.75rem;
+  background: #fbf9f5;
+}
+
+.title {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.45rem;
+}
+
+.code {
+  padding: 0.05rem 0.35rem;
+  border-radius: 4px;
+  background: var(--ms-sand-deep);
+  font-size: 0.62rem;
+  font-weight: 800;
+  color: var(--ms-ink);
+}
+
+.marker {
+  width: 0.45rem;
+  height: 0.45rem;
+  border-radius: 50%;
+}
+
+.error {
+  background: var(--ms-danger);
+}
+
+.missing {
+  background: var(--ms-honey);
+}
+
+.panel {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  padding: 1.35rem;
+}

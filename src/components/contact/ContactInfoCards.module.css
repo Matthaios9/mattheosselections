@@ -1,0 +1,116 @@
+.wrap {
+  position: relative;
+  z-index: 2;
+  margin-top: clamp(-4.5rem, -6vw, -2.5rem);
+}
+
+.grid {
+  display: grid;
+  gap: 1rem;
+}
+
+@media (min-width: 576px) {
+  .grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (min-width: 1200px) {
+  .grid {
+    grid-template-columns: repeat(4, 1fr);
+  }
+}
+
+.card {
+  display: flex;
+  flex-direction: column;
+  gap: 0.35rem;
+  padding: 1.75rem 1.6rem;
+  border-radius: var(--ms-radius-lg);
+  background: var(--ms-surface);
+  box-shadow: var(--ms-shadow);
+  transition: transform 0.45s var(--ms-ease);
+}
+
+.card:hover {
+  transform: translateY(-4px);
+}
+
+.icon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 3rem;
+  height: 3rem;
+  margin-bottom: 1rem;
+  border-radius: 50%;
+  background: var(--ms-honey-soft);
+  color: var(--ms-honey-deep);
+  font-size: 1.35rem;
+}
+
+.title {
+  margin: 0;
+  font-size: 0.7rem;
+  font-weight: 700;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--ms-muted);
+}
+
+.value {
+  font-family: var(--ms-font-serif);
+  font-size: 1.3rem;
+  line-height: 1.25;
+  color: var(--ms-ink);
+  word-break: break-word;
+}
+
+.value:hover {
+  color: var(--ms-honey-deep);
+}
+
+.note {
+  margin: 0;
+  font-size: 0.82rem;
+  color: var(--ms-muted);
+}
+
+.hours {
+  background: var(--ms-ink);
+}
+
+.hours .icon {
+  background: rgba(255, 255, 255, 0.08);
+  color: var(--ms-honey-bright);
+}
+
+.hours .title {
+  color: var(--ms-honey-bright);
+}
+
+.hoursList {
+  display: flex;
+  flex-direction: column;
+  gap: 0.35rem;
+  margin: 0.35rem 0 0;
+}
+
+.hoursList > div {
+  display: flex;
+  justify-content: space-between;
+  gap: 1rem;
+  font-size: 0.88rem;
+}
+
+.hoursList dt {
+  font-weight: 500;
+  color: rgba(255, 255, 255, 0.7);
+}
+
+.hoursList dd {
+  margin: 0;
+  font-weight: 700;
+  color: #fff;
+  white-space: nowrap;
+}

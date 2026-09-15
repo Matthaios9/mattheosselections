@@ -1,0 +1,59 @@
+.button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border: 0;
+  border-radius: var(--ms-radius-pill);
+  color: var(--ms-ink);
+  transition:
+    transform 0.3s var(--ms-ease),
+    background-color 0.3s var(--ms-ease),
+    color 0.3s var(--ms-ease);
+}
+
+.floating {
+  width: 2.4rem;
+  height: 2.4rem;
+  font-size: 1.1rem;
+  background: rgba(255, 255, 255, 0.92);
+  box-shadow: var(--ms-shadow-sm);
+  backdrop-filter: blur(6px);
+}
+
+.floating:hover {
+  transform: scale(1.08);
+  background: #fff;
+}
+
+.outline {
+  width: 3.1rem;
+  height: 3.1rem;
+  flex-shrink: 0;
+  font-size: 1.25rem;
+  background: transparent;
+  border: 1px solid var(--ms-line-strong);
+}
+
+.outline:hover {
+  border-color: var(--ms-ink);
+}
+
+.active {
+  color: #c2412d;
+}
+
+.active svg {
+  animation: heartPop 0.45s var(--ms-ease-out);
+}
+
+@keyframes heartPop {
+  0% {
+    transform: scale(0.6);
+  }
+  60% {
+    transform: scale(1.25);
+  }
+  100% {
+    transform: scale(1);
+  }
+}
