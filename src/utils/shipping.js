@@ -1,7 +1,7 @@
 import { storeConfig } from '@/config/site';
 
-/** Countries offered at checkout (ISO 3166-1 alpha-2). */
-export const SHIPPING_COUNTRIES = ['SE', 'DK', 'FI', 'NO', 'DE', 'NL', 'FR', 'GR'];
+/** Countries offered at checkout (ISO 3166-1 alpha-2) — the same as the WooCommerce shop. */
+export const SHIPPING_COUNTRIES = ['BE', 'CZ', 'DK', 'FR', 'DE', 'GR', 'IE', 'IT', 'NL', 'NO', 'PL', 'PT', 'SK', 'ES', 'SE', 'CH', 'GB'];
 
 /** Shared by the checkout preview (client) and order creation (server). */
 export function calculateShipping(subtotal, country = 'SE') {

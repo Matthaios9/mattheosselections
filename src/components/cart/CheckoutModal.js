@@ -55,6 +55,9 @@ export default function CheckoutModal() {
   const [outcome, setOutcome] = useState(null); // { number } when confirmed, { message } when failed
 
   const countryNames = new Intl.DisplayNames([locale], { type: 'region' });
+  const countries = SHIPPING_COUNTRIES.map((code) => ({ code, name: countryNames.of(code) })).sort((a, b) =>
+    a.name.localeCompare(b.name, locale)
+  );
   const shipping = calculateShipping(cart.subtotal, form.values.country);
   const total = cart.subtotal + shipping;
   const busy = status === 'opening' || status === 'confirming';
@@ -351,9 +354,9 @@ export default function CheckoutModal() {
                   <Form.Group controlId="checkout-country">
                     <Form.Label>{t('checkout.fields.country')}</Form.Label>
                     <Form.Select {...form.field('country')} autoComplete="country">
-                      {SHIPPING_COUNTRIES.map((code) => (
+                      {countries.map(({ code, name }) => (
                         <option key={code} value={code}>
-                          {countryNames.of(code)}
+                          {name}
                         </option>
                       ))}
                     </Form.Select>
