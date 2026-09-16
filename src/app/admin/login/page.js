@@ -3,7 +3,6 @@ import Link from 'next/link';
 import { redirect } from 'next/navigation';
 import { PiArrowLeft, PiShieldCheck } from 'react-icons/pi';
 import GoogleSignIn from '@/components/admin/auth/GoogleSignIn';
-import { adminEmails } from '@/server/auth/admins';
 import { getCurrentAdmin } from '@/server/auth/dal';
 import { isGoogleConfigured } from '@/server/auth/google';
 import { isDatabaseConfigured } from '@/server/db';
@@ -11,7 +10,7 @@ import styles from './login.module.css';
 
 export const metadata = { title: 'Sign in' };
 
-/** Admin sign-in: Google only. The account must be listed in ADMIN_EMAIL and be an admin in the database. */
+/** Admin sign-in: Google only. The Google account's email must belong to an active admin in the database. */
 export default async function AdminLoginPage({ searchParams }) {
   const { next } = await searchParams;
   if (isDatabaseConfigured() && (await getCurrentAdmin())) redirect('/admin');
@@ -19,7 +18,6 @@ export default async function AdminLoginPage({ searchParams }) {
   const missing = [
     !isDatabaseConfigured() && 'MONGODB_URI',
     !isGoogleConfigured() && 'GOOGLE_CLIENT_ID',
-    !adminEmails().length && 'ADMIN_EMAIL',
   ].filter(Boolean);
 
   return (

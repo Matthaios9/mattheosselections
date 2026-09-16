@@ -1,6 +1,5 @@
 import 'server-only';
 import { connectToDatabase } from '@/server/db';
-import { isAdminEmail } from '@/server/auth/admins';
 import { hashPassword, verifyPassword } from '@/server/auth/password';
 import { Order, User } from '@/server/models';
 import { escapeRegex, isObjectId, pageParams, pageResult, toId, toIso } from '@/server/utils';
@@ -47,12 +46,11 @@ export async function authenticate(email, password) {
 }
 
 /**
- * Admin sign-in with an email already verified by Google. The email must be listed
- * in ADMIN_EMAIL and belong to an active admin account in the database.
+ * Admin sign-in with an email already verified by Google. The email must belong to an
+ * active admin account in the database.
  * Returns { ok, user } or { ok: false, reason: 'not-associated' | 'disabled' }.
  */
 export async function authenticateGoogleAdmin(email) {
-  if (!isAdminEmail(email)) return { ok: false, reason: 'not-associated' };
   await connectToDatabase();
   const user = await User.findOne({ email: email.toLowerCase() });
   if (!user || user.role !== 'admin') return { ok: false, reason: 'not-associated' };

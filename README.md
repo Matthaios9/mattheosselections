@@ -8,8 +8,8 @@ The storefront is available in English, Swedish and Greek.
 
 ```bash
 npm install
-cp .env.example .env      # then fill in the values (incl. GOOGLE_CLIENT_ID and ADMIN_EMAIL)
-npm run create-admin -- --email you@example.com --name "Your Name"   # the admin account for ADMIN_EMAIL
+cp .env.example .env      # then fill in the values (incl. GOOGLE_CLIENT_ID)
+npm run create-admin -- --email you@example.com --name "Your Name"   # an admin; sign in with that Google account
 npm run dev               # http://localhost:3000 (storefront) · /admin (admin panel)
 ```
 
@@ -20,8 +20,8 @@ npm run dev               # http://localhost:3000 (storefront) · /admin (admin 
 | `npm run lint`         | ESLint (Next.js + React Compiler rules)       |
 | `npm run create-admin` | Create an admin account from the command line |
 
-Environment variables are documented in [`.env.example`](.env.example) (MongoDB, JWT secret, Cloudinary, Klarna,
-Google sign-in and the admin allow-list).
+Environment variables are documented in [`.env.example`](.env.example) (MongoDB, JWT secret, Cloudinary, Klarna and
+Google sign-in).
 
 ## Architecture
 
@@ -66,8 +66,8 @@ src/
   `AuthHeader()` adds `X-Requested-With`, which secured API routes require (CSRF protection); cross-site
   requests and non-JSON bodies are rejected. Roles are re-checked against the database on every request.
 - **Admin sign-in is Google only.** The Sign in with Google button returns a signed ID token; the API verifies it
-  (signature, audience = `GOOGLE_CLIENT_ID`, verified email) and lets the account in only when its email is listed
-  in `ADMIN_EMAIL` and belongs to an active admin account in the database. Otherwise the page shows
+  (signature, audience = `GOOGLE_CLIENT_ID`, verified email) and lets the account in only when its email belongs to
+  an active admin account in the database. Otherwise the page shows
   "… is not associated with an admin account". Password sign-in is storefront-only and never opens the panel.
 
 ### API

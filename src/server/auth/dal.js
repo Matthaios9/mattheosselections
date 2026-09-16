@@ -4,7 +4,6 @@ import { cookies } from 'next/headers';
 import { redirect } from 'next/navigation';
 import { connectToDatabase, isDatabaseConfigured } from '@/server/db';
 import { User } from '@/server/models';
-import { isAdminEmail } from './admins';
 import { decodeSession, encodeSession, SESSION_COOKIE, SESSION_MAX_AGE, SESSION_MAX_AGE_REMEMBER } from './session';
 
 /**
@@ -41,15 +40,14 @@ export const getCurrentUser = cache(async () => {
 });
 
 /**
- * The signed-in admin (or null). All three must hold on every request:
- * the session came from the Google admin sign-in, the account is an active admin,
- * and its email is still listed in ADMIN_EMAIL.
+ * The signed-in admin (or null). Both must hold on every request: the session came
+ * from the Google admin sign-in, and the account is still an active admin.
  */
 export const getCurrentAdmin = cache(async () => {
   const session = await getSession();
   if (!session?.admin) return null;
   const user = await getCurrentUser();
-  return user?.role === 'admin' && isAdminEmail(user.email) ? user : null;
+  return user?.role === 'admin' ? user : null;
 });
 
 /** For admin pages/layouts: redirect to the login screen unless an active admin is signed in. */

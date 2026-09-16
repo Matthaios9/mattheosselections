@@ -29,7 +29,7 @@ async function guardAdmin(request) {
   if (pathname === '/admin/login') return NextResponse.next();
 
   const session = await decodeSession(request.cookies.get(SESSION_COOKIE)?.value);
-  // Only sessions from the Google admin sign-in; the panel re-checks the account and ADMIN_EMAIL.
+  // Only sessions from the Google admin sign-in; the panel re-checks that the account is still an admin.
   if (session?.admin) return NextResponse.next();
 
   const url = request.nextUrl.clone();

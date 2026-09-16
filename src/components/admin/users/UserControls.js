@@ -87,8 +87,8 @@ export function CreateUserButton({ onCreated }) {
               </Form.Select>
               {form.values.role === 'admin' && (
                 <Form.Text>
-                  Admins sign in to this panel with Google — add their email to ADMIN_EMAIL as well. The password is for
-                  the storefront.
+                  Admins sign in to this panel with the Google account for this email. The password is for the
+                  storefront.
                 </Form.Text>
               )}
             </Form.Group>
