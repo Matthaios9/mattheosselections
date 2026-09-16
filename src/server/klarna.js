@@ -5,12 +5,22 @@ import 'server-only';
  * The same integration as the WooCommerce shop (plugin "Klarna Payments for WooCommerce").
  * Docs: https://docs.klarna.com · API credentials: Klarna Merchant Portal (https://portal.klarna.com).
  *
+ * KLARNA_API_KEY: an API key from the portal (klarna_live_api_… / klarna_test_api_…) — or instead the older
+ *                 KLARNA_USERNAME + KLARNA_PASSWORD. Not the client identifier (klarna_live_client_…),
+ *                 which is only for Klarna's browser SDK.
  * KLARNA_API_URL: https://api.playground.klarna.com (testing, default) or https://api.klarna.com (live)
  */
 
 const apiUrl = () => (process.env.KLARNA_API_URL || 'https://api.playground.klarna.com').replace(/\/+$/, '');
 
-export const isKlarnaConfigured = () => Boolean(process.env.KLARNA_USERNAME && process.env.KLARNA_PASSWORD);
+export const isKlarnaConfigured = () =>
+  Boolean(process.env.KLARNA_API_KEY || (process.env.KLARNA_USERNAME && process.env.KLARNA_PASSWORD));
+
+/** An API key is sent as is; a username and password the usual Basic way. */
+function authorization() {
+  const { KLARNA_API_KEY: apiKey, KLARNA_USERNAME: username, KLARNA_PASSWORD: password } = process.env;
+  return `Basic ${apiKey || Buffer.from(`${username}:${password}`).toString('base64')}`;
+}
 
 /** A failed Klarna API call, with Klarna's error details when available. */
 export class KlarnaError extends Error {
@@ -25,11 +35,10 @@ export class KlarnaError extends Error {
 }
 
 async function request(method, path, body) {
-  const credentials = Buffer.from(`${process.env.KLARNA_USERNAME}:${process.env.KLARNA_PASSWORD}`).toString('base64');
   const response = await fetch(`${apiUrl()}${path}`, {
     method,
     headers: {
-      Authorization: `Basic ${credentials}`,
+      Authorization: authorization(),
       Accept: 'application/json',
       ...(body !== undefined && { 'Content-Type': 'application/json' }),
       'User-Agent': 'MattheosSelections/1.0',
