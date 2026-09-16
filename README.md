@@ -120,6 +120,8 @@ sold out in the meantime.
   rate it was placed with; the admin order page shows the VAT included.
 
 Set `KUSTOM_USERNAME`, `KUSTOM_PASSWORD` and `KUSTOM_API_URL` (`https://api.playground.kustom.co` for testing,
-`https://api.kustom.co` live). Kustom's API only accepts requests from supported regions (use a European server or VPN).
+`https://api.kustom.co` live). Kustom's API only accepts requests from supported regions: on Vercel, `vercel.json`
+runs the functions in Stockholm (`arn1`), next to the MongoDB cluster (AWS eu-north-1) — Vercel's default,
+Washington D.C., is refused by Kustom. Locally, use a European VPN.
 Which payment methods appear is configured in the Kustom portal, not in the code. The checkout links to the terms page set
 in `siteConfig.termsPath`.
