@@ -123,25 +123,34 @@ export const userRoleInput = z.object({ role: z.enum(USER_ROLES) });
 export const userStatusInput = z.object({ status: z.enum(USER_STATUSES) });
 
 /**
- * Checkout request: the cart, the delivery country (sets the shipping fee), an optional note
- * and the storefront page to return to. Kustom Checkout collects the customer's details.
+ * Checkout request: the cart, the customer type (private or company, with the company name), the delivery
+ * country (sets the shipping fee), an optional note and the storefront page to return to. Kustom Checkout
+ * collects the rest of the customer's details.
  */
-export const checkoutInput = z.object({
-  items: z
-    .array(
-      z.object({
-        productId: z.string().min(1),
-        variantId: z.string().min(1),
-        quantity: z.coerce.number().int().min(1).max(10000),
-      })
-    )
-    .min(1, 'Your cart is empty')
-    .max(50),
-  country: z.enum(SHIPPING_COUNTRIES).default('SE'),
-  note: text(1000),
-  locale: z.string().max(5).default('en'),
-  returnPath: z.string().max(200).default(''),
-});
+export const checkoutInput = z
+  .object({
+    items: z
+      .array(
+        z.object({
+          productId: z.string().min(1),
+          variantId: z.string().min(1),
+          quantity: z.coerce.number().int().min(1).max(10000),
+        })
+      )
+      .min(1, 'Your cart is empty')
+      .max(50),
+    // Like the WooCommerce shop: the customer buys as a private person or a company (then with its name).
+    customerType: z.enum(['private', 'company']).default('private'),
+    company: text(200),
+    country: z.enum(SHIPPING_COUNTRIES).default('SE'),
+    note: text(1000),
+    locale: z.string().max(5).default('en'),
+    returnPath: z.string().max(200).default(''),
+  })
+  .refine((input) => input.customerType === 'private' || input.company, {
+    message: 'Company name is required',
+    path: ['company'],
+  });
 
 /** The Kustom checkout order id from the confirmation redirect. */
 export const confirmPaymentInput = z.object({

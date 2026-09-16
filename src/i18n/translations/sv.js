@@ -184,8 +184,15 @@ const sv = {
     title: 'Kassa',
     subtitle: 'Välj vart vi ska leverera och betala sedan säkert med Kustom Checkout.',
     summaryTitle: 'Ordersammanfattning',
+    customerTitle: 'Kund',
+    customerTypes: {
+      private: 'Privatperson',
+      company: 'Företag',
+    },
     shippingTitle: 'Leverans',
     fields: {
+      customerType: 'Kundtyp',
+      company: 'Företagsnamn',
       country: 'Leverera till',
       note: 'Meddelande (valfritt)',
     },
@@ -193,6 +200,7 @@ const sv = {
       note: 'Presenthälsning eller leveransinstruktioner…',
     },
     errors: {
+      companyRequired: 'Ange företagsnamnet.',
       unavailable: 'Vi kunde inte starta kassan just nu. Försök igen.',
       itemsUnavailable: 'Otillräckligt lager för: {items}. Uppdatera din varukorg.',
       paymentUnavailable: 'Onlinebetalning är inte tillgänglig just nu. Försök igen senare.',

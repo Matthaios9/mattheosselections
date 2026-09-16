@@ -53,7 +53,7 @@ function orderLine({ type, reference, name, quantity, unitPrice, imageUrl, produ
   };
 }
 
-export async function startCheckout({ items, country, note, locale, returnPath }, user, { origin }) {
+export async function startCheckout({ items, customerType, company, country, note, locale, returnPath }, user, { origin }) {
   await connectToDatabase();
   const priced = await priceCart({ items, country, locale });
   if (!priced.ok) return priced;
@@ -68,6 +68,7 @@ export async function startCheckout({ items, country, note, locale, returnPath }
       vatRate: storeConfig.vatRate,
       locale,
       customerNote: note,
+      company: customerType === 'company' ? company : '',
     },
   });
 
@@ -90,9 +91,12 @@ export async function startCheckout({ items, country, note, locale, returnPath }
   const back = `${origin}${returnPath}`;
 
   // Kustom offers private and company customers (B2B). Company purchases need B2B activated on the
-  // Kustom account; if Kustom refuses them, the checkout opens for private customers only.
-  const createOrder = (customerTypes) =>
-    createCheckoutOrder({
+  // Kustom account; if Kustom refuses them, the checkout opens for private customers only. A company
+  // chosen in the checkout modal opens Kustom in company mode with its name filled in.
+  const createOrder = (customerTypes) => {
+    const asCompany = customerType === 'company' && customerTypes.includes('organization');
+    const billingAddress = { ...(user?.email && { email: user.email }), ...(asCompany && { organization_name: company }) };
+    return createCheckoutOrder({
       purchase_country: 'SE',
       purchase_currency: storeConfig.currency,
       locale: kustomLocale(locale),
@@ -103,7 +107,8 @@ export async function startCheckout({ items, country, note, locale, returnPath }
       // their country and SEK allow, at least card); delivery is fixed to the country that set the fee.
       billing_countries: SHIPPING_COUNTRIES,
       shipping_countries: [country],
-      ...(user?.email && { billing_address: { email: user.email } }),
+      ...(asCompany && { customer: { type: 'organization' } }),
+      ...(Object.keys(billingAddress).length > 0 && { billing_address: billingAddress }),
       merchant_reference2: String(checkout._id),
       merchant_urls: {
         terms: `${origin}/${locale}${siteConfig.termsPath}`,
@@ -124,6 +129,7 @@ export async function startCheckout({ items, country, note, locale, returnPath }
         color_link: '#95611a',
       },
     });
+  };
 
   try {
     const kustomOrder = await createOrder(['person', 'organization']).catch((error) => {
@@ -171,19 +177,20 @@ export async function finalizeCheckout(kustomOrderId) {
     console.warn(`[kustom] Amount mismatch for ${kustomOrderId}: ${kustomOrder.order_amount} vs ${checkout.order.total} kr`);
   }
 
+  const { company, ...orderFields } = checkout.order;
+  const organization = kustomOrder.customer?.type === 'organization';
   const billing = kustomOrder.billing_address ?? {};
   const shipping = kustomOrder.shipping_address?.street_address ? kustomOrder.shipping_address : billing;
   let order;
   try {
     order = await Order.create({
-      ...checkout.order,
+      ...orderFields,
       number: await nextOrderNumber(),
       customer: {
         name: fullName(billing) || fullName(shipping) || billing.email,
-        ...(kustomOrder.customer?.type === 'organization' && {
-          company: billing.organization_name ?? shipping.organization_name ?? '',
-          organizationNumber: kustomOrder.customer.organization_registration_id ?? '',
-        }),
+        // A company: bought as one in Kustom Checkout (B2B) or chosen as the customer type in the modal.
+        company: (organization && (billing.organization_name ?? shipping.organization_name)) || company || '',
+        organizationNumber: (organization && kustomOrder.customer.organization_registration_id) || '',
         email: billing.email ?? shipping.email,
         phone: billing.phone ?? shipping.phone ?? '',
       },

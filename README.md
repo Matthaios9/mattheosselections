@@ -113,7 +113,9 @@ sold out in the meantime.
 - **Countries.** The order is created for Sweden in SEK (the Kustom merchant setup). Customers may use a billing
   address in any delivery country (`SHIPPING_COUNTRIES`); delivery is fixed to the country chosen in the modal.
   Kustom offers customers abroad the methods their country allows with SEK — at least card.
-- **Company customers (B2B).** The checkout allows `person` and `organization`; company orders store the company
+- **Company customers (B2B).** Like the WooCommerce shop, the modal asks for the customer type (private or company,
+  with the company name); a company opens Kustom in company mode when B2B is available. The checkout allows `person`
+  and `organization`; company orders store the company
   name and organisation number, shown in the admin. B2B must be activated on the Kustom account (ask Kustom from an
   administrator email) — until then Kustom refuses company checkouts and the modal opens for private customers only.
 - **VAT.** Every order line (products and shipping) is sent to Kustom with the VAT rate, and each order stores the

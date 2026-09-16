@@ -9,6 +9,7 @@ import Modal from 'react-bootstrap/Modal';
 import Spinner from 'react-bootstrap/Spinner';
 import { PiArrowLeft, PiCheck, PiLockSimple, PiWarningCircle, PiX } from 'react-icons/pi';
 import CartLine from './CartLine';
+import TextField from '@/components/common/TextField';
 import KustomCheckout from './KustomCheckout';
 import { useStoreCart } from '@/context/CartContext';
 import { useUI } from '@/context/UIContext';
@@ -31,7 +32,7 @@ export default function CheckoutModal() {
   const { t, href, price, locale } = useI18n();
   const { checkoutOpen, openCheckout, closeCheckout } = useUI();
   const cart = useStoreCart();
-  const form = useFormState({ country: 'SE', note: '' });
+  const form = useFormState({ customerType: 'private', company: '', country: 'SE', note: '' });
   const [status, setStatus] = useState('details'); // details | opening | payment | confirming | confirmed | failed
   const [snippet, setSnippet] = useState(null);
   const [serverError, setServerError] = useState(null);
@@ -104,11 +105,17 @@ export default function CheckoutModal() {
 
   const submit = async (event) => {
     event.preventDefault();
+    const valid = form.validate({
+      company: [(value, values) => (values.customerType === 'company' && !String(value).trim() ? 'checkout.errors.companyRequired' : null)],
+    });
+    if (!valid) return;
     setStatus('opening');
     setServerError(null);
     try {
       const checkout = await startCheckout({
         items: cart.items.map((item) => ({ productId: String(item.productId), variantId: item.variantId, quantity: item.quantity })),
+        customerType: form.values.customerType,
+        company: form.values.customerType === 'company' ? form.values.company : '',
         country: form.values.country,
         note: form.values.note,
         locale,
@@ -232,6 +239,26 @@ export default function CheckoutModal() {
                     {serverError}
                   </Alert>
                 )}
+                <fieldset className={styles.fieldset}>
+                  <legend className={styles.legend}>{t('checkout.customerTitle')}</legend>
+                  <Form.Group controlId="checkout-customer-type">
+                    <Form.Label>{t('checkout.fields.customerType')}</Form.Label>
+                    <Form.Select {...form.field('customerType')}>
+                      <option value="private">{t('checkout.customerTypes.private')}</option>
+                      <option value="company">{t('checkout.customerTypes.company')}</option>
+                    </Form.Select>
+                  </Form.Group>
+                  {form.values.customerType === 'company' && (
+                    <TextField
+                      id="checkout-company"
+                      label={t('checkout.fields.company')}
+                      autoComplete="organization"
+                      {...form.field('company')}
+                      error={form.errors.company && t(form.errors.company)}
+                    />
+                  )}
+                </fieldset>
+
                 <fieldset className={styles.fieldset}>
                   <legend className={styles.legend}>{t('checkout.shippingTitle')}</legend>
                   <Form.Group controlId="checkout-country">

@@ -184,8 +184,15 @@ const en = {
     title: 'Checkout',
     subtitle: 'Choose where we deliver, then pay securely with Kustom Checkout.',
     summaryTitle: 'Order summary',
+    customerTitle: 'Customer',
+    customerTypes: {
+      private: 'Private',
+      company: 'Company',
+    },
     shippingTitle: 'Delivery',
     fields: {
+      customerType: 'Customer type',
+      company: 'Company name',
       country: 'Deliver to',
       note: 'Order note (optional)',
     },
@@ -193,6 +200,7 @@ const en = {
       note: 'Gift message or delivery instructions…',
     },
     errors: {
+      companyRequired: 'Please enter the company name.',
       unavailable: 'We could not start the checkout right now. Please try again.',
       itemsUnavailable: 'Not enough stock for: {items}. Please update your cart.',
       paymentUnavailable: 'Online payment is not available right now. Please try again later.',
