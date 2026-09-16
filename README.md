@@ -119,8 +119,9 @@ sold out in the meantime.
 - **VAT.** Every order line (products and shipping) is sent to Kustom with the VAT rate, and each order stores the
   rate it was placed with; the admin order page shows the VAT included.
 
-Set `KUSTOM_USERNAME`, `KUSTOM_PASSWORD` and `KUSTOM_API_URL` (`https://api.playground.kustom.co` for testing,
-`https://api.kustom.co` live). Kustom's API only accepts requests from supported regions: on Vercel, `vercel.json`
+Set `KUSTOM_API_KEY` — from the Kustom Portal under Developers → API (`kco_test_api_…` from the playground portal,
+`kco_live_api_…` from the live one; `KUSTOM_USERNAME` + `KUSTOM_PASSWORD` work too) — and `KUSTOM_API_URL`
+(`https://api.playground.kustom.co` for testing, `https://api.kustom.co` live). Kustom's API only accepts requests from supported regions: on Vercel, `vercel.json`
 runs the functions in Stockholm (`arn1`), next to the MongoDB cluster (AWS eu-north-1) — Vercel's default,
 Washington D.C., is refused by Kustom. Locally, use a European VPN.
 Which payment methods appear is configured in the Kustom portal, not in the code. The checkout links to the terms page set

@@ -4,12 +4,21 @@ import 'server-only';
  * Kustom Checkout (formerly Klarna Checkout) API client.
  * Docs: https://docs.kustom.co — Checkout API v3 + Order Management API v1, HTTP Basic auth.
  *
+ * KUSTOM_API_KEY: an API key from the Kustom Portal (Developers → API): kco_test_api_… for the playground,
+ *                 kco_live_api_… for live — or instead KUSTOM_USERNAME (<MID>-<suffix>) + KUSTOM_PASSWORD (the key).
  * KUSTOM_API_URL: https://api.playground.kustom.co (testing, default) or https://api.kustom.co (live)
  */
 
 const apiUrl = () => (process.env.KUSTOM_API_URL || 'https://api.playground.kustom.co').replace(/\/+$/, '');
 
-export const isKustomConfigured = () => Boolean(process.env.KUSTOM_USERNAME && process.env.KUSTOM_PASSWORD);
+export const isKustomConfigured = () =>
+  Boolean(process.env.KUSTOM_API_KEY || (process.env.KUSTOM_USERNAME && process.env.KUSTOM_PASSWORD));
+
+/** An API key is sent as is; a username and password the usual Basic way. */
+function authorization() {
+  const { KUSTOM_API_KEY: apiKey, KUSTOM_USERNAME: username, KUSTOM_PASSWORD: password } = process.env;
+  return `Basic ${apiKey || Buffer.from(`${username}:${password}`).toString('base64')}`;
+}
 
 /** A failed Kustom API call, with Kustom's error details when available. */
 export class KustomError extends Error {
@@ -24,11 +33,10 @@ export class KustomError extends Error {
 }
 
 async function request(method, path, body) {
-  const credentials = Buffer.from(`${process.env.KUSTOM_USERNAME}:${process.env.KUSTOM_PASSWORD}`).toString('base64');
   const response = await fetch(`${apiUrl()}${path}`, {
     method,
     headers: {
-      Authorization: `Basic ${credentials}`,
+      Authorization: authorization(),
       Accept: 'application/json',
       ...(body !== undefined && { 'Content-Type': 'application/json' }),
       'User-Agent': 'MattheosSelections/1.0',
