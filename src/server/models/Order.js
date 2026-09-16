@@ -2,7 +2,7 @@ import mongoose from 'mongoose';
 import { getModel } from './shared.js';
 
 export const ORDER_STATUSES = ['pending', 'processing', 'shipped', 'delivered', 'cancelled'];
-// 'authorized': reserved by Klarna at checkout, captured (→ 'paid') when the order ships.
+// 'authorized': reserved by Kustom at checkout, captured (→ 'paid') when the order ships.
 export const PAYMENT_STATUSES = ['unpaid', 'authorized', 'paid', 'refunded'];
 
 const orderItemSchema = new mongoose.Schema(
@@ -35,6 +35,9 @@ const orderSchema = new mongoose.Schema(
     user: { type: mongoose.Schema.Types.ObjectId, ref: 'User', index: true },
     customer: {
       name: { type: String, required: true, trim: true },
+      // Set when bought as a company in Kustom Checkout (B2B); empty for private customers.
+      company: { type: String, trim: true, default: '' },
+      organizationNumber: { type: String, trim: true, default: '' },
       email: { type: String, required: true, lowercase: true, trim: true, index: true },
       phone: { type: String, trim: true, default: '' },
     },
@@ -50,11 +53,13 @@ const orderSchema = new mongoose.Schema(
     shippingFee: { type: Number, required: true, min: 0 },
     total: { type: Number, required: true, min: 0 },
     currency: { type: String, default: 'SEK' },
+    // VAT rate (%) included in the prices when the order was placed; null for orders from before it was stored.
+    vatRate: { type: Number, default: null },
     status: { type: String, enum: ORDER_STATUSES, default: 'pending', index: true },
     paymentStatus: { type: String, enum: PAYMENT_STATUSES, default: 'unpaid' },
-    // 'klarna' for Klarna Payments; older orders: 'kustom' (Kustom Checkout), 'invoice' (manual) or 'card' (Stripe)
+    // 'kustom' for Kustom Checkout; older orders: 'invoice' (manual) or 'card' (previous Stripe integration)
     paymentMethod: { type: String, default: 'invoice' },
-    klarnaOrderId: { type: String, unique: true, sparse: true },
+    kustomOrderId: { type: String, unique: true, sparse: true },
     locale: { type: String, default: 'en' },
     customerNote: { type: String, default: '' },
     adminNote: { type: String, default: '' },

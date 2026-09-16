@@ -12,8 +12,9 @@ export const locales = [
     label: 'English',
     shortLabel: 'EN',
     dir: 'ltr',
-    // Used for number grouping in prices (see src/lib/format.js)
+    // Used for number grouping and decimals in prices (see src/utils/format.js)
     groupSeparator: ',',
+    decimalSeparator: '.',
     ogLocale: 'en_GB',
   },
   {
@@ -22,6 +23,7 @@ export const locales = [
     shortLabel: 'SV',
     dir: 'ltr',
     groupSeparator: ' ',
+    decimalSeparator: ',',
     ogLocale: 'sv_SE',
   },
   {
@@ -30,6 +32,7 @@ export const locales = [
     shortLabel: 'EL',
     dir: 'ltr',
     groupSeparator: '.',
+    decimalSeparator: ',',
     ogLocale: 'el_GR',
   },
 ];

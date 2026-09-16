@@ -2,7 +2,7 @@
 
 import Image from 'next/image';
 import Link from 'next/link';
-import { PiEnvelopeSimple, PiMapPin, PiPhone, PiUserCircle } from 'react-icons/pi';
+import { PiBuildings, PiEnvelopeSimple, PiMapPin, PiPhone, PiUserCircle } from 'react-icons/pi';
 import PageHeader from '@/components/admin/PageHeader';
 import QueryState from '@/components/admin/QueryState';
 import StatusPill from '@/components/admin/StatusPill';
@@ -11,6 +11,7 @@ import { useAdminSession } from '@/context/AdminSessionContext';
 import { useApiQuery } from '@/hooks/useApiQuery';
 import { getOrderById } from '@/services/order';
 import { countryName, formatDateTime, money, plural } from '@/utils/format';
+import { includedVat } from '@/utils/vat';
 import styles from './OrderDetail.module.css';
 
 /** One order: items, totals, timeline, customer, and the fulfilment / payment / note cards. */
@@ -94,6 +95,20 @@ export default function OrderDetail({ id }) {
                       <dt>Shipping</dt>
                       <dd>{order.shippingFee ? money(order.shippingFee) : 'Free'}</dd>
                     </div>
+                    {order.vatRate != null && (
+                      <>
+                        <div className={styles.vat}>
+                          <dt>VAT {order.vatRate}% (food), included</dt>
+                          <dd>{money(includedVat(order.subtotal, order.vatRate), { decimals: 2 })}</dd>
+                        </div>
+                        {order.shippingFee > 0 && (
+                          <div className={styles.vat}>
+                            <dt>VAT {order.vatRate}% (shipping), included</dt>
+                            <dd>{money(includedVat(order.shippingFee, order.vatRate), { decimals: 2 })}</dd>
+                          </div>
+                        )}
+                      </>
+                    )}
                     <div className={styles.grand}>
                       <dt>Total</dt>
                       <dd>{money(order.total)}</dd>
@@ -150,6 +165,17 @@ export default function OrderDetail({ id }) {
                       <PiUserCircle aria-hidden="true" /> {order.customer.name}
                       {!order.user && <span className="small text-muted-ms">(guest)</span>}
                     </li>
+                    {order.customer.company && (
+                      <li>
+                        <PiBuildings aria-hidden="true" />
+                        <span>
+                          {order.customer.company}
+                          {order.customer.organizationNumber && (
+                            <span className="small text-muted-ms"> · Org. no. {order.customer.organizationNumber}</span>
+                          )}
+                        </span>
+                      </li>
+                    )}
                     <li>
                       <PiEnvelopeSimple aria-hidden="true" />
                       <a href={`mailto:${order.customer.email}`}>{order.customer.email}</a>

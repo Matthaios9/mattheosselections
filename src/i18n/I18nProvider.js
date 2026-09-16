@@ -18,7 +18,7 @@ export function I18nProvider({ locale, dict, children }) {
     dir: getLocaleConfig(locale).dir,
     t: createTranslator(dict),
     href: (path) => localizePath(path, locale),
-    price: (amount) => formatPrice(amount, locale),
+    price: (amount, options) => formatPrice(amount, locale, options),
   };
 
   return <I18nContext.Provider value={value}>{children}</I18nContext.Provider>;

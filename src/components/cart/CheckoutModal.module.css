@@ -64,17 +64,6 @@
   gap: 1.25rem;
 }
 
-.row {
-  display: grid;
-  gap: 0.85rem;
-}
-
-@media (min-width: 576px) {
-  .row {
-    grid-template-columns: repeat(2, minmax(0, 1fr));
-  }
-}
-
 .fieldset {
   display: flex;
   flex-direction: column;
@@ -135,6 +124,16 @@
   font-weight: 600;
   color: var(--ms-ink);
   font-variant-numeric: tabular-nums;
+}
+
+/* VAT is included in the prices: shown like the WooCommerce shop, "Moms 6% (Mat) inkl. 10.19 kr". */
+.totals > .vat {
+  font-size: 0.82rem;
+}
+
+.vat dd {
+  font-weight: 500;
+  color: var(--ms-muted);
 }
 
 .grand {

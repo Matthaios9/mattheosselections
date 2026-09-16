@@ -3,7 +3,7 @@ import { connectToDatabase } from '@/server/db';
 import { Order, Product } from '@/server/models';
 import { calculateShipping } from '@/utils/shipping';
 import { releaseStock, reserveStock } from './inventory';
-import { PaymentUpdateError, settleKlarnaPayment } from './settlement';
+import { PaymentUpdateError, settleKustomPayment } from './settlement';
 import { escapeRegex, isObjectId, pageParams, pageResult, toId, toIso } from '@/server/utils';
 
 export function serializeOrder(doc) {
@@ -11,7 +11,13 @@ export function serializeOrder(doc) {
     id: toId(doc._id),
     number: doc.number,
     user: toId(doc.user?._id ?? doc.user),
-    customer: { name: doc.customer?.name ?? '', email: doc.customer?.email ?? '', phone: doc.customer?.phone ?? '' },
+    customer: {
+      name: doc.customer?.name ?? '',
+      company: doc.customer?.company ?? '',
+      organizationNumber: doc.customer?.organizationNumber ?? '',
+      email: doc.customer?.email ?? '',
+      phone: doc.customer?.phone ?? '',
+    },
     shippingAddress: {
       line1: doc.shippingAddress?.line1 ?? '',
       line2: doc.shippingAddress?.line2 ?? '',
@@ -34,10 +40,11 @@ export function serializeOrder(doc) {
     shippingFee: doc.shippingFee,
     total: doc.total,
     currency: doc.currency,
+    vatRate: doc.vatRate ?? null,
     status: doc.status,
     paymentStatus: doc.paymentStatus,
     paymentMethod: doc.paymentMethod,
-    klarnaOrderId: doc.klarnaOrderId ?? '',
+    kustomOrderId: doc.kustomOrderId ?? '',
     locale: doc.locale,
     customerNote: doc.customerNote ?? '',
     adminNote: doc.adminNote ?? '',
@@ -144,7 +151,7 @@ export async function listOrdersForUser(userId, limit = 50) {
 /**
  * Change an order's status. Cancelling returns its items to stock; reopening a
  * cancelled order reserves the stock again (fails if it is no longer available).
- * Klarna payments follow along: shipping captures the payment, cancelling voids or refunds it.
+ * Kustom payments follow along: shipping captures the payment, cancelling voids or refunds it.
  * Returns { ok, order } or { ok: false, reason: 'not-found' | 'insufficient-stock' | 'payment', item?, message? }.
  */
 export async function updateOrderStatus(id, { status, note }, admin) {
@@ -159,7 +166,7 @@ export async function updateOrderStatus(id, { status, note }, admin) {
 
   let paymentNote = null;
   try {
-    paymentNote = await settleKlarnaPayment(order, status);
+    paymentNote = await settleKustomPayment(order, status);
   } catch (error) {
     if (error instanceof PaymentUpdateError) return { ok: false, reason: 'payment', message: error.message };
     throw error;

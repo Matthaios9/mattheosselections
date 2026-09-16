@@ -7,20 +7,22 @@ import { storeConfig } from '@/config/site';
  */
 
 /**
- * Deterministic price formatting (e.g. "1,900 kr" / "1 900 kr" / "1.900 kr").
- * Intl output differs slightly between Node and browsers (narrow no-break spaces),
- * which would cause hydration mismatches, so grouping is done by hand.
+ * Deterministic price formatting (e.g. "1,900 kr" / "1 900 kr" / "1.900 kr"; with `decimals: 2`
+ * "10.19 kr" / "10,19 kr"). Intl output differs slightly between Node and browsers (narrow no-break
+ * spaces), which would cause hydration mismatches, so grouping is done by hand.
  */
-export function formatPrice(amount, locale) {
-  const { groupSeparator } = getLocaleConfig(locale);
-  const rounded = Math.round(Number(amount) || 0);
-  const grouped = String(Math.abs(rounded)).replace(/\B(?=(\d{3})+(?!\d))/g, groupSeparator);
-  return `${rounded < 0 ? '−' : ''}${grouped} ${storeConfig.currencySymbol}`;
+export function formatPrice(amount, locale, { decimals = 0 } = {}) {
+  const { groupSeparator, decimalSeparator } = getLocaleConfig(locale);
+  const factor = 10 ** decimals;
+  const scaled = Math.round((Number(amount) || 0) * factor);
+  const whole = String(Math.floor(Math.abs(scaled) / factor)).replace(/\B(?=(\d{3})+(?!\d))/g, groupSeparator);
+  const fraction = decimals ? `${decimalSeparator}${String(Math.abs(scaled) % factor).padStart(decimals, '0')}` : '';
+  return `${scaled < 0 ? '−' : ''}${whole}${fraction} ${storeConfig.currencySymbol}`;
 }
 
 /* Admin formatting (English, Stockholm time) ---------------------------------- */
 
-export const money = (amount) => formatPrice(amount ?? 0, 'en');
+export const money = (amount, options) => formatPrice(amount ?? 0, 'en', options);
 
 const dateFormat = new Intl.DateTimeFormat('en-GB', {
   day: 'numeric',

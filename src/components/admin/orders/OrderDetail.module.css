@@ -44,6 +44,15 @@
   color: var(--ms-ink);
 }
 
+.totals > .vat {
+  font-size: 0.82rem;
+}
+
+.vat dd {
+  font-weight: 500;
+  color: var(--ms-muted);
+}
+
 .grand {
   margin-top: 0.35rem;
   padding-top: 0.75rem;
