@@ -1,9 +1,3 @@
-/* ==========================================================================
-   Mattheos Selections — design system
-   Tokens → Bootstrap theming → base → typography → components → motion.
-   Custom rules use logical properties (inline/block) so an RTL locale only
-   needs `dir: 'rtl'` in src/i18n/config.js.
-   ========================================================================== */
 
 :root {
   /* Palette — warm ivory, ink, honey gold, with an Aegean accent */
