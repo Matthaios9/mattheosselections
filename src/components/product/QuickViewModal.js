@@ -8,6 +8,7 @@ import Button from 'react-bootstrap/Button';
 import Modal from 'react-bootstrap/Modal';
 import { PiCheckCircle, PiHandbagSimple, PiX } from 'react-icons/pi';
 import QuantityStepper from '@/components/common/QuantityStepper';
+import BackInStockForm from './BackInStockForm';
 import SizeSelector from './SizeSelector';
 import WishlistButton from './WishlistButton';
 import { storeConfig } from '@/config/site';
@@ -106,16 +107,19 @@ function QuickViewContent({ product, initialVariant, onClose }) {
               soldOutLabel={t('common.soldOut')}
               size="md"
               showStock
+              allowSoldOut
             />
           )}
-          <div className={styles.actions}>
-            <QuantityStepper value={qty} onChange={setQuantity} max={Math.max(1, available)} />
-            <Button variant="ms-dark" className={styles.addButton} onClick={handleAdd} disabled={soldOut || available === 0}>
-              <PiHandbagSimple className="btn-icon" aria-hidden="true" />
-              {soldOut ? t('common.soldOut') : t('common.addToCart')}
-            </Button>
-            <WishlistButton productId={product.id} variant="outline" />
-          </div>
+          {!soldOut && (
+            <div className={styles.actions}>
+              <QuantityStepper value={qty} onChange={setQuantity} max={Math.max(1, available)} />
+              <Button variant="ms-dark" className={styles.addButton} onClick={handleAdd} disabled={available === 0}>
+                <PiHandbagSimple className="btn-icon" aria-hidden="true" />
+                {t('common.addToCart')}
+              </Button>
+              <WishlistButton productId={product.id} variant="outline" />
+            </div>
+          )}
           <p
             className={`${styles.stock} ${soldOut ? styles.stockOut : ''} ${
               !soldOut && (available === 0 || lowStock) ? styles.stockLow : ''
@@ -124,6 +128,8 @@ function QuickViewContent({ product, initialVariant, onClose }) {
             <span className={styles.stockDot} aria-hidden="true" />
             {stockMessage}
           </p>
+          {/* Sold out: leave an email to hear when this size is back (keyed so each size starts fresh). */}
+          {soldOut && <BackInStockForm key={variant.id} product={product} variant={variant} />}
         </div>
 
         <ul className={styles.trust}>

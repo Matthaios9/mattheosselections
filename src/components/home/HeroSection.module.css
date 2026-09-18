@@ -44,9 +44,32 @@
   max-width: 12.5em;
 }
 
+.intro {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+  max-width: 34rem;
+}
+
+.introTitle {
+  margin: 0;
+  font-family: var(--ms-font-serif);
+  font-size: clamp(1.35rem, 2.2vw, 1.65rem);
+  line-height: 1.25;
+  color: var(--ms-ink);
+}
+
 .text {
   margin: 0;
-  max-width: 34rem;
+}
+
+.tagline {
+  margin: 0;
+  font-family: var(--ms-font-serif);
+  font-style: italic;
+  font-size: 1.05rem;
+  line-height: 1.5;
+  color: var(--ms-honey-deep);
 }
 
 .actions {
@@ -136,6 +159,49 @@
   animation: imageSettle 2s var(--ms-ease-out) both;
 }
 
+/* Producer carousel: Bootstrap's carousel stretched to fill the arch */
+.carousel,
+.carousel :global(.carousel-inner),
+.slide {
+  height: 100%;
+}
+
+.carousel :global(.carousel-item) {
+  transition-duration: 1s;
+}
+
+.dots {
+  position: absolute;
+  top: 50%;
+  inset-inline-end: 1rem;
+  z-index: 2;
+  display: flex;
+  flex-direction: column;
+  gap: 0.55rem;
+  transform: translateY(-50%);
+}
+
+.dot {
+  width: 0.6rem;
+  height: 0.6rem;
+  padding: 0;
+  border: 1.5px solid #fff;
+  border-radius: 50%;
+  background: transparent;
+  box-shadow: 0 1px 6px rgba(28, 25, 21, 0.35);
+  transition:
+    background-color 0.3s var(--ms-ease),
+    transform 0.3s var(--ms-ease);
+}
+
+.dot:hover {
+  transform: scale(1.2);
+}
+
+.dotActive {
+  background: #fff;
+}
+
 @keyframes imageSettle {
   from {
     transform: scale(1.15);
@@ -143,19 +209,6 @@
   to {
     transform: scale(1);
   }
-}
-
-.secondary {
-  position: absolute;
-  bottom: 18%;
-  inset-inline-end: -12%;
-  width: 36%;
-  aspect-ratio: 1 / 1.15;
-  overflow: hidden;
-  border: 6px solid var(--ms-bg);
-  border-radius: var(--ms-radius);
-  box-shadow: var(--ms-shadow);
-  animation: ms-fade-up 1s var(--ms-ease-out) 0.7s both;
 }
 
 .seal {
@@ -334,10 +387,6 @@
     width: min(100%, 420px);
   }
 
-  .secondary {
-    inset-inline-end: -6%;
-  }
-
   .seal {
     inset-inline-start: -6%;
     width: 112px;
@@ -364,12 +413,6 @@
   .sealCenter img {
     width: 30px;
     height: auto;
-  }
-
-  .secondary {
-    inset-inline-end: -12%;
-    width: 38%;
-    border-width: 4px;
   }
 
   .productCard {

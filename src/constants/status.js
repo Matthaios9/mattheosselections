@@ -29,6 +29,10 @@ export const STATUS_META = {
     active: { label: 'Active', tone: 'success' },
     disabled: { label: 'Disabled', tone: 'danger' },
   },
+  stockAlert: {
+    waiting: { label: 'Waiting', tone: 'warning' },
+    notified: { label: 'Emailed', tone: 'success' },
+  },
 };
 
 export const ORDER_STATUS_OPTIONS = Object.entries(STATUS_META.order).map(([value, meta]) => ({ value, ...meta }));

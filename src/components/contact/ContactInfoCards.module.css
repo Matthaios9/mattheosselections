@@ -9,15 +9,9 @@
   gap: 1rem;
 }
 
-@media (min-width: 576px) {
+@media (min-width: 768px) {
   .grid {
-    grid-template-columns: repeat(2, 1fr);
-  }
-}
-
-@media (min-width: 1200px) {
-  .grid {
-    grid-template-columns: repeat(4, 1fr);
+    grid-template-columns: repeat(3, 1fr);
   }
 }
 
@@ -59,6 +53,7 @@
 }
 
 .value {
+  margin: 0;
   font-family: var(--ms-font-serif);
   font-size: 1.3rem;
   line-height: 1.25;
@@ -66,7 +61,7 @@
   word-break: break-word;
 }
 
-.value:hover {
+a.value:hover {
   color: var(--ms-honey-deep);
 }
 
@@ -74,43 +69,4 @@
   margin: 0;
   font-size: 0.82rem;
   color: var(--ms-muted);
-}
-
-.hours {
-  background: var(--ms-ink);
-}
-
-.hours .icon {
-  background: rgba(255, 255, 255, 0.08);
-  color: var(--ms-honey-bright);
-}
-
-.hours .title {
-  color: var(--ms-honey-bright);
-}
-
-.hoursList {
-  display: flex;
-  flex-direction: column;
-  gap: 0.35rem;
-  margin: 0.35rem 0 0;
-}
-
-.hoursList > div {
-  display: flex;
-  justify-content: space-between;
-  gap: 1rem;
-  font-size: 0.88rem;
-}
-
-.hoursList dt {
-  font-weight: 500;
-  color: rgba(255, 255, 255, 0.7);
-}
-
-.hoursList dd {
-  margin: 0;
-  font-weight: 700;
-  color: #fff;
-  white-space: nowrap;
 }

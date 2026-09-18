@@ -1,6 +1,6 @@
 import Link from 'next/link';
 import Container from 'react-bootstrap/Container';
-import { PiEnvelopeSimple, PiLockSimple, PiMapPin, PiPhone } from 'react-icons/pi';
+import { PiEnvelopeSimple, PiGlobeHemisphereWest, PiLockSimple, PiMapPin } from 'react-icons/pi';
 import LanguageSelector from './LanguageSelector';
 import Logo from './Logo';
 import SocialLinks from './SocialLinks';
@@ -30,8 +30,9 @@ export default function Footer({ locale, dict, categories }) {
       title: f.supportTitle,
       links: [
         { label: f.faq, href: `${href('/contact')}#faq` },
-        { label: f.shipping, href: `${href('/contact')}#faq` },
-        { label: f.returns, href: `${href('/contact')}#faq` },
+        { label: f.shipping, href: `${href('/contact')}#shipping` },
+        { label: f.returns, href: `${href(siteConfig.termsPath)}#returns` },
+        { label: f.terms, href: href(siteConfig.termsPath) },
         { label: f.corporate, href: `${href('/contact')}#wholesale` },
       ],
     },
@@ -69,13 +70,17 @@ export default function Footer({ locale, dict, categories }) {
               <ul className={`${styles.links} ${styles.contact}`}>
                 <li>
                   <a href={`mailto:${siteConfig.email}`}>
-                    <PiEnvelopeSimple aria-hidden="true" /> {siteConfig.email}
+                    <PiEnvelopeSimple aria-hidden="true" />
+                    <span>
+                      {siteConfig.email}
+                      <span className={styles.note}>{f.emailNote}</span>
+                    </span>
                   </a>
                 </li>
                 <li>
-                  <a href={siteConfig.phoneHref}>
-                    <PiPhone aria-hidden="true" /> {siteConfig.phone}
-                  </a>
+                  <span>
+                    <PiGlobeHemisphereWest aria-hidden="true" /> {f.onlineOnly}
+                  </span>
                 </li>
                 <li>
                   <span>
@@ -84,6 +89,7 @@ export default function Footer({ locale, dict, categories }) {
                       {siteConfig.address.street}
                       <br />
                       {siteConfig.address.postalCode} {siteConfig.address.city}, {f.country}
+                      <span className={styles.note}>{f.office}</span>
                     </span>
                   </span>
                 </li>
@@ -97,6 +103,8 @@ export default function Footer({ locale, dict, categories }) {
             <span>{interpolate(f.copyright, { year: new Date().getFullYear() })}</span>
             <span className={styles.dot} aria-hidden="true" />
             <span>{f.legal}</span>
+            <span className={styles.dot} aria-hidden="true" />
+            <Link href={href(siteConfig.termsPath)}>{f.terms}</Link>
           </div>
           <div className={styles.bottomEnd}>
             <span className={styles.secure}>

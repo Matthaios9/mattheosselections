@@ -1,4 +1,4 @@
-import { PiArrowCounterClockwise, PiPackage, PiTruck } from 'react-icons/pi';
+import { PiPackage, PiSealCheck, PiTruck } from 'react-icons/pi';
 import PageHero from '@/components/common/PageHero';
 import ShopCatalog from '@/components/shop/ShopCatalog';
 import { filtersFromParams, filtersToParams, sortFromParams } from '@/constants/shop';
@@ -7,7 +7,7 @@ import { getDictionary } from '@/i18n/dictionaries';
 import { getStoreCategories, searchStoreProducts, storeQueryToOptions } from '@/server/domain/storefront';
 import styles from './page.module.css';
 
-const PERK_ICONS = [PiTruck, PiPackage, PiArrowCounterClockwise];
+const PERK_ICONS = [PiTruck, PiPackage, PiSealCheck];
 
 export async function generateMetadata({ params }) {
   const { lang } = await params;
@@ -15,7 +15,7 @@ export async function generateMetadata({ params }) {
   return { title: dict.meta.shop.title, description: dict.meta.shop.description };
 }
 
-const EMPTY_RESULT = { items: [], total: 0, page: 1, pageSize: 0, pages: 1, facets: { category: {}, price: {}, size: {}, sizes: [] } };
+const EMPTY_RESULT = { items: [], total: 0, page: 1, pageSize: 0, pages: 1 };
 
 /** First page of results for the requested filters, rendered on the server (SEO, no loading flash). */
 async function loadFirstPage(locale, searchParams) {
@@ -25,7 +25,7 @@ async function loadFirstPage(locale, searchParams) {
     // Same rule as the client: an unknown category shows everything.
     const filters = categories.some((category) => category.id === parsed.category) ? parsed : { ...parsed, category: 'all' };
     const query = filtersToParams(filters, sortFromParams(searchParams));
-    return await searchStoreProducts(storeQueryToOptions({ ...query, locale, facets: '1' }));
+    return await searchStoreProducts(storeQueryToOptions({ ...query, locale }));
   } catch (error) {
     console.error('[shop] Could not load products:', error.message);
     return EMPTY_RESULT;

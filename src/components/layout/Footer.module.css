@@ -99,6 +99,13 @@
   color: var(--ms-honey-bright);
 }
 
+.note {
+  display: block;
+  margin-top: 0.15rem;
+  font-size: 0.78rem;
+  color: rgba(255, 255, 255, 0.5);
+}
+
 .bottom {
   display: flex;
   flex-direction: column;
@@ -121,6 +128,16 @@
   flex-wrap: wrap;
   align-items: center;
   gap: 0.35rem 0.75rem;
+}
+
+.legal a {
+  color: inherit;
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+
+.legal a:hover {
+  color: #fff;
 }
 
 .dot {

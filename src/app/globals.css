@@ -39,7 +39,7 @@
   /* Motion & layout */
   --ms-ease: cubic-bezier(0.22, 0.7, 0.18, 1);
   --ms-ease-out: cubic-bezier(0.16, 1, 0.3, 1);
-  --ms-header-h: 76px;
+  --ms-header-h: 88px;
   --ms-section-y: clamp(4.5rem, 9vw, 8rem);
 
   /* Bootstrap theming */

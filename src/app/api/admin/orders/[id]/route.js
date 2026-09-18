@@ -1,6 +1,8 @@
+import { after } from 'next/server';
 import { z } from 'zod';
 import { getOrder, updateOrderFields, updateOrderStatus } from '@/server/domain/orders';
-import { conflict, notFound, parseBody, revalidateStorefront, withApi } from '@/server/http';
+import { sendBackInStockEmails } from '@/server/domain/stock-alerts';
+import { conflict, notFound, parseBody, requestOrigin, revalidateStorefront, withApi } from '@/server/http';
 import { adminNoteInput, orderStatusInput, paymentStatusInput } from '@/server/validation';
 
 const missing = () => notFound('Order not found.');
@@ -41,6 +43,15 @@ export const PATCH = withApi(
       if (!result.ok && result.reason === 'payment') throw conflict(result.message, 'payment-failed');
       if (!result.ok) throw missing();
       revalidateStorefront(); // cancelling / reopening changes stock
+      if (body.status === 'cancelled') {
+        // Items returned to stock may be what someone is waiting for.
+        const origin = requestOrigin(request);
+        after(() =>
+          sendBackInStockEmails({ origin }).catch((error) =>
+            console.error('[stock-alerts] Could not send back-in-stock emails:', error.message)
+          )
+        );
+      }
       return result.order;
     }
 

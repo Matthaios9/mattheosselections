@@ -5,7 +5,7 @@ const sv = {
     home: {
       title: 'Grekisk råhonung, olivolja & naturliga presenter',
       description:
-        'Råhonung från enskilda regioner, kallpressad olivolja och naturlig supermat från små grekiska producenter – levererat från Stockholm.',
+        'Vi söker upp enastående naturprodukter från små familjeproducenter som bevarar traditionella metoder och arbetar i harmoni med naturen.',
     },
     about: {
       title: 'Om oss',
@@ -14,11 +14,16 @@ const sv = {
     },
     shop: {
       title: 'Butik',
-      description: 'Handla grekisk råhonung, supermat, olivolja, naturlig hudvård och Naturbox-presentset.',
+      description:
+        'Upptäck vårt urval av grekisk råhonung, honungskreationer och naturprodukter från små producenter i hela Grekland.',
     },
     contact: {
       title: 'Kontakta oss',
-      description: 'Frågor om en beställning, en produkt eller företagsgåvor? Vårt team i Stockholm svarar inom 24 timmar.',
+      description: 'Frågor om en beställning, en produkt eller företagsgåvor? Mejla oss – vi svarar inom 24 timmar.',
+    },
+    terms: {
+      title: 'Villkor och försäljningsvillkor',
+      description: 'Försäljningsvillkor för Mattheos Selections: beställningar, moms, frakt, betalning, returer och klagomål.',
     },
     notFound: { title: 'Sidan hittades inte' },
   },
@@ -122,6 +127,7 @@ const sv = {
     add: 'Lägg till',
     added: 'Tillagd',
     soldOut: 'Slutsåld',
+    notifyMe: 'Bevaka',
     quickView: 'Snabbvy',
     viewDetails: 'Visa detaljer',
     addToWishlist: 'Spara i önskelista',
@@ -149,15 +155,28 @@ const sv = {
   },
 
   product: {
-    shipping: 'Frakt & returer',
+    shipping: 'Frakt & leverans',
     shippingText:
-      'Skickas från Stockholm inom 1–2 arbetsdagar. Frakt inom Sverige kostar 69 kr – fri frakt vid köp över 799 kr. Oöppnade produkter kan returneras inom 14 dagar.',
+      'Frakt inom Sverige kostar 69 kr, med fri frakt vid köp över 799 kr. Till övriga Europa kostar frakten 25 EUR, med fri frakt vid köp över 179 EUR. Varje beställning packas omsorgsfullt och skickas från Stockholm så att dina produkter kommer fram säkert.',
     lowStock: 'Endast {count} kvar',
     inStock: '{count} i lager – redo att skickas',
     stockCount: '{count} i lager',
     inCart: '{count} i din varukorg',
     outOfStock: 'Tillfälligt slutsåld',
     trust: ['100 % rå & naturlig', 'Skickas inom 1–2 dagar', 'Säker betalning'],
+    backInStock: {
+      title: 'Meddela mig när den finns i lager',
+      text: 'Lämna din e-postadress så meddelar vi dig så snart {name} finns i lager igen.',
+      label: 'E-postadress',
+      placeholder: 'Din e-postadress',
+      submit: 'Meddela mig',
+      success: 'Tack! Vi mejlar {email} så snart den finns i lager igen.',
+      errors: {
+        email: 'Ange en giltig e-postadress.',
+        inStock: 'Goda nyheter – storleken finns i lager igen. Ladda om sidan för att beställa.',
+        unavailable: 'Vi kunde inte spara din bevakning just nu. Försök igen.',
+      },
+    },
   },
 
   cart: {
@@ -245,7 +264,9 @@ const sv = {
       titleBefore: 'Honung, så som',
       titleAccent: 'Grekland',
       titleAfter: 'alltid har gjort den.',
-      text: 'Råhonung från enskilda regioner, kallpressad olivolja och naturlig supermat – direkt från små biodlarfamiljer på Olympens sluttningar, levererat från Stockholm.',
+      intro: 'Med rötter i naturen. Utvalt med omsorg.',
+      text: 'Vi söker upp enastående naturprodukter från små familjeproducenter som bevarar traditionella metoder och arbetar i harmoni med naturen.',
+      tagline: 'Äkta till ursprunget. Ren till karaktären. Som naturen avsett.',
       primaryCta: 'Upptäck kollektionen',
       secondaryCta: 'Vår historia',
       trust: ['100 % rå & ovärmd', 'Familjeproducenter i Grekland', 'Fri frakt över 799 kr'],
@@ -253,7 +274,8 @@ const sv = {
       badge: 'Råhonung · Direkt från Grekland · Äkta sedan dag ett ·',
       altitude: 'Skördad upp till',
       altitudeValue: '1 200 m',
-      imageAlt: 'Grekisk råhonung som droppar från en honungsslev ner i en glasburk',
+      imageAlt: 'Våra producenter i Grekland',
+      slide: 'Bild {index} av {total}',
     },
     categories: {
       eyebrow: 'Handla efter kategori',
@@ -304,10 +326,10 @@ const sv = {
     },
     story: {
       eyebrow: 'Vår historia',
-      title: 'Från Olympens sluttningar till ditt bord',
+      title: 'Att hitta det exceptionella i naturen',
       paragraphs: [
-        'Jag heter Mattheos Tasios och har alltid haft en passion för naturliga produkter som ger verklig energi och välmående. Jag växte upp med grekisk honung och vet hur annorlunda den äkta varan smakar.',
-        'I dag arbetar vi direkt med små biodlarfamiljer som flyttar sina kupor med årstiderna – efter vild timjan, ek och gran över centrala Grekland.',
+        'Jag heter Mattheos Tasios och har alltid haft en passion för naturliga produkter som förblir trogna sitt ursprung. Den passionen förde mig till slut tillbaka till Grekland, på jakt efter producenterna och traditionerna bakom de produkter jag alltid har värdesatt.',
+        'I dag arbetar vi direkt med små biodlarfamiljer som bedriver vandringsbiodling. De flyttar sina kupor med årstiderna och följer den naturliga blomningen av vild timjan, ek och gran över det grekiska landskapet.',
       ],
       signature: 'Mattheos Tasios',
       role: 'Grundare',
@@ -322,43 +344,36 @@ const sv = {
     testimonials: {
       eyebrow: 'Vänliga ord',
       title: 'Vad våra kunder säger',
+      text: 'Den största komplimangen är när någon kommer tillbaka för ännu en burk. Här är några ord från kunder som upptäckt något annorlunda i vår honung.',
       items: [
         {
-          quote: 'Timjanhonungen är olik allt jag hittat i en svensk mataffär – man känner smaken av sluttningarna. Vi är redan på vår tredje burk.',
-          name: 'Anna L.',
+          quote: 'Granhonungen är något av det mest unika jag någonsin smakat. Jag hade aldrig upplevt honung som den förut. Det har blivit den jag alltid kommer tillbaka till.',
+          name: 'Sofia',
           location: 'Stockholm',
-          product: 'Timjanhonung',
         },
         {
-          quote: 'Jag gav Hela upplevelsen till mina föräldrar på deras bröllopsdag. Vackert presenterat och varje burk var en ny upptäckt.',
-          name: 'Johan K.',
-          location: 'Göteborg',
-          product: 'Naturbox: Hela upplevelsen',
-        },
-        {
-          quote: 'Snabb leverans, fin förpackning och ekhonungen är mörk och fyllig som kola. Äntligen riktig honung.',
-          name: 'Eleni P.',
+          quote: 'Honungen är fantastisk. Jag har inte hittat något liknande i Sverige, och inte ens i Grekland är det den sortens honung man brukar hitta i mataffären.',
+          name: 'Malin',
           location: 'Uppsala',
-          product: 'Ekhonung',
         },
         {
-          quote: 'Propolisen har blivit en del av vår vinterrutin. Äkta produkter och ett team som faktiskt svarar på mejl.',
-          name: 'Sara M.',
-          location: 'Malmö',
-          product: 'Naturligt propolisextrakt',
+          quote: 'Timjanhonungen är olik allt jag hittat i svenska mataffärer. Vi är redan på vår tredje burk.',
+          name: 'David',
+          location: 'Stockholm',
         },
       ],
     },
   },
 
   newsletter: {
-    eyebrow: 'Mattheos-cirkeln',
-    title: 'Smaka säsongens nya skörd först',
-    text: 'Säsongsnyheter, recept från det grekiska köket och erbjudanden för medlemmar – några gånger i månaden, aldrig oftare.',
+    eyebrow: 'Välkomsterbjudande',
+    title: 'En liten sak till dig',
+    offer: 'Få 10 % rabatt på din första beställning.',
+    text: 'Registrera dig för att få ditt välkomsterbjudande och nyheter då och då från Mattheos Selections.',
     label: 'E-postadress',
     placeholder: 'Din e-postadress',
-    submit: 'Prenumerera',
-    success: 'Välkommen till cirkeln! Kolla din inkorg för att bekräfta din prenumeration.',
+    submit: 'Registrera dig',
+    success: 'Tack för din registrering! Ditt välkomsterbjudande skickas till din inkorg.',
     error: 'Ange en giltig e-postadress.',
     privacy: 'Ingen spam. Avsluta när du vill.',
   },
@@ -485,18 +500,12 @@ const sv = {
     hero: {
       eyebrow: 'Kollektionen',
       title: 'Alla produkter',
-      text: 'Grekisk råhonung, supermat, kallpressad olivolja och presentset – från små producenter, levererat från Stockholm.',
+      text: 'Upptäck vårt urval av grekisk råhonung, honungskreationer och naturprodukter från små producenter i hela Grekland.',
     },
-    perks: ['Fri frakt över 799 kr', 'Skickas inom 1–2 dagar', '14 dagars retur'],
+    perks: ['Fri frakt över 799 kr', 'Skickas inom 1–2 dagar', 'Utvalt direkt från Grekland'],
     toolbar: {
-      showing: 'Visar {shown} av {total} produkter',
-      filters: 'Filter',
+      categories: 'Produktkategorier',
       sortBy: 'Sortera',
-    },
-    search: {
-      label: 'Sök produkter',
-      placeholder: 'Sök produkter…',
-      clear: 'Rensa sökning',
     },
     sort: {
       featured: 'Utvalda',
@@ -506,35 +515,19 @@ const sv = {
       'price-desc': 'Pris: högt till lågt',
     },
     filters: {
-      title: 'Filter',
-      categories: 'Kategori',
       allCategories: 'Alla produkter',
-      price: 'Pris',
-      anyPrice: 'Alla priser',
-      priceRanges: {
-        'under-150': 'Under 150 kr',
-        '150-300': '150 – 300 kr',
-        '300-600': '300 – 600 kr',
-        'over-600': 'Över 600 kr',
-      },
-      size: 'Storlek',
-      availability: 'Tillgänglighet',
-      inStockOnly: 'Endast i lager',
-      clearAll: 'Rensa alla',
-      apply: 'Visa {count} produkter',
-      active: 'Aktiva filter',
       searchChip: 'Sökning: ”{query}”',
+      clearSearch: 'Rensa sökning',
     },
     emptyCatalog: {
       title: 'Nya produkter kommer snart',
       text: 'Butiken fylls på just nu. Välkommen tillbaka inom kort.',
     },
     loadMore: 'Visa fler',
-    allLoaded: 'Du har sett alla produkter',
     empty: {
-      title: 'Inga produkter matchar dina filter',
-      text: 'Prova att justera din sökning eller dina filter för att hitta det du letar efter.',
-      cta: 'Rensa alla filter',
+      title: 'Inga produkter här ännu',
+      text: 'Det finns inget i den här kategorin just nu. Ta en titt på resten av kollektionen.',
+      cta: 'Visa alla produkter',
     },
   },
 
@@ -542,21 +535,16 @@ const sv = {
     hero: {
       eyebrow: 'Kontakta oss',
       title: 'Vi vill gärna höra från dig',
-      text: 'Frågor om en beställning, en honung eller en företagsgåva? Vårt team i Stockholm hjälper gärna till – vi svarar på alla meddelanden inom 24 timmar.',
+      text: 'Frågor om en beställning, en honung eller en företagsgåva? Vårt team i Stockholm hjälper gärna till – mejla oss så svarar vi på alla meddelanden inom 24 timmar.',
     },
     info: {
       email: 'E-post',
-      emailNote: 'Vi svarar inom 24 timmar',
-      phone: 'Telefon',
-      phoneNote: 'Mån–fre, 09.00–17.00',
-      address: 'Adress',
-      addressNote: 'Liljeholmen, Stockholm',
-      hours: 'Öppettider',
-      hoursRows: [
-        { days: 'Måndag – fredag', time: '09.00 – 17.00' },
-        { days: 'Lördag', time: '10.00 – 14.00' },
-        { days: 'Söndag', time: 'Stängt' },
-      ],
+      emailNote: 'Vi svarar via e-post inom 24 timmar',
+      shop: 'Webbutik',
+      shopValue: 'Vi säljer endast online',
+      shopNote: 'Ingen fysisk butik – alla beställningar skickas från Stockholm',
+      office: 'Kontor',
+      officeNote: 'Vårt kontor tar inte emot besök',
     },
     form: {
       eyebrow: 'Skriv till oss',
@@ -593,41 +581,52 @@ const sv = {
       title: 'Följ skörden',
       text: 'Bakom kulisserna från de grekiska bigårdarna, varje vecka.',
     },
-    map: {
-      title: 'Vårt kontor i Stockholm',
-      note: 'Besök efter överenskommelse',
-      directions: 'Vägbeskrivning',
-    },
     faq: {
       eyebrow: 'Hjälp & support',
       title: 'Vanliga frågor',
-      text: 'Allt du behöver veta om leverans, returer och våra produkter.',
+      text: 'Allt du behöver veta om vår honung och hur vi arbetar.',
       items: [
         {
-          q: 'Hur lång är leveranstiden?',
-          a: 'Beställningar skickas från Stockholm inom 1–2 arbetsdagar. Leverans inom Sverige tar oftast 1–3 arbetsdagar och 3–7 arbetsdagar till övriga Europa.',
-        },
-        {
-          q: 'Vad kostar frakten?',
-          a: 'Frakt inom Sverige kostar 69 kr och är gratis vid köp över 799 kr. För övriga Europa kostar frakten 25 € och är gratis vid köp över 179 €.',
-        },
-        {
-          q: 'Varför har min honung kristalliserats?',
-          a: 'Kristallisering är en naturlig process och ett tecken på att honungen är rå och obearbetad. Ställ burken i varmt vatten (max 40 °C) och rör försiktigt så blir den flytande igen.',
+          q: 'Vad gör er honung annorlunda?',
+          a: 'Vår honung väljs ut direkt från små biodlarfamiljer i Grekland som arbetar nära naturen och årstiderna. Varje sort speglar sitt ursprung, från vild timjan och ekskogar till Greklands granklädda berg. Vi väljer honung för dess karaktär, renhet och särpräglade smak.',
         },
         {
           q: 'Är er honung verkligen rå?',
-          a: 'Ja. Vår honung värms eller ultrafiltreras aldrig, så den behåller sina naturliga enzymer, pollen och sin arom. Varje sort kommer från en enda region i Grekland.',
+          a: 'Ja. Vår råhonung hålls så nära sitt naturliga tillstånd som möjligt och utsätts inte för den höga värme som är vanlig vid industriell bearbetning. Det hjälper till att bevara dess naturliga arom, smak och karaktär.',
         },
         {
-          q: 'Kan jag returnera en produkt?',
-          a: 'Oöppnade produkter kan returneras inom 14 dagar efter leverans enligt svensk konsumentlag. Kontakta oss så guidar vi dig genom processen.',
+          q: 'Var kommer er honung ifrån?',
+          a: 'Vår honung kommer från noga utvalda regioner i hela Grekland. Vi arbetar med små biodlarfamiljer vars kupor följer olika landskap och säsongens blomning, vilket ger varje honung dess egen särpräglade karaktär.',
         },
         {
-          q: 'Erbjuder ni företagsgåvor?',
-          a: 'Absolut. Våra Naturbox-presentset är populära bland företag. Mejla info@mattheosselections.com för volympriser och personliga hälsningar.',
+          q: 'Varför har min honung kristalliserats?',
+          a: 'Kristallisering är helt naturligt och ofta ett tecken på att honungen har förblivit nära sitt naturliga tillstånd. När det sker varierar beroende på blomkälla och den naturliga sockersammansättningen. Om du föredrar den flytande kan du försiktigt värma burken i ljummet vatten.',
+        },
+        {
+          q: 'Hur ska jag förvara min honung?',
+          a: 'Förvara honungen väl tillsluten i rumstemperatur på en torr plats, skyddad från direkt solljus och stark värme. Den behöver inte förvaras i kylskåp.',
+        },
+        {
+          q: 'Vad är vandringsbiodling?',
+          a: 'Vandringsbiodling är en traditionell metod där biodlarna flyttar sina kupor under året och följer säsongens blomning och olika landskap. Det låter bina söka föda där naturen är som bäst och ger varje honung dess särpräglade ursprung och karaktär.',
+        },
+        {
+          q: 'Vad kan jag använda er honung till?',
+          a: 'Njut av den som den är, eller ha den i yoghurt, på frukt, i te och till frukosten. Den passar också utmärkt till ost och kan användas i dressingar, marinader, bakning och matlagning. Olika sorter ger olika smak, så det finns mycket att upptäcka.',
+        },
+        {
+          q: 'Innehåller er honung tillsatt socker eller sirap?',
+          a: 'Nej. Vår honung innehåller inget tillsatt socker, ingen sirap och inga andra ingredienser. Det som finns i burken är helt enkelt honung, producerad av bina och utvald av oss för sitt ursprung, sin kvalitet och sin karaktär.',
         },
       ],
+      shipping: {
+        title: 'Frakt & leverans',
+        items: [
+          'Frakt inom Sverige kostar 69 kr, med fri frakt vid köp över 799 kr.',
+          'Till övriga Europa kostar frakten 25 EUR, med fri frakt vid köp över 179 EUR.',
+          'Varje beställning packas omsorgsfullt och skickas från Stockholm så att dina produkter kommer fram säkert.',
+        ],
+      },
       moreTitle: 'Har du fler frågor?',
       moreText: 'Vårt team hjälper dig gärna med allt du behöver.',
       moreCta: 'Mejla oss',
@@ -635,7 +634,7 @@ const sv = {
   },
 
   footer: {
-    about: 'Ren honung och naturliga produkter från Greklands orörda landskap – utvalda för sin kvalitet, hållbarhet och sitt hantverk.',
+    about: 'Personligt utvalt från Grekland, med djup respekt för ursprunget, naturen och människorna som för traditionerna vidare.',
     shopTitle: 'Butik',
     companyTitle: 'Företaget',
     supportTitle: 'Kundservice',
@@ -644,7 +643,11 @@ const sv = {
     faq: 'Vanliga frågor',
     shipping: 'Frakt & leverans',
     returns: 'Returer',
+    terms: 'Köpvillkor',
     corporate: 'Företagsgåvor',
+    emailNote: 'Vi svarar via e-post',
+    onlineOnly: 'Endast webbutik – ingen fysisk butik',
+    office: 'Kontor, tar inte emot besök',
     country: 'Sverige',
     copyright: '© {year} Mattheos Selections. Alla rättigheter förbehållna.',
     legal: 'Pasver AB · Org.nr 559053-2486',

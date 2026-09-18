@@ -5,7 +5,7 @@ import Image from 'next/image';
 import Badge from 'react-bootstrap/Badge';
 import Button from 'react-bootstrap/Button';
 import Card from 'react-bootstrap/Card';
-import { PiEye, PiHandbagSimple } from 'react-icons/pi';
+import { PiBellSimpleRinging, PiEye, PiHandbagSimple } from 'react-icons/pi';
 import SizeSelector from './SizeSelector';
 import WishlistButton from './WishlistButton';
 import { storeConfig } from '@/config/site';
@@ -100,17 +100,30 @@ export default function ProductCard({ product, imageSizes, preload = false }) {
 
         <div className={styles.footer}>
           <span className={styles.price}>{price(variant.price)}</span>
-          <Button
-            variant="ms-dark"
-            size="sm"
-            className={styles.addButton}
-            onClick={() => addToCart(product, variant.id)}
-            disabled={soldOut}
-            aria-label={`${t('common.addToCart')}: ${product.name}${hasOptions ? `, ${variant.label}` : ''}`}
-          >
-            <PiHandbagSimple className="btn-icon" aria-hidden="true" />
-            <span className={styles.addLabel}>{soldOut ? t('common.soldOut') : t('common.add')}</span>
-          </Button>
+          {soldOut ? (
+            // Sold out: open the quick view, where the customer can ask to be notified when it is back.
+            <Button
+              variant="ms-outline"
+              size="sm"
+              className={styles.addButton}
+              onClick={openDetails}
+              aria-label={`${t('product.backInStock.title')}: ${product.name}${hasOptions ? `, ${variant.label}` : ''}`}
+            >
+              <PiBellSimpleRinging className="btn-icon" aria-hidden="true" />
+              <span className={styles.addLabel}>{t('common.notifyMe')}</span>
+            </Button>
+          ) : (
+            <Button
+              variant="ms-dark"
+              size="sm"
+              className={styles.addButton}
+              onClick={() => addToCart(product, variant.id)}
+              aria-label={`${t('common.addToCart')}: ${product.name}${hasOptions ? `, ${variant.label}` : ''}`}
+            >
+              <PiHandbagSimple className="btn-icon" aria-hidden="true" />
+              <span className={styles.addLabel}>{t('common.add')}</span>
+            </Button>
+          )}
         </div>
       </Card.Body>
     </Card>

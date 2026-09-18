@@ -1,36 +1,11 @@
-import { PiArrowUpRight, PiEnvelopeSimple, PiGift, PiMapPin } from 'react-icons/pi';
+import { PiEnvelopeSimple, PiGift } from 'react-icons/pi';
 import SocialLinks from '@/components/layout/SocialLinks';
 import { siteConfig } from '@/config/site';
 import styles from './ContactAside.module.css';
 
 export default function ContactAside({ copy }) {
-  const { address, map } = siteConfig;
-
   return (
     <div className={styles.aside}>
-      <div className={styles.mapCard}>
-        <div className={styles.map}>
-          <iframe
-            title={copy.map.title}
-            src={map.embedUrl}
-            loading="lazy"
-            referrerPolicy="no-referrer-when-downgrade"
-          />
-        </div>
-        <div className={styles.mapInfo}>
-          <div>
-            <p className={styles.mapTitle}>{copy.map.title}</p>
-            <p className={styles.mapAddress}>
-              <PiMapPin aria-hidden="true" /> {address.street}, {address.postalCode} {address.city}
-            </p>
-            <p className={styles.mapNote}>{copy.map.note}</p>
-          </div>
-          <a href={map.directionsUrl} target="_blank" rel="noopener noreferrer" className={styles.directions}>
-            {copy.map.directions} <PiArrowUpRight className="flip-rtl" aria-hidden="true" />
-          </a>
-        </div>
-      </div>
-
       <div className={styles.wholesale} id="wholesale">
         <span className={styles.wholesaleIcon}>
           <PiGift aria-hidden="true" />

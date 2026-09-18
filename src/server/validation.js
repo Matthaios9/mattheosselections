@@ -165,3 +165,13 @@ export const kustomValidationInput = z
   .passthrough();
 
 export const uploadSignatureInput = z.object({ target: z.enum(UPLOAD_TARGETS) });
+
+/** "Notify me when available" for one size of a sold-out product. */
+export const stockAlertInput = z
+  .object({
+    productId: objectId('Invalid product'),
+    variantKey: z.string().trim().min(1).max(40),
+    email: z.string().trim().toLowerCase().max(254).pipe(z.email('Enter a valid email address')),
+    locale: z.enum(['en', 'sv', 'el']).catch('en'),
+  })
+  .strip();

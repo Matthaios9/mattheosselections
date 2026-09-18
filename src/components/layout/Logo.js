@@ -11,7 +11,7 @@ export default function Logo({ href, light = false, onClick, className = '' }) {
       onClick={onClick}
       aria-label="Mattheos Selections"
     >
-      <Image src="/images/brand/logo-mark.png" alt="" width={44} height={41} className={styles.mark} preload />
+      <Image src="/images/brand/logo-mark.png" alt="" width={58} height={54} className={styles.mark} preload />
       <span className={styles.wordmark}>
         <span className={styles.name}>Mattheos</span>
         <span className={styles.sub}>Selections</span>

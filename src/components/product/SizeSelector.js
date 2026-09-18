@@ -8,10 +8,20 @@ import { useI18n } from '@/i18n/I18nProvider';
 import styles from './SizeSelector.module.css';
 
 /**
- * Pill-style size picker built on React-Bootstrap's ToggleButtonGroup. Sold-out sizes are disabled.
+ * Pill-style size picker built on React-Bootstrap's ToggleButtonGroup. Sold-out sizes are disabled,
+ * unless `allowSoldOut` (the quick view, where a sold-out size offers "Notify me when available").
  * With `showStock`, each option also shows how many units of that size are available.
  */
-export default function SizeSelector({ variants, value, onChange, label, soldOutLabel, size = 'sm', showStock = false }) {
+export default function SizeSelector({
+  variants,
+  value,
+  onChange,
+  label,
+  soldOutLabel,
+  size = 'sm',
+  showStock = false,
+  allowSoldOut = false,
+}) {
   const name = useId();
   const { t } = useI18n();
 
@@ -38,7 +48,7 @@ export default function SizeSelector({ variants, value, onChange, label, soldOut
             id={`${name}-${variant.id}`}
             value={variant.id}
             variant="ms-size"
-            disabled={soldOut}
+            disabled={soldOut && !allowSoldOut}
             className={`${styles.option} ${soldOut ? styles.soldOut : ''}`}
             title={soldOut ? soldOutLabel : undefined}
           >

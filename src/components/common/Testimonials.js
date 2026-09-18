@@ -4,12 +4,12 @@ import { useState } from 'react';
 import Image from 'next/image';
 import Carousel from 'react-bootstrap/Carousel';
 import Container from 'react-bootstrap/Container';
-import { PiArrowLeft, PiArrowRight, PiQuotes, PiStarFill } from 'react-icons/pi';
+import { PiArrowLeft, PiArrowRight, PiQuotes } from 'react-icons/pi';
 import Reveal from './Reveal';
 import { useI18n } from '@/i18n/I18nProvider';
 import styles from './Testimonials.module.css';
 
-/** Customer quotes on a React-Bootstrap Carousel with custom controls. Reused on Home and About. */
+/** Real customer quotes on a React-Bootstrap Carousel with custom controls. Reused on Home and About. */
 export default function Testimonials({ className = 'bg-sand' }) {
   const { t } = useI18n();
   const items = t('home.testimonials.items');
@@ -33,6 +33,7 @@ export default function Testimonials({ className = 'bg-sand' }) {
           <Reveal className={styles.content} delay={120}>
             <span className="eyebrow">{t('home.testimonials.eyebrow')}</span>
             <h2 className="section-title">{t('home.testimonials.title')}</h2>
+            <p className={styles.intro}>{t('home.testimonials.text')}</p>
 
             <Carousel
               activeIndex={index}
@@ -46,11 +47,6 @@ export default function Testimonials({ className = 'bg-sand' }) {
               {items.map((item) => (
                 <Carousel.Item key={item.name}>
                   <figure className={styles.slide}>
-                    <div className={styles.stars} aria-hidden="true">
-                      {Array.from({ length: 5 }, (_, i) => (
-                        <PiStarFill key={i} />
-                      ))}
-                    </div>
                     <blockquote className={styles.quote}>“{item.quote}”</blockquote>
                     <figcaption className={styles.author}>
                       <span className={styles.avatar} aria-hidden="true">
@@ -58,9 +54,7 @@ export default function Testimonials({ className = 'bg-sand' }) {
                       </span>
                       <span>
                         <span className={styles.name}>{item.name}</span>
-                        <span className={styles.meta}>
-                          {item.location} · {item.product}
-                        </span>
+                        <span className={styles.meta}>{item.location}</span>
                       </span>
                     </figcaption>
                   </figure>

@@ -8,6 +8,7 @@ import Dropdown from 'react-bootstrap/Dropdown';
 import Offcanvas from 'react-bootstrap/Offcanvas';
 import {
   PiArrowSquareOut,
+  PiBellSimpleRinging,
   PiList,
   PiPackage,
   PiReceipt,
@@ -27,6 +28,7 @@ const NAV = [
   { href: '/admin/orders', label: 'Orders', icon: PiReceipt, badge: 'pending' },
   { href: '/admin/products', label: 'Products', icon: PiPackage },
   { href: '/admin/categories', label: 'Categories', icon: PiTag },
+  { href: '/admin/stock-alerts', label: 'Stock alerts', icon: PiBellSimpleRinging },
   { href: '/admin/users', label: 'Users', icon: PiUsers },
 ];
 

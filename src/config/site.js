@@ -7,23 +7,16 @@ export const siteConfig = {
   legalName: 'Pasver AB',
   orgNumber: '559053-2486',
   url: 'https://mattheosselections.com',
+  // Customers are helped by email only — no phone line.
   email: 'info@mattheosselections.com',
-  phone: '+46 70 174 06 50', // placeholder
-  phoneHref: 'tel:+46701740650', // placeholder
+  // Office and postal address. Not open to visitors: the shop is online only.
   address: {
     street: 'Ekfatsgatan 4',
     postalCode: '117 57',
     city: 'Stockholm',
   },
-  map: {
-    lat: 59.30607,
-    lng: 18.03467,
-    embedUrl:
-      'https://www.openstreetmap.org/export/embed.html?bbox=18.0226%2C59.3018%2C18.0467%2C59.3103&layer=mapnik&marker=59.30607%2C18.03467',
-    directionsUrl: 'https://www.openstreetmap.org/?mlat=59.30607&mlon=18.03467#map=17/59.30607/18.03467',
-  },
-  // Purchase terms linked from Kustom Checkout — point this at a terms page once it exists.
-  termsPath: '/contact',
+  // Terms and conditions of sale: linked in the footer and from Kustom Checkout.
+  termsPath: '/terms-and-conditions',
   socials: [
     { id: 'instagram', label: 'Instagram', href: 'https://www.instagram.com/mattheos_selections' },
     { id: 'facebook', label: 'Facebook', href: 'https://www.facebook.com/profile.php?id=61575561185894' },
@@ -46,5 +39,6 @@ export const storeConfig = {
   vatRate: 6,
   // Sizes with this many units or fewer show "Only N left" and appear as low stock in the admin.
   lowStockThreshold: 5,
-  shopPageSize: 9,
+  // Products per shop page; with a small collection everything usually fits on the first page.
+  shopPageSize: 24,
 };

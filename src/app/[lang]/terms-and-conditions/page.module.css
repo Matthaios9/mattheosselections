@@ -1,0 +1,119 @@
+.layout {
+  display: grid;
+  gap: 2.5rem;
+}
+
+@media (min-width: 992px) {
+  .layout {
+    grid-template-columns: 260px minmax(0, 1fr);
+    gap: clamp(3rem, 6vw, 5rem);
+    align-items: start;
+  }
+
+  .toc {
+    position: sticky;
+    top: calc(var(--ms-header-h) + 2rem);
+  }
+}
+
+/* Contents ------------------------------------------------------------------ */
+
+.toc {
+  padding: 1.5rem;
+  border-radius: var(--ms-radius-lg);
+  background: var(--ms-sand);
+}
+
+.tocTitle {
+  margin: 0 0 0.85rem;
+  font-size: 0.7rem;
+  font-weight: 700;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--ms-muted);
+}
+
+.tocList {
+  display: flex;
+  flex-direction: column;
+  gap: 0.45rem;
+  margin: 0;
+  padding-inline-start: 1.2rem;
+  font-size: 0.88rem;
+}
+
+.tocList a {
+  color: var(--ms-ink);
+}
+
+.tocList a:hover {
+  color: var(--ms-honey-deep);
+}
+
+/* Text ------------------------------------------------------------------------ */
+
+.article {
+  max-width: 46rem;
+  color: var(--ms-text);
+  line-height: 1.8;
+}
+
+.section {
+  padding-bottom: 2rem;
+  margin-bottom: 2rem;
+  border-bottom: 1px solid var(--ms-line);
+  scroll-margin-top: calc(var(--ms-header-h) + 1.5rem);
+}
+
+.section p,
+.section ul {
+  margin: 0 0 1rem;
+}
+
+.section > :last-child {
+  margin-bottom: 0;
+}
+
+.section ul {
+  display: flex;
+  flex-direction: column;
+  gap: 0.35rem;
+  padding-inline-start: 1.25rem;
+}
+
+.section a {
+  color: var(--ms-honey-deep);
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+
+.heading {
+  margin: 0 0 1rem;
+  font-size: clamp(1.5rem, 2.4vw, 1.9rem);
+}
+
+.subheading {
+  margin: 1.5rem 0 0.5rem;
+  font-family: var(--ms-font-sans);
+  font-size: 1rem;
+  font-weight: 700;
+  color: var(--ms-ink);
+}
+
+.address {
+  display: flex;
+  flex-direction: column;
+  margin: 0 0 1rem;
+  padding: 1rem 1.25rem;
+  border-inline-start: 3px solid var(--ms-honey);
+  background: var(--ms-sand);
+  font-style: normal;
+  font-weight: 600;
+  color: var(--ms-ink);
+}
+
+.company {
+  margin: 0;
+  font-size: 0.85rem;
+  color: var(--ms-muted);
+}

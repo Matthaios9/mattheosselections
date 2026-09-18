@@ -1,0 +1,78 @@
+.box {
+  display: flex;
+  flex-direction: column;
+  gap: 0.6rem;
+  padding: 1.1rem 1.2rem 1.2rem;
+  border-radius: var(--ms-radius);
+  background: var(--ms-sand);
+}
+
+.title {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  margin: 0;
+  font-family: var(--ms-font-serif);
+  font-size: 1.2rem;
+  line-height: 1.25;
+  color: var(--ms-ink);
+}
+
+.icon {
+  flex-shrink: 0;
+  font-size: 1.2rem;
+  color: var(--ms-honey-deep);
+}
+
+.text {
+  margin: 0;
+  font-size: 0.88rem;
+  line-height: 1.6;
+  color: var(--ms-muted);
+}
+
+.row {
+  display: flex;
+  gap: 0.5rem;
+  margin-top: 0.2rem;
+}
+
+.input {
+  flex: 1;
+  min-width: 0;
+  height: 3rem;
+}
+
+.submit {
+  flex-shrink: 0;
+  height: 3rem;
+  --bs-btn-padding-y: 0;
+}
+
+@media (max-width: 420px) {
+  .row {
+    flex-direction: column;
+  }
+}
+
+.error {
+  margin: 0;
+  font-size: 0.82rem;
+  font-weight: 600;
+  color: var(--ms-danger);
+}
+
+.success {
+  flex-direction: row;
+  align-items: flex-start;
+  gap: 0.6rem;
+}
+
+.success .icon {
+  margin-top: 0.1rem;
+  color: var(--ms-success);
+}
+
+.success .text {
+  color: var(--ms-ink);
+}

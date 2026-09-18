@@ -3,6 +3,7 @@ import Link from 'next/link';
 import Container from 'react-bootstrap/Container';
 import { PiArrowRight, PiCheck, PiMountains } from 'react-icons/pi';
 import ButtonLink from '@/components/common/ButtonLink';
+import HeroCarousel from './HeroCarousel';
 import HeroProductCard from './HeroProductCard';
 import styles from './HeroSection.module.css';
 
@@ -19,9 +20,11 @@ export default function HeroSection({ copy, href, product }) {
           <h1 className={`display-hero ${styles.title} enter`} style={{ '--enter-delay': '90ms' }}>
             {copy.titleBefore} <span className="accent-italic">{copy.titleAccent}</span> {copy.titleAfter}
           </h1>
-          <p className={`lead-ms ${styles.text} enter`} style={{ '--enter-delay': '180ms' }}>
-            {copy.text}
-          </p>
+          <div className={`${styles.intro} enter`} style={{ '--enter-delay': '180ms' }}>
+            <p className={styles.introTitle}>{copy.intro}</p>
+            <p className={`lead-ms ${styles.text}`}>{copy.text}</p>
+            <p className={styles.tagline}>{copy.tagline}</p>
+          </div>
           <div className={`${styles.actions} enter`} style={{ '--enter-delay': '270ms' }}>
             <ButtonLink href={href('/shop')} size="lg">
               {copy.primaryCta}
@@ -44,28 +47,7 @@ export default function HeroSection({ copy, href, product }) {
         </div>
 
         <div className={styles.visual}>
-          <div className={styles.arch}>
-            <Image
-              src="/images/editorial/hero-honey-jar.jpg"
-              alt={copy.imageAlt}
-              fill
-              preload
-              quality={85}
-              sizes="(min-width: 992px) 38vw, 86vw"
-              className={styles.archImage}
-            />
-          </div>
-
-          <div className={styles.secondary}>
-            <Image
-              src="/images/editorial/honeycomb-close.jpg"
-              alt=""
-              fill
-              loading="eager"
-              sizes="(min-width: 992px) 14vw, 30vw"
-              className="img-cover"
-            />
-          </div>
+          <HeroCarousel alt={copy.imageAlt} slideLabel={copy.slide} />
 
           <div className={styles.seal} aria-hidden="true">
             <svg viewBox="0 0 140 140" className={styles.sealText}>

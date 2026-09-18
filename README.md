@@ -20,8 +20,8 @@ npm run dev               # http://localhost:3000 (storefront) · /admin (admin 
 | `npm run lint`         | ESLint (Next.js + React Compiler rules)       |
 | `npm run create-admin` | Create an admin account from the command line |
 
-Environment variables are documented in [`.env.example`](.env.example) (MongoDB, JWT secret, Cloudinary, Kustom Checkout and
-Google sign-in).
+Environment variables are documented in [`.env.example`](.env.example) (MongoDB, JWT secret, Cloudinary, Kustom Checkout,
+Google sign-in and SMTP email).
 
 ## Architecture
 
@@ -36,7 +36,8 @@ src/
 ├── hooks/                Reusable React hooks (data loading, URL state, forms, cart…)
 ├── context/              Shared client state (cart, auth, UI overlays, wishlist, catalogue, admin session)
 ├── constants/            App-wide constants (shop filters & sorting, status labels)
-├── config/               Business configuration (contact details, shipping, navigation)
+├── config/               Business configuration (contact details, shipping, navigation, home hero photos)
+├── content/              Long page texts per language (terms and conditions of sale)
 ├── utils/                Pure helpers (formatting, validation, URLs, errors, localisation)
 ├── i18n/                 Locales, dictionaries (en / sv / el) and the translation provider
 ├── server/               Server-only code — never imported by client components
@@ -45,7 +46,7 @@ src/
 │   ├── auth/             Sessions (httpOnly JWT cookie), Google sign-in, admin allow-list, current user
 │   ├── models/           Mongoose models
 │   ├── validation.js     Request schemas (zod)
-│   └── kustom.js · cloudinary.js · db.js · search.js · utils.js
+│   └── kustom.js · mailer.js · cloudinary.js · db.js · search.js · utils.js
 └── proxy.js              Locale redirects and the optimistic admin gate
 ```
 
@@ -77,8 +78,9 @@ src/
 | Auth | `POST /api/auth/login` · `POST /api/auth/register` · `POST /api/auth/logout` · `GET /api/auth/me` |
 | Admin auth | `POST /api/admin/auth/google` (Sign in with Google — the only way into the panel) |
 | Catalogue (public) | `GET /api/products` — `locale, q, category, price, sizes, stock=in, featured, ids, sort, page, pageSize, facets` |
+| Stock alerts (public) | `POST /api/stock-alerts` — "Notify me when available" for a sold-out size |
 | Checkout | `POST /api/checkout` (→ Kustom Checkout snippet) · `POST /api/checkout/confirm` · `POST /api/kustom/push` · `POST /api/kustom/validate` |
-| Admin | `/api/admin/products[/:id]` · `/api/admin/categories[/:id]` · `/api/admin/orders[/:id]` · `/api/admin/users[/:id][/orders]` · `GET /api/admin/stats[/orders]` · `POST /api/admin/uploads/signature` |
+| Admin | `/api/admin/products[/:id]` · `/api/admin/categories[/:id]` · `/api/admin/orders[/:id]` · `/api/admin/users[/:id][/orders]` · `/api/admin/stock-alerts[/:id]` · `GET /api/admin/stats[/orders]` · `POST /api/admin/uploads/signature` |
 
 Errors are always `{ "error": { "code", "message", "fieldErrors?" } }` with a matching HTTP status.
 
@@ -126,5 +128,25 @@ Set `KUSTOM_API_KEY` — from the Kustom Portal under Developers → API (`kco_t
 (`https://api.playground.kustom.co` for testing, `https://api.kustom.co` live). Kustom's API only accepts requests from supported regions: on Vercel, `vercel.json`
 runs the functions in Stockholm (`arn1`), next to the MongoDB cluster (AWS eu-north-1) — Vercel's default,
 Washington D.C., is refused by Kustom. Locally, use a European VPN.
-Which payment methods appear is configured in the Kustom portal, not in the code. The checkout links to the terms page set
-in `siteConfig.termsPath`.
+Which payment methods appear is decided by Kustom, not by the code: the Checkout API has no setting to hide or add a
+method. Removing one (e.g. EPS for Austria or Przelewy24 for Poland) or adding one is done by Kustom support
+(support@kustom.co, with the merchant ID). Apple Pay and Google Pay are on by default and only appear on devices and
+browsers that support them (Apple Pay: Safari on Apple devices). The checkout links to the terms page set in
+`siteConfig.termsPath` (`/terms-and-conditions`).
+
+## Shop categories
+
+The shop filters by category only, with **All Products** as the default view. The category tabs come from the
+categories managed under Admin → Categories (active ones, in their sort order); assign each product to one in the
+product form.
+
+## Back-in-stock emails
+
+Like the WooCommerce shop's Back In Stock Notifier: when a size is sold out, the quick view offers "Notify me when
+available". The customer gets a short confirmation email and, once, an email when that size is back in stock. The
+emails go out after an admin saves a product with the size restocked (or cancels an order, which returns stock), in the
+customer's language. Admin → Stock alerts lists the requests and has a "Send due emails now" button.
+
+Email is sent over SMTP — set `SMTP_HOST`, `SMTP_PORT` (465, or 587 for STARTTLS), `SMTP_USER`, `SMTP_PASSWORD` and
+optionally `MAIL_FROM` (default `Mattheos Selections <info@mattheosselections.com>`). Without `SMTP_HOST`, requests are
+still saved and the admin page shows a warning; the emails can be sent with the button once email is configured.

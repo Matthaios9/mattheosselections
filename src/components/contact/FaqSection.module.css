@@ -56,6 +56,27 @@
   color: var(--ms-ink);
 }
 
+.shipping {
+  margin-top: 0.5rem;
+  scroll-margin-top: calc(var(--ms-header-h) + 2rem);
+}
+
+.shipping + .help {
+  margin-top: 0;
+}
+
+.shippingList {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  margin: 0.6rem 0 0;
+  padding: 0;
+  list-style: none;
+  font-size: 0.88rem;
+  line-height: 1.6;
+  color: var(--ms-muted);
+}
+
 .helpText {
   margin: 0.2rem 0 0.6rem;
   font-size: 0.88rem;

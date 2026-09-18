@@ -2,7 +2,7 @@ import 'server-only';
 import { storeConfig } from '@/config/site';
 import { connectToDatabase } from '@/server/db';
 import { destroyImages } from '@/server/cloudinary';
-import { Product } from '@/server/models';
+import { Product, StockAlert } from '@/server/models';
 import { escapeRegex, isObjectId, pageParams, pageResult, plainLocalized, toId, toIso } from '@/server/utils';
 
 /** Admin product management (all languages, drafts included). The storefront reads through storefront.js. */
@@ -100,6 +100,7 @@ export async function deleteProduct(id) {
   await connectToDatabase();
   const doc = await Product.findByIdAndDelete(id).lean();
   if (!doc) return false;
+  await StockAlert.deleteMany({ product: id });
   await destroyImages((doc.images ?? []).map((image) => image.publicId));
   return true;
 }

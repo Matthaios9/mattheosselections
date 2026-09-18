@@ -3,7 +3,7 @@ import AccordionBody from 'react-bootstrap/AccordionBody';
 import AccordionHeader from 'react-bootstrap/AccordionHeader';
 import AccordionItem from 'react-bootstrap/AccordionItem';
 import Container from 'react-bootstrap/Container';
-import { PiEnvelopeSimple, PiQuestion } from 'react-icons/pi';
+import { PiEnvelopeSimple, PiQuestion, PiTruck } from 'react-icons/pi';
 import Reveal from '@/components/common/Reveal';
 import { siteConfig } from '@/config/site';
 import styles from './FaqSection.module.css';
@@ -17,6 +17,19 @@ export default function FaqSection({ copy }) {
             <span className="eyebrow">{copy.eyebrow}</span>
             <h2 className="section-title">{copy.title}</h2>
             <p className={styles.text}>{copy.text}</p>
+            <div className={`${styles.help} ${styles.shipping}`} id="shipping">
+              <span className={styles.helpIcon}>
+                <PiTruck aria-hidden="true" />
+              </span>
+              <div>
+                <h3 className={styles.helpTitle}>{copy.shipping.title}</h3>
+                <ul className={styles.shippingList}>
+                  {copy.shipping.items.map((item) => (
+                    <li key={item}>{item}</li>
+                  ))}
+                </ul>
+              </div>
+            </div>
             <div className={styles.help}>
               <span className={styles.helpIcon}>
                 <PiQuestion aria-hidden="true" />

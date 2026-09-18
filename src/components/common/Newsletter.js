@@ -39,6 +39,7 @@ export default function Newsletter() {
             <div className={styles.copy}>
               <span className="eyebrow eyebrow-light">{t('newsletter.eyebrow')}</span>
               <h2 className={styles.title}>{t('newsletter.title')}</h2>
+              <p className={styles.offer}>{t('newsletter.offer')}</p>
               <p className={styles.text}>{t('newsletter.text')}</p>
             </div>
 
