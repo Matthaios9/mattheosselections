@@ -43,7 +43,7 @@ export default function Footer({ locale, dict, categories }) {
       <Container>
         <div className={styles.top}>
           <div className={styles.brand}>
-            <Logo href={href('/')} light />
+            <Logo href={href('/')} light stacked />
             <p className={styles.about}>{f.about}</p>
             <div className={styles.follow}>
               <span className={styles.followLabel}>{f.followUs}</span>

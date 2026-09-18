@@ -40,13 +40,18 @@
 }
 
 .brandText {
-  font-family: var(--ms-font-serif);
-  font-size: 1.4rem;
-  line-height: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 0.45rem;
+}
+
+.brandWordmark {
+  width: 124px;
+  height: auto;
 }
 
 .brandTag {
-  margin-inline-start: 0.2rem;
   padding: 0.15rem 0.45rem;
   border-radius: 999px;
   background: rgba(224, 168, 74, 0.18);

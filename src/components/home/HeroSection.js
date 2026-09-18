@@ -61,7 +61,7 @@ export default function HeroSection({ copy, href, product }) {
               </text>
             </svg>
             <span className={styles.sealCenter}>
-              <Image src="/images/brand/logo-mark.png" alt="" width={40} height={38} />
+              <Image src="/images/brand/logo-mark.svg" alt="" width={44} height={41} />
             </span>
           </div>
 

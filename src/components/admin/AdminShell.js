@@ -48,10 +48,11 @@ function SidebarContent({ pathname, pendingOrders, onNavigate }) {
 
   return (
     <div className={styles.sidebarInner}>
-      <Link href="/admin" className={styles.brand} onClick={onNavigate}>
-        <Image src="/images/brand/logo-mark.png" alt="" width={34} height={32} />
+      <Link href="/admin" className={styles.brand} onClick={onNavigate} aria-label="Mattheos Selections admin">
+        <Image src="/images/brand/logo-mark.svg" alt="" width={42} height={40} />
         <span className={styles.brandText}>
-          Mattheos <span className={styles.brandTag}>Admin</span>
+          <Image src="/images/brand/logo-wordmark-light.svg" alt="" width={124} height={23} className={styles.brandWordmark} />
+          <span className={styles.brandTag}>Admin</span>
         </span>
       </Link>
 

@@ -26,10 +26,9 @@ export default async function AdminLoginPage({ searchParams }) {
         <Image src="/images/editorial/honey-dipper-dark.jpg" alt="" fill sizes="50vw" className={styles.brandImage} preload />
         <div className={styles.brandContent}>
           <div className={styles.logo}>
-            <Image src="/images/brand/logo-mark.png" alt="" width={44} height={41} />
-            <span>
-              Mattheos <em>Admin</em>
-            </span>
+            <Image src="/images/brand/logo-mark.svg" alt="" width={56} height={53} />
+            <Image src="/images/brand/logo-wordmark-light.svg" alt="Mattheos Selections" width={180} height={33} className={styles.wordmark} />
+            <span className={styles.tag}>Admin</span>
           </div>
           <p className={styles.quote}>Manage the harvest — products, orders and customers in one place.</p>
         </div>

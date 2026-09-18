@@ -1,13 +1,10 @@
 .logo {
   display: inline-flex;
   align-items: center;
-  gap: 0.8rem;
-  color: var(--ms-ink);
+  gap: 0.85rem;
   flex-shrink: 0;
-}
-
-.logo:hover {
-  color: var(--ms-ink);
+  /* Artwork, not text: keep the lock-up's arrangement in right-to-left locales too. */
+  direction: ltr;
 }
 
 .mark {
@@ -21,34 +18,28 @@
 }
 
 .wordmark {
-  display: flex;
+  width: 172px;
+  height: auto;
+}
+
+/* Official stacked lock-up. The ratios come straight from the source artwork's viewBoxes
+   (mark 121.4 wide at x 233.8, wordmark 256.8 wide at x 169.6, 8.8 units apart), so the
+   mark sits exactly where the designer placed it at any width. */
+.logo.stacked {
   flex-direction: column;
-  line-height: 1;
+  align-items: flex-start;
+  gap: 0;
+  width: 14rem;
 }
 
-.name {
-  font-family: var(--ms-font-serif);
-  font-size: 2.1rem;
-  font-weight: 500;
-  letter-spacing: -0.01em;
+.stacked .mark {
+  width: 47.27%;
+  margin-left: 25%;
+  margin-bottom: 3.43%;
 }
 
-.sub {
-  margin-top: 0.25rem;
-  font-size: 0.72rem;
-  font-weight: 700;
-  letter-spacing: 0.42em;
-  text-transform: uppercase;
-  color: var(--ms-honey-deep);
-}
-
-.light,
-.light:hover {
-  color: #fff;
-}
-
-.light .sub {
-  color: var(--ms-honey-bright);
+.stacked .wordmark {
+  width: 100%;
 }
 
 @media (max-width: 575.98px) {
@@ -60,12 +51,12 @@
     width: 44px;
   }
 
-  .name {
-    font-size: 1.75rem;
+  .wordmark {
+    width: 142px;
   }
 
-  .sub {
-    font-size: 0.62rem;
+  .logo.stacked {
+    width: 12.5rem;
   }
 }
 
@@ -74,12 +65,7 @@
     width: 38px;
   }
 
-  .name {
-    font-size: 1.5rem;
-  }
-
-  .sub {
-    font-size: 0.56rem;
-    letter-spacing: 0.36em;
+  .wordmark {
+    width: 122px;
   }
 }
