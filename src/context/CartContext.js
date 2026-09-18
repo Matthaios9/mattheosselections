@@ -52,7 +52,9 @@ function CartStateProvider({ children }) {
           product,
           name: product?.name ?? item.name,
           variantLabel: variant?.label ?? item.variantLabel,
-          image: variant?.image ?? item.image,
+          // The saved image only stands in until live data arrives. A product that no longer exists
+          // may point at storage this site no longer serves (e.g. a previous Cloudinary account).
+          image: variant?.image ?? (settled && !product ? null : item.image),
           maxQuantity: product ? (variant?.stock ?? 0) : settled ? 0 : (item.stock ?? item.quantity),
         };
       })
