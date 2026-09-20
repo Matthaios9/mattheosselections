@@ -2,6 +2,7 @@ import 'server-only';
 import { siteConfig } from '@/config/site';
 import { interpolate } from '@/i18n/translate';
 import { connectToDatabase } from '@/server/db';
+import { renderEmail } from '@/server/email';
 import { isMailConfigured, sendMail } from '@/server/mailer';
 import { Product, STOCK_ALERT_STATUSES, StockAlert } from '@/server/models';
 import { escapeRegex, isObjectId, pageParams, pageResult, toId, toIso } from '@/server/utils';
@@ -44,26 +45,6 @@ const EMAILS = {
     footer: 'Λαμβάνετε αυτό το email επειδή ζητήσατε να ενημερωθείτε όταν το προϊόν είναι ξανά διαθέσιμο. Το στέλνουμε μόνο μία φορά.',
   },
 };
-
-const escapeHtml = (value) =>
-  String(value).replace(/[&<>"']/g, (char) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' })[char]);
-
-/** A short branded email: a paragraph, an optional button and a footer line. */
-function renderEmail({ to, subject, text, link, cta, footer }) {
-  const button = link
-    ? `<p style="margin:28px 0 0"><a href="${escapeHtml(link)}" style="display:inline-block;padding:13px 26px;border-radius:999px;background:#1c1915;color:#ffffff;font-weight:700;text-decoration:none">${escapeHtml(cta)}</a></p>`
-    : '';
-  const html = `<!doctype html>
-<html><body style="margin:0;padding:0;background:#fbf8f3">
-  <div style="max-width:560px;margin:0 auto;padding:40px 24px;font-family:Helvetica,Arial,sans-serif;font-size:16px;line-height:1.6;color:#3e382f">
-    <p style="margin:0 0 24px;font-family:Georgia,serif;font-size:24px;color:#1c1915">${escapeHtml(siteConfig.name)}</p>
-    <p style="margin:0">${escapeHtml(text)}</p>
-    ${button}
-    <p style="margin:36px 0 0;font-size:13px;color:#8a8172">${escapeHtml(footer)}</p>
-  </div>
-</body></html>`;
-  return { to, subject, text: [text, link && `${cta}: ${link}`, footer].filter(Boolean).join('\n\n'), html };
-}
 
 /** Product name and size label in the customer's language, for one alert. */
 function describe(product, variantKey, locale) {

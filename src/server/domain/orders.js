@@ -152,7 +152,8 @@ export async function listOrdersForUser(userId, limit = 50) {
  * Change an order's status. Cancelling returns its items to stock; reopening a
  * cancelled order reserves the stock again (fails if it is no longer available).
  * Kustom payments follow along: shipping captures the payment, cancelling voids or refunds it.
- * Returns { ok, order } or { ok: false, reason: 'not-found' | 'insufficient-stock' | 'payment', item?, message? }.
+ * `changed` is false when the order already had this status — the caller then skips the customer email.
+ * Returns { ok, changed, order } or { ok: false, reason: 'not-found' | 'insufficient-stock' | 'payment', item?, message? }.
  */
 export async function updateOrderStatus(id, { status, note }, admin) {
   if (!isObjectId(id)) return { ok: false, reason: 'not-found' };
@@ -160,6 +161,7 @@ export async function updateOrderStatus(id, { status, note }, admin) {
   const order = await Order.findById(id);
   if (!order) return { ok: false, reason: 'not-found' };
 
+  const previousStatus = order.status;
   const lines = order.items.filter((item) => item.product).map(stockLine);
   const cancelling = status === 'cancelled' && order.status !== 'cancelled';
   const reopening = order.status === 'cancelled' && status !== 'cancelled';
@@ -188,7 +190,7 @@ export async function updateOrderStatus(id, { status, note }, admin) {
   order.status = status;
   order.history.push({ status, note: [note, paymentNote].filter(Boolean).join(' · '), by: admin.email, at: new Date() });
   await order.save();
-  return { ok: true, order: serializeOrder(order.toObject()) };
+  return { ok: true, changed: previousStatus !== status, order: serializeOrder(order.toObject()) };
 }
 
 export async function updateOrderFields(id, fields) {

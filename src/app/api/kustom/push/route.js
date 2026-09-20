@@ -1,3 +1,5 @@
+import { after } from 'next/server';
+import { sendOrderConfirmation } from '@/server/domain/order-emails';
 import { handleKustomPush } from '@/server/domain/payments';
 import { revalidateStorefront, unavailable, withApi } from '@/server/http';
 import { isKustomConfigured } from '@/server/kustom';
@@ -13,6 +15,11 @@ export const POST = withApi(async ({ query }) => {
   if (!query.kustom_order_id) return { ok: false };
 
   const result = await handleKustomPush(query.kustom_order_id);
-  if (result.created) revalidateStorefront();
+  // The customer never reached the confirmation page: this is where their order email comes from.
+  // Links use siteConfig.url — the request comes from Kustom, not from a browser on this site.
+  if (result.created) {
+    revalidateStorefront();
+    after(() => sendOrderConfirmation(result.order));
+  }
   return { ok: result.ok };
 });

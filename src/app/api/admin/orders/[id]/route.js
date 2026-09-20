@@ -1,5 +1,6 @@
 import { after } from 'next/server';
 import { z } from 'zod';
+import { sendOrderStatusEmail } from '@/server/domain/order-emails';
 import { getOrder, updateOrderFields, updateOrderStatus } from '@/server/domain/orders';
 import { sendBackInStockEmails } from '@/server/domain/stock-alerts';
 import { conflict, notFound, parseBody, requestOrigin, revalidateStorefront, withApi } from '@/server/http';
@@ -43,9 +44,11 @@ export const PATCH = withApi(
       if (!result.ok && result.reason === 'payment') throw conflict(result.message, 'payment-failed');
       if (!result.ok) throw missing();
       revalidateStorefront(); // cancelling / reopening changes stock
+      const origin = requestOrigin(request);
+      // Tell the customer where their order stands. Re-saving the same status is not news to them.
+      if (result.changed) after(() => sendOrderStatusEmail(result.order, { origin }));
       if (body.status === 'cancelled') {
         // Items returned to stock may be what someone is waiting for.
-        const origin = requestOrigin(request);
         after(() =>
           sendBackInStockEmails({ origin }).catch((error) =>
             console.error('[stock-alerts] Could not send back-in-stock emails:', error.message)

@@ -140,6 +140,16 @@ The shop filters by category only, with **All Products** as the default view. Th
 categories managed under Admin → Categories (active ones, in their sort order); assign each product to one in the
 product form.
 
+## Order emails
+
+The customer is emailed in the language they shopped in at every step of their order: a confirmation with the full
+summary when the order is placed, then one email per status change made in Admin → Orders — *Processing*, *Shipped*,
+*Delivered* and *Cancelled* (re-saving the status an order already has sends nothing). An order that sold out while the
+customer was paying gets the cancellation notice instead of a confirmation.
+
+The wording lives in `src/server/domain/order-emails.js`, one block per language. Sending happens in `after()` once the
+response has gone out, and a failed email is logged without ever failing the order or the admin's status change.
+
 ## Back-in-stock emails
 
 Like the WooCommerce shop's Back In Stock Notifier: when a size is sold out, the quick view offers "Notify me when
