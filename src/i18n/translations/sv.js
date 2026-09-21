@@ -113,7 +113,9 @@ const sv = {
       submit: 'Skapa konto',
       hasAccount: 'Har du redan ett konto?',
       switch: 'Logga in',
-      terms: 'Genom att skapa ett konto godkänner du våra köpvillkor och vår integritetspolicy.',
+      terms: 'Genom att skapa ett konto godkänner du våra {terms} och vår {privacy}.',
+      termsLink: 'köpvillkor',
+      privacyLink: 'integritetspolicy',
       success: 'Välkommen till Mattheos Selections, {name}!',
     },
     forgot: {
@@ -342,7 +344,7 @@ const sv = {
       role: 'Grundare',
       cta: 'Läs vår historia',
       stats: [
-        { value: '9', label: 'Honungar från enskilda regioner' },
+        { value: '{singleOrigin}', label: 'Honungar från enskilda regioner' },
         { value: '1 200 m', label: 'Högsta skördehöjd' },
         { value: '0', label: 'Tillsatser, någonsin' },
       ],
@@ -434,7 +436,7 @@ const sv = {
       ],
     },
     stats: [
-      { value: '9', label: 'Honungssorter från enskilda regioner' },
+      { value: '{singleOrigin}', label: 'Honungssorter från enskilda regioner' },
       { value: '1 200 m', label: 'Höjden där vår granhonung skördas' },
       { value: '100 %', label: 'Rå, ovärmd & ofiltrerad' },
       { value: '24 h', label: 'Genomsnittlig svarstid från vårt team' },

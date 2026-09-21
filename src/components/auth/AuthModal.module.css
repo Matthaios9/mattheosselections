@@ -264,6 +264,12 @@
   color: var(--ms-subtle);
 }
 
+.terms a {
+  color: inherit;
+  text-decoration: underline;
+  text-underline-offset: 2px;
+}
+
 .success {
   display: flex;
   flex-direction: column;

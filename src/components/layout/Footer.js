@@ -33,6 +33,7 @@ export default function Footer({ locale, dict, categories }) {
         { label: f.shipping, href: `${href('/contact')}#shipping` },
         { label: f.returns, href: `${href(siteConfig.termsPath)}#returns` },
         { label: f.terms, href: href(siteConfig.termsPath) },
+        { label: f.privacy, href: href(siteConfig.privacyPath) },
         { label: f.corporate, href: `${href('/contact')}#wholesale` },
       ],
     },
@@ -105,6 +106,8 @@ export default function Footer({ locale, dict, categories }) {
             <span>{f.legal}</span>
             <span className={styles.dot} aria-hidden="true" />
             <Link href={href(siteConfig.termsPath)}>{f.terms}</Link>
+            <span className={styles.dot} aria-hidden="true" />
+            <Link href={href(siteConfig.privacyPath)}>{f.privacy}</Link>
           </div>
           <div className={styles.bottomEnd}>
             <span className={styles.secure}>

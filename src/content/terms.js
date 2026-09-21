@@ -1,10 +1,9 @@
 /**
- * Terms and conditions of sale, per language. English and Swedish are the texts published on the
- * WordPress shop (mattheosselections.com/en/terms-and-conditions and /terms-and-conditions); Greek is
- * translated from the English. Kept out of the dictionaries so the text only loads on the terms page.
+ * Terms and conditions of sale, per language. English and Swedish started from the texts published on the
+ * WordPress shop, corrected to state that prices include VAT (as they always have); Greek is translated
+ * from the English. Kept out of the dictionaries so the text only loads on the terms page.
  *
- * A section is `{ id, title, blocks }`; a block is a paragraph (string), `{ heading }`, `{ list: [] }`
- * or `{ lines: [] }` (an address, one line each).
+ * Rendered by LegalDocument (src/components/legal), which describes the section and block format.
  */
 
 const en = {
@@ -34,7 +33,7 @@ const en = {
       title: 'Order Acceptance',
       blocks: [
         'All orders are subject to acceptance and product availability. We reserve the right to cancel or decline any order at our discretion.',
-        'Prices are listed exclusive of VAT. VAT is calculated and added during checkout, based on the customer’s location and legal entity type (private or business).',
+        'All prices on the website are in Swedish kronor (SEK) and include VAT. Nothing is added at checkout except shipping, where it applies; the VAT included in your order is shown at checkout.',
         'An order is considered accepted only after we issue an email confirming dispatch.',
       ],
     },
@@ -42,6 +41,7 @@ const en = {
       id: 'vat',
       title: 'VAT and Pricing',
       blocks: [
+        'All prices include VAT at the rates below.',
         {
           list: [
             'VAT is 6% for all private and business customers within Sweden.',
@@ -119,7 +119,10 @@ const en = {
       id: 'privacy',
       title: 'Privacy and Data Protection',
       blocks: [
-        'We value your privacy and protect your personal data in accordance with GDPR and Swedish data protection laws. For full details, please read our Privacy Policy.',
+        {
+          text: 'We value your privacy and protect your personal data in accordance with GDPR and Swedish data protection laws. For full details, please read our Privacy Policy.',
+          links: [{ label: 'Privacy Policy', path: '/privacy-policy' }],
+        },
       ],
     },
     {
@@ -175,7 +178,7 @@ const sv = {
       title: 'Orderacceptans',
       blocks: [
         'Alla beställningar är beroende av tillgänglighet och godkännande. Vi förbehåller oss rätten att avbryta eller neka beställningar efter eget gottfinnande.',
-        'Priserna anges exklusive moms. Moms beräknas och läggs till i kassan, baserat på kundens plats och juridiska persontyp (enskild person eller företag).',
+        'Alla priser på webbplatsen anges i svenska kronor (SEK) inklusive moms. Inget läggs till i kassan utöver eventuell frakt; momsen som ingår i din beställning visas i kassan.',
         'En beställning anses endast accepterad efter att vi skickat ett e-postmeddelande som bekräftar leveransen.',
       ],
     },
@@ -183,6 +186,7 @@ const sv = {
       id: 'vat',
       title: 'Moms och prissättning',
       blocks: [
+        'Alla priser inkluderar moms enligt satserna nedan.',
         {
           list: [
             'Momsen är 6% för alla privat- och företagskunder inom Sverige.',
@@ -260,7 +264,10 @@ const sv = {
       id: 'privacy',
       title: 'Integritet och dataskydd',
       blocks: [
-        'Vi värdesätter din integritet och skyddar dina personuppgifter i enlighet med GDPR och svensk dataskyddslag. För fullständig information, vänligen läs vår Integritetspolicy.',
+        {
+          text: 'Vi värdesätter din integritet och skyddar dina personuppgifter i enlighet med GDPR och svensk dataskyddslag. För fullständig information, vänligen läs vår Integritetspolicy.',
+          links: [{ label: 'Integritetspolicy', path: '/privacy-policy' }],
+        },
       ],
     },
     {
@@ -316,7 +323,7 @@ const el = {
       title: 'Αποδοχή παραγγελιών',
       blocks: [
         'Όλες οι παραγγελίες υπόκεινται σε αποδοχή και στη διαθεσιμότητα των προϊόντων. Διατηρούμε το δικαίωμα να ακυρώσουμε ή να απορρίψουμε οποιαδήποτε παραγγελία κατά την κρίση μας.',
-        'Οι τιμές αναγράφονται χωρίς ΦΠΑ. Ο ΦΠΑ υπολογίζεται και προστίθεται κατά την ολοκλήρωση της αγοράς, με βάση την τοποθεσία του πελάτη και τη νομική του μορφή (ιδιώτης ή επιχείρηση).',
+        'Όλες οι τιμές στον ιστότοπο αναγράφονται σε σουηδικές κορόνες (SEK) και περιλαμβάνουν ΦΠΑ. Στο ταμείο δεν προστίθεται τίποτα πέρα από τα τυχόν μεταφορικά· ο ΦΠΑ που περιλαμβάνεται στην παραγγελία σας εμφανίζεται στο ταμείο.',
         'Μια παραγγελία θεωρείται αποδεκτή μόνο αφού σας στείλουμε email που επιβεβαιώνει την αποστολή της.',
       ],
     },
@@ -324,6 +331,7 @@ const el = {
       id: 'vat',
       title: 'ΦΠΑ και τιμολόγηση',
       blocks: [
+        'Όλες οι τιμές περιλαμβάνουν ΦΠΑ με τους παρακάτω συντελεστές.',
         {
           list: [
             'Ο ΦΠΑ είναι 6% για όλους τους ιδιώτες και τις επιχειρήσεις εντός Σουηδίας.',
@@ -401,7 +409,10 @@ const el = {
       id: 'privacy',
       title: 'Ιδιωτικότητα και προστασία δεδομένων',
       blocks: [
-        'Σεβόμαστε την ιδιωτικότητά σας και προστατεύουμε τα προσωπικά σας δεδομένα σύμφωνα με τον GDPR και τη σουηδική νομοθεσία για την προστασία δεδομένων. Για πλήρεις πληροφορίες, διαβάστε την Πολιτική Απορρήτου μας.',
+        {
+          text: 'Σεβόμαστε την ιδιωτικότητά σας και προστατεύουμε τα προσωπικά σας δεδομένα σύμφωνα με τον GDPR και τη σουηδική νομοθεσία για την προστασία δεδομένων. Για πλήρεις πληροφορίες, διαβάστε την Πολιτική Απορρήτου μας.',
+          links: [{ label: 'Πολιτική Απορρήτου', path: '/privacy-policy' }],
+        },
       ],
     },
     {

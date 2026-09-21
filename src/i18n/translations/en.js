@@ -113,7 +113,9 @@ const en = {
       submit: 'Create account',
       hasAccount: 'Already have an account?',
       switch: 'Log in',
-      terms: 'By creating an account you agree to our terms of sale and privacy policy.',
+      terms: 'By creating an account you agree to our {terms} and {privacy}.',
+      termsLink: 'terms of sale',
+      privacyLink: 'privacy policy',
       success: 'Welcome to Mattheos Selections, {name}!',
     },
     forgot: {
@@ -342,7 +344,7 @@ const en = {
       role: 'Founder',
       cta: 'Read our story',
       stats: [
-        { value: '9', label: 'Single-origin honeys' },
+        { value: '{singleOrigin}', label: 'Single-origin honeys' },
         { value: '1,200 m', label: 'Highest harvest altitude' },
         { value: '0', label: 'Additives, ever' },
       ],
@@ -434,7 +436,7 @@ const en = {
       ],
     },
     stats: [
-      { value: '9', label: 'Single-origin honey varieties' },
+      { value: '{singleOrigin}', label: 'Single-origin honey varieties' },
       { value: '1,200 m', label: 'Altitude of our fir honey forests' },
       { value: '100%', label: 'Raw, unheated & unfiltered' },
       { value: '24 h', label: 'Average reply time from our team' },

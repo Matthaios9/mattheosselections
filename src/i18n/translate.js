@@ -4,6 +4,16 @@ export function interpolate(template, values) {
   return template.replace(/\{(\w+)\}/g, (match, key) => (key in values ? String(values[key]) : match));
 }
 
+/**
+ * Like `interpolate`, but the values may be React elements (e.g. links inside a sentence):
+ * returns the pieces as an array to render.
+ */
+export function interpolateParts(template, values) {
+  return String(template)
+    .split(/\{(\w+)\}/g)
+    .map((part, index) => (index % 2 === 1 && part in values ? values[part] : part));
+}
+
 /** Resolve a dotted key ('cart.title') against a dictionary. */
 function resolve(dict, key) {
   return key.split('.').reduce((node, part) => (node == null ? undefined : node[part]), dict);

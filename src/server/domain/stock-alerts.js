@@ -55,8 +55,11 @@ function describe(product, variantKey, locale) {
   };
 }
 
-const shopLink = (origin, locale, productName) =>
-  `${origin || siteConfig.url}/${locale}/shop?q=${encodeURIComponent(productName)}`;
+/** The product's page, or a shop search for it if it has no page address yet. */
+const productLink = (origin, locale, product, productName) =>
+  product.slug
+    ? `${origin || siteConfig.url}/${locale}/product/${product.slug}`
+    : `${origin || siteConfig.url}/${locale}/shop?q=${encodeURIComponent(productName)}`;
 
 /**
  * Storefront: ask to be emailed when one size of a sold-out product is back.
@@ -99,7 +102,7 @@ export async function sendStockAlertConfirmation(alertId, { origin } = {}) {
         to: alert.email,
         subject: interpolate(copy.confirmSubject, values),
         text: interpolate(copy.confirmText, values),
-        link: shopLink(origin, alert.locale, values.product),
+        link: productLink(origin, alert.locale, product, values.product),
         cta: copy.cta,
         footer: copy.footer,
       })
@@ -151,7 +154,7 @@ export async function sendBackInStockEmails({ productIds, origin } = {}) {
           to: alert.email,
           subject: interpolate(copy.restockSubject, values),
           text: interpolate(copy.restockText, values),
-          link: shopLink(origin, alert.locale, values.product),
+          link: productLink(origin, alert.locale, product, values.product),
           cta: copy.cta,
           footer: copy.footer,
         })

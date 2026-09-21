@@ -81,7 +81,9 @@ export async function startCheckout({ items, customerType, company, country, not
         quantity: line.quantity,
         unitPrice: line.price,
         imageUrl: line.image,
-        productUrl: `${origin}/${locale}/shop?q=${encodeURIComponent(line.name)}`,
+        productUrl: line.slug
+          ? `${origin}/${locale}/product/${line.slug}`
+          : `${origin}/${locale}/shop?q=${encodeURIComponent(line.name)}`,
       })
     ),
     ...(priced.shippingFee > 0

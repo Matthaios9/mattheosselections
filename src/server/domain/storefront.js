@@ -2,7 +2,7 @@ import 'server-only';
 import { cache } from 'react';
 import mongoose from 'mongoose';
 import { storeConfig } from '@/config/site';
-import { isLocale } from '@/i18n/config';
+import { defaultLocale, isLocale, localeCodes } from '@/i18n/config';
 import { DEFAULT_SORT, PRICE_RANGES, SORT_OPTIONS } from '@/constants/shop';
 import { connectToDatabase, isDatabaseConfigured } from '@/server/db';
 import { Category, Product } from '@/server/models';
@@ -274,12 +274,15 @@ export const getStoreCategories = cache(async (locale) => {
   }
 });
 
-/** One visible product by its page slug, localized, or null. */
+/** Languages a product has been translated into (its name is filled in). English is always present. */
+const translatedLocales = (doc) => localeCodes.filter((code) => code === defaultLocale || Boolean(doc.name?.[code]?.trim()));
+
+/** One visible product by its page slug, localized, or null. `locales`: the languages it is translated into. */
 export const getStoreProduct = cache(async (slug, locale) => {
   if (!isDatabaseConfigured() || !slug) return null;
   const { byId, base } = await loadVisibility();
   const doc = await Product.findOne({ $and: [base, { slug: String(slug) }] }).lean();
-  return doc ? { ...localizeProduct(doc, byId, locale), updatedAt: toIso(doc.updatedAt) } : null;
+  return doc ? { ...localizeProduct(doc, byId, locale), updatedAt: toIso(doc.updatedAt), locales: translatedLocales(doc) } : null;
 });
 
 /** Up to `limit` other products from the same category, in stock first. */
@@ -289,12 +292,12 @@ export async function getRelatedProducts(product, locale, limit = 4) {
   return items.filter((item) => item.id !== product.id).slice(0, limit);
 }
 
-/** Slug and last change of every visible product, for the sitemap and static generation. */
+/** Slug, last change and translated languages of every visible product, for the sitemap and static generation. */
 export async function getProductSlugs() {
   if (!isDatabaseConfigured()) return [];
   const { base } = await loadVisibility();
-  const docs = await Product.find({ $and: [base, { slug: { $exists: true, $nin: ['', null] } }] }, { slug: 1, updatedAt: 1 }).lean();
-  return docs.map((doc) => ({ slug: doc.slug, updatedAt: toIso(doc.updatedAt) }));
+  const docs = await Product.find({ $and: [base, { slug: { $exists: true, $nin: ['', null] } }] }, { slug: 1, name: 1, updatedAt: 1 }).lean();
+  return docs.map((doc) => ({ slug: doc.slug, updatedAt: toIso(doc.updatedAt), locales: translatedLocales(doc) }));
 }
 
 /**

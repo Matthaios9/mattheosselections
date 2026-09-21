@@ -41,6 +41,7 @@ export async function generateMetadata({ params }) {
     title: product.name,
     description: summary(product.description) || dict.meta.shop.description,
     image: absolute(product.image),
+    available: product.locales,
   });
 }
 

@@ -43,42 +43,43 @@ const localeOf = (pathname) => localeCodes.find((code) => pathname === `/${code}
 
 /**
  * Links from the old WordPress shop (Swedish at the root, English under /en/) → the new page in the
- * same language, permanently. Null for everything else, including old English URLs that are still
- * valid as they are (e.g. /en/shop, /en/product/ekhonung).
+ * same language, permanently. `path` has no trailing slash. Null for everything else, including old
+ * English URLs that are still valid as they are (e.g. /en/shop, /en/product/ekhonung).
  */
-function legacyRedirect(request) {
-  const { pathname } = request.nextUrl;
-  if (GONE_PREFIXES.some((prefix) => pathname === prefix || pathname.startsWith(`${prefix}/`))) {
+function legacyRedirect(request, path) {
+  if (GONE_PREFIXES.some((prefix) => path === prefix || path.startsWith(`${prefix}/`))) {
     return new NextResponse(null, { status: 410, headers: { 'X-Robots-Tag': 'noindex' } });
   }
-  const locale = localeOf(pathname);
+  const locale = localeOf(path);
   if (locale && locale !== 'en') return null;
 
-  const path = (locale ? pathname.slice(3) : pathname).replace(/\/+$/, '') || '/';
-  const target = legacyTarget(path);
+  const target = legacyTarget(locale ? path.slice(3) || '/' : path);
   if (!target) return null;
   const destination = localizePath(target, locale ?? 'sv');
-  if (destination === pathname) return null;
+  if (destination === request.nextUrl.pathname) return null;
 
-  const url = request.nextUrl.clone();
-  url.pathname = destination;
-  url.search = '';
-  return NextResponse.redirect(url, 301);
+  // Built with new URL(): request.nextUrl would re-add the trailing slash of the old address.
+  return NextResponse.redirect(new URL(destination, request.url), 301);
 }
 
 export async function proxy(request) {
   const { pathname } = request.nextUrl;
+  // Next.js's own trailing-slash redirect is off (next.config.mjs) so that old WordPress URLs, which all
+  // end in "/", reach their new page in a single 301 instead of two redirects.
+  const path = pathname.length > 1 ? pathname.replace(/\/+$/, '') || '/' : pathname;
 
-  if (pathname === '/admin' || pathname.startsWith('/admin/')) return guardAdmin(request);
-
-  const legacy = legacyRedirect(request);
+  const legacy = legacyRedirect(request, path);
   if (legacy) return legacy;
 
+  if (path !== pathname) return NextResponse.redirect(new URL(`${path}${request.nextUrl.search}`, request.url), 301);
+
+  if (path === '/admin' || path.startsWith('/admin/')) return guardAdmin(request);
+
   // Redirect locale-less storefront URLs (e.g. "/" or "/shop") to their localized version.
-  if (localeOf(pathname)) return NextResponse.next();
+  if (localeOf(path)) return NextResponse.next();
 
   const url = request.nextUrl.clone();
-  url.pathname = `/${resolveLocale(request)}${pathname === '/' ? '' : pathname}`;
+  url.pathname = `/${resolveLocale(request)}${path === '/' ? '' : path}`;
   return NextResponse.redirect(url);
 }
 

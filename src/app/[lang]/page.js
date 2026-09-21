@@ -10,6 +10,7 @@ import { localizePath } from '@/i18n/config';
 import { getDictionary } from '@/i18n/dictionaries';
 import { pageMetadata } from '@/i18n/metadata';
 import { getSpotlightProducts, getStoreCategories, searchStoreProducts } from '@/server/domain/storefront';
+import { withLiveStats } from '@/utils/stats';
 
 export async function generateMetadata({ params }) {
   const { lang } = await params;
@@ -55,7 +56,7 @@ export default async function HomePage({ params }) {
       <FeaturedProducts initial={featured} />
       <PromoBanner copy={dict.home.promo} product={spotlight.gift} href={href} locale={lang} />
       <WhyChooseUs copy={dict.home.why} />
-      <BrandStory copy={dict.home.story} href={href} />
+      <BrandStory copy={{ ...dict.home.story, stats: withLiveStats(dict.home.story.stats, categories) }} href={href} />
       <Testimonials />
       <Newsletter />
     </>

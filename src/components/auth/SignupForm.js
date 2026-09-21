@@ -1,21 +1,26 @@
 'use client';
 
-import { useState } from 'react';
+import { Fragment, useState } from 'react';
+import Link from 'next/link';
 import Alert from 'react-bootstrap/Alert';
 import Button from 'react-bootstrap/Button';
 import Form from 'react-bootstrap/Form';
 import Spinner from 'react-bootstrap/Spinner';
 import PasswordField from './PasswordField';
 import TextField from '@/components/common/TextField';
+import { siteConfig } from '@/config/site';
 import { useAuth } from '@/context/AuthContext';
+import { useUI } from '@/context/UIContext';
 import { useFormState } from '@/hooks/useFormState';
 import { useI18n } from '@/i18n/I18nProvider';
+import { interpolateParts } from '@/i18n/translate';
 import { firstName } from '@/utils/format';
 import { email, matches, minLength, required } from '@/utils/validation';
 import styles from './AuthModal.module.css';
 
 export default function SignupForm({ onSwitch, onSuccess }) {
-  const { t } = useI18n();
+  const { t, href } = useI18n();
+  const { closeAuth } = useUI();
   const { signup } = useAuth();
   const form = useFormState({ name: '', email: '', password: '', confirmPassword: '' });
   const [submitting, setSubmitting] = useState(false);
@@ -103,7 +108,22 @@ export default function SignupForm({ onSwitch, onSuccess }) {
         {t('auth.signup.submit')}
       </Button>
 
-      <p className={styles.terms}>{t('auth.signup.terms')}</p>
+      <p className={styles.terms}>
+        {interpolateParts(t('auth.signup.terms'), {
+          terms: (
+            <Link href={href(siteConfig.termsPath)} onClick={closeAuth}>
+              {t('auth.signup.termsLink')}
+            </Link>
+          ),
+          privacy: (
+            <Link href={href(siteConfig.privacyPath)} onClick={closeAuth}>
+              {t('auth.signup.privacyLink')}
+            </Link>
+          ),
+        }).map((part, index) => (
+          <Fragment key={index}>{part}</Fragment>
+        ))}
+      </p>
 
       <p className={styles.switch}>
         {t('auth.signup.hasAccount')}{' '}

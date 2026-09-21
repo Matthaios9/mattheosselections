@@ -94,6 +94,7 @@ export async function priceCart({ items, country, locale }) {
     }
     lines.push({
       product: product._id,
+      slug: product.slug ?? '',
       name: product.name?.[locale] || product.name?.en,
       variantKey: variant.key,
       variantLabel: variant.label?.[locale] || variant.label?.en,

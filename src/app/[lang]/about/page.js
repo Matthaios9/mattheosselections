@@ -11,6 +11,8 @@ import Testimonials from '@/components/common/Testimonials';
 import { localizePath } from '@/i18n/config';
 import { getDictionary } from '@/i18n/dictionaries';
 import { pageMetadata } from '@/i18n/metadata';
+import { getStoreCategories } from '@/server/domain/storefront';
+import { withLiveStats } from '@/utils/stats';
 
 export async function generateMetadata({ params }) {
   const { lang } = await params;
@@ -23,6 +25,7 @@ export default async function AboutPage({ params }) {
   const { dict } = await getDictionary(lang);
   const href = (path) => localizePath(path, lang);
   const about = dict.about;
+  const categories = await getStoreCategories(lang);
 
   return (
     <>
@@ -34,7 +37,7 @@ export default async function AboutPage({ params }) {
         breadcrumbs={[{ label: dict.nav.home, href: href('/') }, { label: dict.nav.about }]}
       />
       <StorySection copy={about.story} />
-      <StatsBand stats={about.stats} />
+      <StatsBand stats={withLiveStats(about.stats, categories)} />
       <MissionVision mission={about.mission} vision={about.vision} />
       <ValuesGrid copy={about.values} />
       <ProcessSteps copy={about.process} />
