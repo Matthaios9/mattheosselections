@@ -160,19 +160,3 @@
   align-items: center;
   gap: 0.4rem;
 }
-
-.wordmark {
-  margin-bottom: -0.14em;
-  font-family: var(--ms-font-serif);
-  font-size: clamp(6rem, 22vw, 20rem);
-  line-height: 1;
-  letter-spacing: -0.04em;
-  text-align: center;
-  white-space: nowrap;
-  color: transparent;
-  -webkit-text-stroke: 1px rgba(255, 255, 255, 0.07);
-  background: linear-gradient(180deg, rgba(224, 168, 74, 0.14), rgba(224, 168, 74, 0));
-  -webkit-background-clip: text;
-  background-clip: text;
-  user-select: none;
-}

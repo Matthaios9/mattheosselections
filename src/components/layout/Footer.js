@@ -114,10 +114,6 @@ export default function Footer({ locale, dict, categories }) {
           </div>
         </div>
       </Container>
-
-      <div className={styles.wordmark} aria-hidden="true">
-        Mattheos
-      </div>
     </footer>
   );
 }
