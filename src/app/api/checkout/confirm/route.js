@@ -1,5 +1,5 @@
 import { after } from 'next/server';
-import { sendOrderConfirmation } from '@/server/domain/order-emails';
+import { sendAdminOrderNotice, sendOrderConfirmation } from '@/server/domain/order-emails';
 import { finalizeCheckout } from '@/server/domain/payments';
 import { conflict, parseBody, requestOrigin, revalidateStorefront, unavailable, withApi } from '@/server/http';
 import { isKustomConfigured, KustomError } from '@/server/kustom';
@@ -20,10 +20,11 @@ export const POST = withApi(async ({ request }) => {
   });
   if (!result.ok) throw conflict('The purchase could not be confirmed.', result.reason);
   revalidateStorefront();
-  // Only the call that created the order emails the customer, so the push notification never repeats it.
+  // Only the call that created the order emails the customer and the shop, so the push notification never repeats it.
   if (result.created) {
     const origin = requestOrigin(request);
     after(() => sendOrderConfirmation(result.order, { origin }));
+    after(() => sendAdminOrderNotice(result.order, { origin }));
   }
   return { orderNumber: result.order.number, soldOut: result.order.status === 'cancelled' };
 });

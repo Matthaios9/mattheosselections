@@ -28,12 +28,12 @@ function getTransport() {
   return transport;
 }
 
-/** Send one email: `{ to, subject, text, html }`. Throws when SMTP rejects it. */
-export async function sendMail({ to, subject, text, html }) {
+/** Send one email: `{ to, subject, text, html, replyTo? }`. Throws when SMTP rejects it. */
+export async function sendMail({ to, subject, text, html, replyTo = siteConfig.email }) {
   if (!isMailConfigured()) throw new Error('Email is not configured (SMTP_HOST is missing).');
   await getTransport().sendMail({
     from: process.env.MAIL_FROM || `${siteConfig.name} <${siteConfig.email}>`,
-    replyTo: siteConfig.email,
+    replyTo,
     to,
     subject,
     text,

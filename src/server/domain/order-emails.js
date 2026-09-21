@@ -3,11 +3,12 @@ import { siteConfig } from '@/config/site';
 import { interpolate } from '@/i18n/translate';
 import { escapeHtml, renderEmail } from '@/server/email';
 import { isMailConfigured, sendMail } from '@/server/mailer';
-import { firstName, formatPrice } from '@/utils/format';
+import { firstName, formatPrice, plural } from '@/utils/format';
 
 /**
  * Order emails to the customer, in the language they shopped in: one when the order
- * is placed and one on every later status change (see ORDER_STATUSES).
+ * is placed and one on every later status change (see ORDER_STATUSES). The shop gets
+ * its own notice of every new order at ADMIN_EMAIL.
  *
  * Sending never blocks or fails the order itself — the routes call these from `after()`
  * and every failure is logged, not thrown. Without SMTP configured nothing is sent.
@@ -159,6 +160,74 @@ function renderSummary(order, copy, locale) {
   ].join('\n');
 
   return { html, text };
+}
+
+/** Who ordered — contact details, language and their note — for the admin notice. */
+function renderCustomer(order) {
+  const { customer } = order;
+  const rows = [
+    ['Customer', customer.name],
+    ['Company', customer.company],
+    ['Org. number', customer.organizationNumber],
+    ['Email', customer.email],
+    ['Phone', customer.phone],
+    ['Language', order.locale?.toUpperCase()],
+    ['Note', order.customerNote],
+  ].filter(([, value]) => value);
+
+  const html = `
+    <table role="presentation" width="100%" style="margin:28px 0 0;border-collapse:collapse;font-size:15px">
+      <tbody>
+        ${rows
+          .map(
+            ([label, value]) =>
+              `<tr><td style="padding:4px 16px 4px 0;color:#8a8172;vertical-align:top;white-space:nowrap">${escapeHtml(label)}</td>
+                <td style="padding:4px 0">${escapeHtml(value)}</td></tr>`
+          )
+          .join('')}
+      </tbody>
+    </table>`;
+  const text = rows.map(([label, value]) => `${label}: ${value}`).join('\n');
+
+  return { html, text };
+}
+
+/**
+ * Tell the shop about a newly placed order: customer, items, totals and address, with a link
+ * to it in the admin panel. Goes to ADMIN_EMAIL (comma-separated for several), in English like
+ * the panel; replying reaches the customer. Returns whether an email went out; never throws.
+ */
+export async function sendAdminOrderNotice(order, { origin } = {}) {
+  const to = process.env.ADMIN_EMAIL;
+  if (!isMailConfigured() || !to || !order) return false;
+
+  try {
+    const total = formatPrice(order.total ?? 0, 'en');
+    // Sold out while the customer was paying: the order was created cancelled (see payments.js).
+    const soldOut = order.status === 'cancelled';
+    const customer = renderCustomer(order);
+    const summary = renderSummary(order, EMAILS.en, 'en');
+    await sendMail({
+      ...renderEmail({
+        to,
+        subject: soldOut ? `Order ${order.number} was cancelled — sold out` : `New order ${order.number} — ${total}`,
+        text: soldOut
+          ? [`Order ${order.number} from ${order.customer.name} was cancelled automatically.`, order.history.at(-1)?.note]
+              .filter(Boolean)
+              .join(' ')
+          : `${order.customer.name} placed order ${order.number}: ${plural(order.itemCount, 'item')}, ${total} in total.`,
+        details: { html: customer.html + summary.html, text: `${customer.text}\n\n${summary.text}` },
+        link: `${origin || siteConfig.url}/admin/orders/${order.id}`,
+        cta: 'Open the order',
+        footer: `Sent to ADMIN_EMAIL for every new order at ${siteConfig.name}. Reply to this email to answer the customer.`,
+      }),
+      replyTo: order.customer.email || undefined,
+    });
+    return true;
+  } catch (error) {
+    console.error(`[order-emails] admin notice for ${order.number} failed:`, error.message);
+    return false;
+  }
 }
 
 /**
