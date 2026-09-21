@@ -20,6 +20,7 @@ export function serializeProduct(doc) {
   return {
     id: toId(doc._id),
     sku: doc.sku ?? '',
+    slug: doc.slug ?? '',
     category: toId(doc.category?._id ?? doc.category),
     categoryName: doc.category?.name?.en ?? '',
     name: plainLocalized(doc.name),

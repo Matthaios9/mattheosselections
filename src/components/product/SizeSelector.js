@@ -10,7 +10,7 @@ import styles from './SizeSelector.module.css';
 /**
  * Pill-style size picker built on React-Bootstrap's ToggleButtonGroup. Sold-out sizes are disabled,
  * unless `allowSoldOut` (the quick view, where a sold-out size offers "Notify me when available").
- * With `showStock`, each option also shows how many units of that size are available.
+ * With `showStock`, each option also shows whether that size is in stock (never the exact number).
  */
 export default function SizeSelector({
   variants,
@@ -27,8 +27,8 @@ export default function SizeSelector({
 
   const stockText = (stock) => {
     if (stock <= 0) return soldOutLabel;
-    if (stock <= storeConfig.lowStockThreshold) return t('product.lowStock', { count: stock });
-    return t('product.stockCount', { count: stock });
+    if (stock <= storeConfig.lowStockThreshold) return t('product.lowStock');
+    return t('product.available');
   };
 
   return (

@@ -8,15 +8,19 @@ import Newsletter from '@/components/common/Newsletter';
 import Testimonials from '@/components/common/Testimonials';
 import { localizePath } from '@/i18n/config';
 import { getDictionary } from '@/i18n/dictionaries';
+import { pageMetadata } from '@/i18n/metadata';
 import { getSpotlightProducts, getStoreCategories, searchStoreProducts } from '@/server/domain/storefront';
 
 export async function generateMetadata({ params }) {
   const { lang } = await params;
   const { dict } = await getDictionary(lang);
-  return {
+  return pageMetadata({
+    dict,
+    locale: lang,
+    path: '/',
     title: { absolute: `${dict.meta.siteName} — ${dict.meta.home.title}` },
     description: dict.meta.home.description,
-  };
+  });
 }
 
 /** First tab of the "Featured" section: products flagged in the admin, or the best sellers if none are. */

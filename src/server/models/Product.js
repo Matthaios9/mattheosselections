@@ -1,4 +1,5 @@
 import mongoose from 'mongoose';
+import { slugify } from '../../utils/slug.js';
 import { getModel, imageSchema, localizedString } from './shared.js';
 
 export const PRODUCT_BADGES = ['', 'bestseller', 'limited', 'new', 'signature', 'gift'];
@@ -18,6 +19,8 @@ const variantSchema = new mongoose.Schema(
 const productSchema = new mongoose.Schema(
   {
     sku: { type: String, trim: true, default: '' },
+    // Product page URL: /{lang}/product/{slug}, the same in every language. Generated when left empty.
+    slug: { type: String, trim: true, unique: true, sparse: true },
     category: { type: mongoose.Schema.Types.ObjectId, ref: 'Category', default: null, index: true },
     name: { type: localizedString({ required: true }), required: true },
     description: { type: localizedString(), default: () => ({}) },
@@ -45,6 +48,15 @@ productSchema.pre('validate', function syncDerivedFields() {
       this.defaultVariant = this.variants[0].key;
     }
   }
+});
+
+/** A product without a slug gets one from its Swedish (else English) name, numbered if already taken. */
+productSchema.pre('validate', async function assignSlug() {
+  if (this.slug) return;
+  const base = slugify(this.name?.sv) || slugify(this.name?.en) || String(this._id);
+  let slug = base;
+  for (let n = 2; await this.constructor.exists({ slug, _id: { $ne: this._id } }); n += 1) slug = `${base}-${n}`;
+  this.slug = slug;
 });
 
 export const Product = getModel('Product', productSchema);

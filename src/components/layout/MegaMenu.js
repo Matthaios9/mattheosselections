@@ -50,7 +50,7 @@ export default function MegaMenu({ onNavigate }) {
         ))}
 
         {pick && (
-          <Link href={`${href('/shop')}?q=${encodeURIComponent(pick.name)}`} className={styles.pick} onClick={onNavigate}>
+          <Link href={href(`/product/${pick.slug}`)} className={styles.pick} onClick={onNavigate}>
             <p className={styles.heading}>{t('nav.editorsPick')}</p>
             <span className={styles.pickImage}>
               <Image src={pick.image} alt="" fill sizes="220px" className="img-cover" />

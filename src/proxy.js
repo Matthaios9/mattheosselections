@@ -1,5 +1,6 @@
 import { NextResponse } from 'next/server';
-import { defaultLocale, isLocale, LOCALE_COOKIE, localeCodes } from '@/i18n/config';
+import { GONE_PREFIXES, legacyTarget } from '@/config/redirects';
+import { defaultLocale, isLocale, LOCALE_COOKIE, localeCodes, localizePath } from '@/i18n/config';
 import { decodeSession, SESSION_COOKIE } from '@/server/auth/session';
 
 /** Pick a locale from the saved cookie, then the browser's Accept-Language header. */
@@ -38,14 +39,43 @@ async function guardAdmin(request) {
   return NextResponse.redirect(url);
 }
 
+const localeOf = (pathname) => localeCodes.find((code) => pathname === `/${code}` || pathname.startsWith(`/${code}/`));
+
+/**
+ * Links from the old WordPress shop (Swedish at the root, English under /en/) → the new page in the
+ * same language, permanently. Null for everything else, including old English URLs that are still
+ * valid as they are (e.g. /en/shop, /en/product/ekhonung).
+ */
+function legacyRedirect(request) {
+  const { pathname } = request.nextUrl;
+  if (GONE_PREFIXES.some((prefix) => pathname === prefix || pathname.startsWith(`${prefix}/`))) {
+    return new NextResponse(null, { status: 410, headers: { 'X-Robots-Tag': 'noindex' } });
+  }
+  const locale = localeOf(pathname);
+  if (locale && locale !== 'en') return null;
+
+  const path = (locale ? pathname.slice(3) : pathname).replace(/\/+$/, '') || '/';
+  const target = legacyTarget(path);
+  if (!target) return null;
+  const destination = localizePath(target, locale ?? 'sv');
+  if (destination === pathname) return null;
+
+  const url = request.nextUrl.clone();
+  url.pathname = destination;
+  url.search = '';
+  return NextResponse.redirect(url, 301);
+}
+
 export async function proxy(request) {
   const { pathname } = request.nextUrl;
 
   if (pathname === '/admin' || pathname.startsWith('/admin/')) return guardAdmin(request);
 
+  const legacy = legacyRedirect(request);
+  if (legacy) return legacy;
+
   // Redirect locale-less storefront URLs (e.g. "/" or "/shop") to their localized version.
-  const hasLocale = localeCodes.some((code) => pathname === `/${code}` || pathname.startsWith(`/${code}/`));
-  if (hasLocale) return NextResponse.next();
+  if (localeOf(pathname)) return NextResponse.next();
 
   const url = request.nextUrl.clone();
   url.pathname = `/${resolveLocale(request)}${pathname === '/' ? '' : pathname}`;

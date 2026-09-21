@@ -19,12 +19,7 @@ export default function CartLine({ item, onQuantityChange, onRemove, compact = f
           <div>
             <p className={styles.name}>{item.name}</p>
             {item.variantLabel && (
-              <p className={styles.variant}>
-                {item.variantLabel}
-                {!compact && item.maxQuantity > 0 && item.quantity <= item.maxQuantity && (
-                  <span className={styles.available}> · {t('product.stockCount', { count: item.maxQuantity })}</span>
-                )}
-              </p>
+              <p className={styles.variant}>{item.variantLabel}</p>
             )}
           </div>
           <span className={styles.total}>{price(item.itemTotal ?? item.price * item.quantity)}</span>

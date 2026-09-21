@@ -1,0 +1,8 @@
+.wrap {
+  padding-block: clamp(1.25rem, 3vw, 2rem) var(--ms-section-y);
+}
+
+.breadcrumbs {
+  margin-bottom: 1.25rem;
+  font-size: 0.85rem;
+}

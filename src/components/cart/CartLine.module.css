@@ -60,10 +60,6 @@
   color: var(--ms-muted);
 }
 
-.available {
-  color: var(--ms-subtle);
-}
-
 .total {
   font-weight: 700;
   font-size: 0.95rem;

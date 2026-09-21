@@ -8,12 +8,13 @@ import FaqSection from '@/components/contact/FaqSection';
 import { PHOTOS } from '@/config/photos';
 import { localizePath } from '@/i18n/config';
 import { getDictionary } from '@/i18n/dictionaries';
+import { pageMetadata } from '@/i18n/metadata';
 import styles from './page.module.css';
 
 export async function generateMetadata({ params }) {
   const { lang } = await params;
   const { dict } = await getDictionary(lang);
-  return { title: dict.meta.contact.title, description: dict.meta.contact.description };
+  return pageMetadata({ dict, locale: lang, path: '/contact', title: dict.meta.contact.title, description: dict.meta.contact.description });
 }
 
 export default async function ContactPage({ params }) {

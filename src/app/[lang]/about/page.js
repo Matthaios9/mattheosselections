@@ -10,11 +10,12 @@ import PageHero from '@/components/common/PageHero';
 import Testimonials from '@/components/common/Testimonials';
 import { localizePath } from '@/i18n/config';
 import { getDictionary } from '@/i18n/dictionaries';
+import { pageMetadata } from '@/i18n/metadata';
 
 export async function generateMetadata({ params }) {
   const { lang } = await params;
   const { dict } = await getDictionary(lang);
-  return { title: dict.meta.about.title, description: dict.meta.about.description };
+  return pageMetadata({ dict, locale: lang, path: '/about', title: dict.meta.about.title, description: dict.meta.about.description });
 }
 
 export default async function AboutPage({ params }) {

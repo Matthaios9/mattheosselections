@@ -2,6 +2,7 @@
 
 import { useState } from 'react';
 import Image from 'next/image';
+import Link from 'next/link';
 import Badge from 'react-bootstrap/Badge';
 import Button from 'react-bootstrap/Button';
 import Card from 'react-bootstrap/Card';
@@ -15,7 +16,7 @@ import { useI18n } from '@/i18n/I18nProvider';
 import styles from './ProductCard.module.css';
 
 export default function ProductCard({ product, imageSizes, preload = false }) {
-  const { t, price } = useI18n();
+  const { t, price, href } = useI18n();
   const { openQuickView } = useUI();
   const addToCart = useAddToCart();
   const [variantId, setVariantId] = useState(product.defaultVariant);
@@ -25,16 +26,13 @@ export default function ProductCard({ product, imageSizes, preload = false }) {
   const soldOut = variant.stock <= 0;
   const lowStock = !soldOut && variant.stock <= storeConfig.lowStockThreshold;
   const openDetails = () => openQuickView(product, variant.id);
+  const pageHref = href(`/product/${product.slug}`);
 
   return (
     <Card as="article" className={`${styles.card} ${product.inStock ? '' : styles.unavailable}`}>
       <div className={styles.media}>
-        <button
-          type="button"
-          className={styles.imageButton}
-          onClick={openDetails}
-          aria-label={`${t('common.quickView')}: ${product.name}`}
-        >
+        {/* Same destination as the title link, so it is skipped by keyboard and screen readers. */}
+        <Link href={pageHref} className={styles.imageLink} tabIndex={-1} aria-hidden="true">
           <Image
             key={variant.image}
             src={variant.image}
@@ -44,7 +42,7 @@ export default function ProductCard({ product, imageSizes, preload = false }) {
             sizes={imageSizes ?? '(min-width: 1200px) 25vw, (min-width: 768px) 33vw, 50vw'}
             className={styles.image}
           />
-        </button>
+        </Link>
 
         <div className={styles.badges}>
           {!product.inStock ? (
@@ -62,7 +60,12 @@ export default function ProductCard({ product, imageSizes, preload = false }) {
 
         <WishlistButton productId={product.id} className={styles.wishlist} />
 
-        <button type="button" className={styles.quickView} onClick={openDetails} tabIndex={-1}>
+        <button
+          type="button"
+          className={styles.quickView}
+          onClick={openDetails}
+          aria-label={`${t('common.quickView')}: ${product.name}`}
+        >
           <PiEye aria-hidden="true" />
           {t('common.quickView')}
         </button>
@@ -73,15 +76,13 @@ export default function ProductCard({ product, imageSizes, preload = false }) {
           {product.categoryName && <span className={styles.category}>{product.categoryName}</span>}
           {!soldOut && (
             <span className={lowStock ? styles.lowStock : styles.stock}>
-              {t(lowStock ? 'product.lowStock' : 'product.stockCount', { count: variant.stock })}
+              {t(lowStock ? 'product.lowStock' : 'product.available')}
             </span>
           )}
         </div>
 
         <Card.Title as="h3" className={styles.name}>
-          <button type="button" onClick={openDetails}>
-            {product.name}
-          </button>
+          <Link href={pageHref}>{product.name}</Link>
         </Card.Title>
 
         <div className={styles.options}>

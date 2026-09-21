@@ -37,6 +37,7 @@ function toFormState(product) {
     return {
       name: emptyLocalized(),
       sku: '',
+      slug: '',
       category: '',
       description: emptyLocalized(),
       images: [],
@@ -50,6 +51,7 @@ function toFormState(product) {
   return {
     name: product.name,
     sku: product.sku,
+    slug: product.slug,
     category: product.category ?? '',
     description: product.description,
     images: product.images,
@@ -420,6 +422,20 @@ export default function ProductForm({ product, categories, onSaved }) {
               <Form.Group controlId="sku">
                 <Form.Label>SKU (optional)</Form.Label>
                 <Form.Control value={form.sku} onChange={(event) => update(['sku'], event.target.value)} />
+              </Form.Group>
+              <Form.Group controlId="slug">
+                <Form.Label>URL slug</Form.Label>
+                <Form.Control
+                  value={form.slug}
+                  onChange={(event) => update(['slug'], event.target.value)}
+                  placeholder="Generated from the name"
+                  isInvalid={Boolean(error('slug'))}
+                />
+                <Form.Control.Feedback type="invalid">{error('slug')}</Form.Control.Feedback>
+                <Form.Text>
+                  The product page address: /sv/product/<strong>{form.slug || 'slug'}</strong>. Changing it breaks links to the old
+                  address.
+                </Form.Text>
               </Form.Group>
             </div>
           </section>

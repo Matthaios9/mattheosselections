@@ -63,6 +63,7 @@ function localizeProduct(doc, categoriesById, locale) {
   return {
     id: toId(doc._id),
     sku: doc.sku ?? '',
+    slug: doc.slug ?? '',
     category: category ? toId(doc.category) : null,
     categoryName: category ? pickLocalized(category.name, locale) : '',
     price: doc.price,
@@ -272,6 +273,29 @@ export const getStoreCategories = cache(async (locale) => {
     return [];
   }
 });
+
+/** One visible product by its page slug, localized, or null. */
+export const getStoreProduct = cache(async (slug, locale) => {
+  if (!isDatabaseConfigured() || !slug) return null;
+  const { byId, base } = await loadVisibility();
+  const doc = await Product.findOne({ $and: [base, { slug: String(slug) }] }).lean();
+  return doc ? { ...localizeProduct(doc, byId, locale), updatedAt: toIso(doc.updatedAt) } : null;
+});
+
+/** Up to `limit` other products from the same category, in stock first. */
+export async function getRelatedProducts(product, locale, limit = 4) {
+  if (!product.category) return [];
+  const { items } = await searchStoreProducts({ locale, category: product.category, sort: 'popularity', pageSize: limit + 1 });
+  return items.filter((item) => item.id !== product.id).slice(0, limit);
+}
+
+/** Slug and last change of every visible product, for the sitemap and static generation. */
+export async function getProductSlugs() {
+  if (!isDatabaseConfigured()) return [];
+  const { base } = await loadVisibility();
+  const docs = await Product.find({ $and: [base, { slug: { $exists: true, $nin: ['', null] } }] }, { slug: 1, updatedAt: 1 }).lean();
+  return docs.map((doc) => ({ slug: doc.slug, updatedAt: toIso(doc.updatedAt) }));
+}
 
 /**
  * Products highlighted in the storefront, chosen in the admin via badges:

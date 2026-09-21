@@ -18,13 +18,9 @@
   isolation: isolate;
 }
 
-.imageButton {
+.imageLink {
   position: absolute;
   inset: 0;
-  padding: 0;
-  border: 0;
-  background: none;
-  cursor: pointer;
 }
 
 .image {
@@ -138,6 +134,11 @@
   background: #fff;
 }
 
+.quickView:focus-visible {
+  opacity: 1;
+  transform: none;
+}
+
 @media (hover: hover) and (min-width: 768px) {
   .card:hover .quickView {
     opacity: 1;
@@ -196,12 +197,9 @@
   line-height: 1.2;
 }
 
-.name button {
-  padding: 0;
-  border: 0;
-  background: none;
-  font: inherit;
+.name a {
   color: var(--ms-ink);
+  text-decoration: none;
   text-align: start;
   background-image: linear-gradient(currentColor, currentColor);
   background-size: 0% 1px;
@@ -210,7 +208,7 @@
   transition: background-size 0.45s var(--ms-ease);
 }
 
-.name button:hover {
+.name a:hover {
   background-size: 100% 1px;
 }
 

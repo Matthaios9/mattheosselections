@@ -7,7 +7,8 @@
     "build": "next build",
     "start": "next start",
     "lint": "eslint",
-    "create-admin": "node --disable-warning=MODULE_TYPELESS_PACKAGE_JSON scripts/create-admin.mjs"
+    "create-admin": "node --disable-warning=MODULE_TYPELESS_PACKAGE_JSON scripts/create-admin.mjs",
+    "set-product-slugs": "node --disable-warning=MODULE_TYPELESS_PACKAGE_JSON scripts/set-product-slugs.mjs"
   },
   "dependencies": {
     "axios": "^1.20.0",

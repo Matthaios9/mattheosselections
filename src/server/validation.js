@@ -4,6 +4,7 @@ import { ORDER_STATUSES, PAYMENT_STATUSES } from '@/server/models/Order';
 import { USER_ROLES, USER_STATUSES } from '@/server/models/User';
 import { UPLOAD_TARGETS } from '@/server/cloudinary';
 import { SHIPPING_COUNTRIES } from '@/utils/shipping';
+import { slugify } from '@/utils/slug';
 
 /** Request schemas for the API routes (zod). Field errors reach the UI as `{ 'name.en': 'message' }`. */
 
@@ -34,6 +35,8 @@ export const productInput = z
   .object({
     name: localized({ required: true, max: 160 }),
     sku: text(60),
+    // Empty → generated from the name when saved.
+    slug: text(80).transform(slugify),
     // Optional: an empty value leaves the product uncategorised.
     category: z
       .union([objectId('Choose a valid category'), z.literal(''), z.null()])

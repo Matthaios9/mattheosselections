@@ -4,6 +4,7 @@ import ShopCatalog from '@/components/shop/ShopCatalog';
 import { filtersFromParams, filtersToParams, sortFromParams } from '@/constants/shop';
 import { localizePath } from '@/i18n/config';
 import { getDictionary } from '@/i18n/dictionaries';
+import { pageMetadata } from '@/i18n/metadata';
 import { getStoreCategories, searchStoreProducts, storeQueryToOptions } from '@/server/domain/storefront';
 import styles from './page.module.css';
 
@@ -12,7 +13,8 @@ const PERK_ICONS = [PiTruck, PiPackage, PiSealCheck];
 export async function generateMetadata({ params }) {
   const { lang } = await params;
   const { dict } = await getDictionary(lang);
-  return { title: dict.meta.shop.title, description: dict.meta.shop.description };
+  // Filtered and searched views all point at the plain shop page as canonical.
+  return pageMetadata({ dict, locale: lang, path: '/shop', title: dict.meta.shop.title, description: dict.meta.shop.description });
 }
 
 const EMPTY_RESULT = { items: [], total: 0, page: 1, pageSize: 0, pages: 1 };

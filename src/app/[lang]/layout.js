@@ -27,15 +27,14 @@ export async function generateMetadata({ params }) {
       template: `%s — ${dict.meta.siteName}`,
     },
     description: dict.meta.home.description,
-    alternates: {
-      languages: Object.fromEntries(locales.map((locale) => [locale.code, `/${locale.code}`])),
-    },
+    // Canonical and hreflang are set per page (src/i18n/metadata.js); these are the fallbacks.
     openGraph: {
       siteName: dict.meta.siteName,
       locale: getLocaleConfig(lang).ogLocale,
       type: 'website',
       images: [{ url: SHARE_IMAGE, width: 1200, height: 630 }],
     },
+    twitter: { card: 'summary_large_image' },
   };
 }
 
