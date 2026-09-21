@@ -33,6 +33,10 @@ export const STATUS_META = {
     waiting: { label: 'Waiting', tone: 'warning' },
     notified: { label: 'Emailed', tone: 'success' },
   },
+  contactMessage: {
+    new: { label: 'New', tone: 'warning' },
+    read: { label: 'Read', tone: 'neutral' },
+  },
 };
 
 export const ORDER_STATUS_OPTIONS = Object.entries(STATUS_META.order).map(([value, meta]) => ({ value, ...meta }));

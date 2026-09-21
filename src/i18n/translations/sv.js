@@ -375,15 +375,15 @@ const sv = {
   },
 
   newsletter: {
-    eyebrow: 'Välkomsterbjudande',
-    title: 'En liten sak till dig',
-    offer: 'Få 10 % rabatt på din första beställning.',
-    text: 'Registrera dig för att få ditt välkomsterbjudande och nyheter då och då från Mattheos Selections.',
+    eyebrow: 'Nyhetsbrev',
+    title: 'Håll kontakten',
+    text: 'Anmäl dig för nyheter om nya skördar, säsongens favoriter och presenttips från Mattheos Selections.',
     label: 'E-postadress',
     placeholder: 'Din e-postadress',
     submit: 'Registrera dig',
-    success: 'Tack för din registrering! Ditt välkomsterbjudande skickas till din inkorg.',
+    success: 'Tack för din anmälan! Vi håller dig uppdaterad.',
     error: 'Ange en giltig e-postadress.',
+    failed: 'Vi kunde inte registrera dig just nu. Försök igen.',
     privacy: 'Ingen spam. Avsluta när du vill.',
   },
 
@@ -579,6 +579,7 @@ const sv = {
         required: 'Detta fält är obligatoriskt.',
         email: 'Ange en giltig e-postadress.',
         message: 'Skriv minst 10 tecken.',
+        failed: 'Ditt meddelande kunde inte skickas just nu. Försök igen eller mejla oss på info@mattheosselections.com.',
       },
     },
     wholesale: {

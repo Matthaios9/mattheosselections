@@ -8,23 +8,26 @@ import Form from 'react-bootstrap/Form';
 import Row from 'react-bootstrap/Row';
 import Spinner from 'react-bootstrap/Spinner';
 import { PiCheckCircle, PiPaperPlaneTilt } from 'react-icons/pi';
+import Honeypot from '@/components/common/Honeypot';
 import TextField from '@/components/common/TextField';
 import { useFormState } from '@/hooks/useFormState';
 import { useI18n } from '@/i18n/I18nProvider';
+import { sendContactMessage } from '@/services/submission';
 import { firstName } from '@/utils/format';
 import { email, minLength, required } from '@/utils/validation';
 import styles from './ContactForm.module.css';
 
 const EMPTY = { name: '', email: '', subject: '', message: '' };
 
-/** Validated contact form. No email service is connected yet: replace the timeout in `handleSubmit` with a service call. */
+/** Validated contact form. Messages are saved in the admin under Submissions → Contact. */
 export default function ContactForm() {
-  const { t } = useI18n();
+  const { t, locale } = useI18n();
   const form = useFormState(EMPTY);
-  const [status, setStatus] = useState('idle'); // idle | sending | sent
+  const [website, setWebsite] = useState('');
+  const [status, setStatus] = useState('idle'); // idle | sending | sent | failed
   const [sentName, setSentName] = useState('');
 
-  const handleSubmit = (event) => {
+  const handleSubmit = async (event) => {
     event.preventDefault();
     const valid = form.validate({
       name: [required('contact.form.errors.required')],
@@ -35,11 +38,14 @@ export default function ContactForm() {
     if (!valid) return;
 
     setStatus('sending');
-    window.setTimeout(() => {
+    try {
+      await sendContactMessage({ ...form.values, locale, website });
       setSentName(firstName(form.values.name));
       form.reset();
       setStatus('sent');
-    }, 900);
+    } catch {
+      setStatus('failed');
+    }
   };
 
   const field = (name, props = {}) => (
@@ -74,6 +80,11 @@ export default function ContactForm() {
         </Alert>
       ) : (
         <Form noValidate onSubmit={handleSubmit}>
+          {status === 'failed' && (
+            <Alert variant="danger" className="mb-3">
+              {t('contact.form.errors.failed')}
+            </Alert>
+          )}
           <Row className="g-3">
             <Col md={6}>
               {field('name', { autoComplete: 'name' })}
@@ -88,6 +99,7 @@ export default function ContactForm() {
               {field('message', { as: 'textarea', rows: 6, inputClassName: styles.textarea })}
             </Col>
           </Row>
+          <Honeypot value={website} onChange={setWebsite} />
           <div className={styles.footer}>
             <p className={styles.privacy}>{t('contact.form.privacy')}</p>
             <Button type="submit" variant="ms-dark" size="lg" disabled={status === 'sending'}>

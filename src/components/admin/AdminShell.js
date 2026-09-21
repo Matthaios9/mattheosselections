@@ -9,6 +9,7 @@ import Offcanvas from 'react-bootstrap/Offcanvas';
 import {
   PiArrowSquareOut,
   PiBellSimpleRinging,
+  PiEnvelopeSimple,
   PiList,
   PiPackage,
   PiReceipt,
@@ -25,10 +26,11 @@ import styles from './AdminShell.module.css';
 
 const NAV = [
   { href: '/admin', label: 'Dashboard', icon: PiSquaresFour, exact: true },
-  { href: '/admin/orders', label: 'Orders', icon: PiReceipt, badge: 'pending' },
+  { href: '/admin/orders', label: 'Orders', icon: PiReceipt, badge: 'pendingOrders' },
   { href: '/admin/products', label: 'Products', icon: PiPackage },
   { href: '/admin/categories', label: 'Categories', icon: PiTag },
   { href: '/admin/stock-alerts', label: 'Stock alerts', icon: PiBellSimpleRinging },
+  { href: '/admin/submissions', label: 'Submissions', icon: PiEnvelopeSimple, badge: 'unreadMessages' },
   { href: '/admin/users', label: 'Users', icon: PiUsers },
 ];
 
@@ -42,7 +44,8 @@ function useLogout() {
   };
 }
 
-function SidebarContent({ pathname, pendingOrders, onNavigate }) {
+/** `badges`: counts shown next to nav items, keyed by the item's `badge`. */
+function SidebarContent({ pathname, badges, onNavigate }) {
   const handleLogout = useLogout();
   const isActive = (item) => (item.exact ? pathname === item.href : pathname.startsWith(item.href));
 
@@ -71,7 +74,7 @@ function SidebarContent({ pathname, pendingOrders, onNavigate }) {
             >
               <Icon className={styles.navIcon} aria-hidden="true" />
               <span>{item.label}</span>
-              {item.badge === 'pending' && pendingOrders > 0 && <span className={styles.navBadge}>{pendingOrders}</span>}
+              {badges[item.badge] > 0 && <span className={styles.navBadge}>{badges[item.badge]}</span>}
             </Link>
           );
         })}
@@ -104,20 +107,20 @@ export default function AdminShell({ admin, children }) {
 
 function ShellLayout({ children }) {
   const pathname = usePathname();
-  const { admin, orderCounts } = useAdminSession();
+  const { admin, orderCounts, submissionCounts } = useAdminSession();
   const handleLogout = useLogout();
   const [menuOpen, setMenuOpen] = useState(false);
-  const pendingOrders = orderCounts.pending ?? 0;
+  const badges = { pendingOrders: orderCounts.pending ?? 0, unreadMessages: submissionCounts.unread ?? 0 };
   const current = NAV.find((item) => (item.exact ? pathname === item.href : pathname.startsWith(item.href)));
 
   return (
     <div className={styles.shell}>
       <aside className={`d-none d-lg-block ${styles.sidebar}`}>
-        <SidebarContent pathname={pathname} pendingOrders={pendingOrders} />
+        <SidebarContent pathname={pathname} badges={badges} />
       </aside>
 
       <Offcanvas show={menuOpen} onHide={() => setMenuOpen(false)} className={styles.offcanvas} aria-label="Admin menu">
-        <SidebarContent pathname={pathname} pendingOrders={pendingOrders} onNavigate={() => setMenuOpen(false)} />
+        <SidebarContent pathname={pathname} badges={badges} onNavigate={() => setMenuOpen(false)} />
       </Offcanvas>
 
       <div className={styles.main}>

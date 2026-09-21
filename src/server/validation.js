@@ -1,5 +1,6 @@
 import { z } from 'zod';
 import { PRODUCT_BADGES, PRODUCT_STATUSES } from '@/server/models/Product';
+import { CONTACT_MESSAGE_STATUSES } from '@/server/models/ContactMessage';
 import { ORDER_STATUSES, PAYMENT_STATUSES } from '@/server/models/Order';
 import { USER_ROLES, USER_STATUSES } from '@/server/models/User';
 import { UPLOAD_TARGETS } from '@/server/cloudinary';
@@ -169,12 +170,35 @@ export const kustomValidationInput = z
 
 export const uploadSignatureInput = z.object({ target: z.enum(UPLOAD_TARGETS) });
 
+const emailAddress = z.string().trim().toLowerCase().max(254).pipe(z.email('Enter a valid email address'));
+const storeLocale = z.enum(['en', 'sv', 'el']).catch('en');
+// Hidden form field that people never see: bots fill it in, and their submissions are dropped.
+const honeypot = z.string().max(500).default('');
+
 /** "Notify me when available" for one size of a sold-out product. */
 export const stockAlertInput = z
   .object({
     productId: objectId('Invalid product'),
     variantKey: z.string().trim().min(1).max(40),
-    email: z.string().trim().toLowerCase().max(254).pipe(z.email('Enter a valid email address')),
-    locale: z.enum(['en', 'sv', 'el']).catch('en'),
+    email: emailAddress,
+    locale: storeLocale,
   })
   .strip();
+
+/** Newsletter sign-up from the storefront. */
+export const newsletterInput = z.object({ email: emailAddress, locale: storeLocale, website: honeypot }).strip();
+
+/** The contact form on the contact page. */
+export const contactMessageInput = z
+  .object({
+    name: z.string().trim().min(1, 'This field is required').max(120),
+    email: emailAddress,
+    subject: z.string().trim().min(1, 'This field is required').max(200),
+    message: z.string().trim().min(10, 'Please write at least 10 characters').max(5000),
+    locale: storeLocale,
+    website: honeypot,
+  })
+  .strip();
+
+/** Admin: mark a contact message as read or unread. */
+export const contactMessageStatusInput = z.object({ status: z.enum(CONTACT_MESSAGE_STATUSES) }).strip();

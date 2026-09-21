@@ -375,15 +375,15 @@ const en = {
   },
 
   newsletter: {
-    eyebrow: 'Welcome offer',
-    title: 'A Little Something for You',
-    offer: 'Enjoy 10% off your first order.',
-    text: 'Sign up to receive your welcome offer and occasional news from Mattheos Selections.',
+    eyebrow: 'Newsletter',
+    title: 'Stay in Touch',
+    text: 'Sign up for news about new harvests, seasonal favourites and gift ideas from Mattheos Selections.',
     label: 'Email address',
     placeholder: 'Your email address',
     submit: 'Sign up',
-    success: 'Thank you for signing up! Your welcome offer will be sent to your inbox.',
+    success: 'Thank you for signing up! We will keep you posted.',
     error: 'Please enter a valid email address.',
+    failed: 'We could not sign you up right now. Please try again.',
     privacy: 'No spam. Unsubscribe at any time.',
   },
 
@@ -579,6 +579,7 @@ const en = {
         required: 'This field is required.',
         email: 'Please enter a valid email address.',
         message: 'Please write at least 10 characters.',
+        failed: 'Your message could not be sent right now. Please try again, or email us at info@mattheosselections.com.',
       },
     },
     wholesale: {

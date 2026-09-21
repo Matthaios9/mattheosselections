@@ -8,25 +8,34 @@ import Container from 'react-bootstrap/Container';
 import Form from 'react-bootstrap/Form';
 import InputGroup from 'react-bootstrap/InputGroup';
 import { PiCheckCircle, PiPaperPlaneTilt } from 'react-icons/pi';
+import Honeypot from './Honeypot';
 import Reveal from './Reveal';
 import { useI18n } from '@/i18n/I18nProvider';
+import { subscribeNewsletter } from '@/services/submission';
 import { isEmail } from '@/utils/validation';
 import styles from './Newsletter.module.css';
 
 export default function Newsletter() {
-  const { t } = useI18n();
+  const { t, locale } = useI18n();
   const [email, setEmail] = useState('');
-  const [status, setStatus] = useState('idle'); // idle | invalid | success
+  const [website, setWebsite] = useState('');
+  const [status, setStatus] = useState('idle'); // idle | invalid | sending | success | failed
 
-  const handleSubmit = (event) => {
+  /** Saved in the admin under Submissions → Newsletter. */
+  const handleSubmit = async (event) => {
     event.preventDefault();
     if (!isEmail(email)) {
       setStatus('invalid');
       return;
     }
-    // Connect to the email platform (Klaviyo, Mailchimp…) here.
-    setStatus('success');
-    setEmail('');
+    setStatus('sending');
+    try {
+      await subscribeNewsletter({ email, locale, website });
+      setStatus('success');
+      setEmail('');
+    } catch {
+      setStatus('failed');
+    }
   };
 
   return (
@@ -39,7 +48,6 @@ export default function Newsletter() {
             <div className={styles.copy}>
               <span className="eyebrow eyebrow-light">{t('newsletter.eyebrow')}</span>
               <h2 className={styles.title}>{t('newsletter.title')}</h2>
-              <p className={styles.offer}>{t('newsletter.offer')}</p>
               <p className={styles.text}>{t('newsletter.text')}</p>
             </div>
 
@@ -61,21 +69,22 @@ export default function Newsletter() {
                       value={email}
                       onChange={(event) => {
                         setEmail(event.target.value);
-                        if (status === 'invalid') setStatus('idle');
+                        if (status === 'invalid' || status === 'failed') setStatus('idle');
                       }}
                       placeholder={t('newsletter.placeholder')}
                       autoComplete="email"
-                      isInvalid={status === 'invalid'}
+                      isInvalid={status === 'invalid' || status === 'failed'}
                       className={styles.input}
                     />
-                    <Button type="submit" variant="ms-honey" className={styles.submit}>
+                    <Button type="submit" variant="ms-honey" className={styles.submit} disabled={status === 'sending'}>
                       {t('newsletter.submit')}
                       <PiPaperPlaneTilt className="btn-icon flip-rtl" aria-hidden="true" />
                     </Button>
                     <Form.Control.Feedback type="invalid" className={styles.error}>
-                      {t('newsletter.error')}
+                      {t(status === 'failed' ? 'newsletter.failed' : 'newsletter.error')}
                     </Form.Control.Feedback>
                   </InputGroup>
+                  <Honeypot value={website} onChange={setWebsite} />
                   <p className={styles.privacy}>{t('newsletter.privacy')}</p>
                 </Form>
               )}
