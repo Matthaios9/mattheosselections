@@ -120,6 +120,20 @@
   transition-delay: 0s;
 }
 
+/* A link in the flyout was just picked: hide it at once, even though it is still hovered. */
+.hasMega.megaClosed:hover .caret,
+.hasMega.megaClosed:focus-within .caret {
+  transform: none;
+}
+
+.hasMega.megaClosed:hover > :global(div),
+.hasMega.megaClosed:focus-within > :global(div) {
+  opacity: 0;
+  visibility: hidden;
+  transform: translateY(-6px);
+  transition-delay: 0s;
+}
+
 /* Cart badge --------------------------------------------------------------- */
 
 .cartButton {
