@@ -27,6 +27,7 @@ export default async function ContactPage({ params }) {
         size="sm"
         overlap
         image={PHOTOS.hivesMountainRoad}
+        imagePosition="50% 72%"
         eyebrow={contact.hero.eyebrow}
         title={contact.hero.title}
         text={contact.hero.text}

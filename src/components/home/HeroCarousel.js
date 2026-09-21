@@ -1,8 +1,8 @@
 'use client';
 
 import { useState } from 'react';
-import CloudinaryImage from '@/components/common/CloudinaryImage';
 import Carousel from 'react-bootstrap/Carousel';
+import CloudinaryImage from '@/components/common/CloudinaryImage';
 import { HERO_SLIDES } from '@/config/home';
 import { interpolate } from '@/i18n/translate';
 import styles from './HeroSection.module.css';

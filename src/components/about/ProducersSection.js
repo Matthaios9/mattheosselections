@@ -1,6 +1,6 @@
-import CloudinaryImage from '@/components/common/CloudinaryImage';
 import Container from 'react-bootstrap/Container';
 import { PiCheck, PiMapPin } from 'react-icons/pi';
+import CloudinaryImage from '@/components/common/CloudinaryImage';
 import Reveal from '@/components/common/Reveal';
 import { PHOTOS } from '@/config/photos';
 import styles from './ProducersSection.module.css';
@@ -38,7 +38,7 @@ export default function ProducersSection({ copy }) {
               <PiMapPin aria-hidden="true" /> {copy.caption}
             </span>
             <div className={styles.jar}>
-              <CloudinaryImage src={PHOTOS.hivesMountainRoad} alt="" fill sizes="180px" className="img-cover" />
+              <CloudinaryImage src={PHOTOS.beekeepingFamilyBw} alt="" fill sizes="180px" className="img-cover" />
             </div>
           </Reveal>
         </div>

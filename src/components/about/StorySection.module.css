@@ -21,15 +21,14 @@
   padding: 2rem 2rem 3rem 0;
 }
 
-.texture {
+.accent {
   position: absolute;
   top: 0;
   inset-inline-start: 0;
   width: 55%;
   aspect-ratio: 1 / 1.2;
-  overflow: hidden;
   border-radius: var(--ms-radius-lg);
-  opacity: 0.9;
+  background: var(--ms-honey-soft);
 }
 
 .portrait {

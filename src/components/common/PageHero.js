@@ -6,10 +6,12 @@ import styles from './PageHero.module.css';
 /**
  * Editorial image banner used at the top of inner pages (About, Shop, Contact).
  * `overlap` reserves room at the bottom for content that overlaps the banner (e.g. contact cards).
+ * `imagePosition` is the CSS object-position, to keep the subject in frame in the wide banner.
  */
 export default function PageHero({
   image,
   imageAlt = '',
+  imagePosition,
   eyebrow,
   title,
   text,
@@ -29,6 +31,7 @@ export default function PageHero({
           quality={85}
           sizes="100vw"
           className={styles.image}
+          style={imagePosition ? { objectPosition: imagePosition } : undefined}
         />
         <div className={styles.overlay} aria-hidden="true" />
         <Container className={styles.content}>

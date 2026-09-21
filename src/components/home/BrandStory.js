@@ -1,7 +1,7 @@
-import CloudinaryImage from '@/components/common/CloudinaryImage';
 import Link from 'next/link';
 import Container from 'react-bootstrap/Container';
 import { PiArrowRight, PiMapPin } from 'react-icons/pi';
+import CloudinaryImage from '@/components/common/CloudinaryImage';
 import Reveal from '@/components/common/Reveal';
 import { PHOTOS } from '@/config/photos';
 import styles from './BrandStory.module.css';

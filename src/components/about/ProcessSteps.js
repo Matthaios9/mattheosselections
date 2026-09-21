@@ -1,5 +1,5 @@
-import CloudinaryImage from '@/components/common/CloudinaryImage';
 import Container from 'react-bootstrap/Container';
+import CloudinaryImage from '@/components/common/CloudinaryImage';
 import Reveal from '@/components/common/Reveal';
 import { PHOTOS } from '@/config/photos';
 import styles from './ProcessSteps.module.css';
