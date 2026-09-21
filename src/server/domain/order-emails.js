@@ -40,7 +40,14 @@ const EMAILS = {
       subject: 'Order {number} has been cancelled',
       text: 'Hi {name}, order {number} has been cancelled and any payment reserved for it has been released. Get in touch if this was not expected.',
     },
-    summary: { subtotal: 'Subtotal', shipping: 'Shipping', free: 'Free', total: 'Total', address: 'Delivery address' },
+    summary: {
+      subtotal: 'Subtotal',
+      shipping: 'Shipping',
+      free: 'Free',
+      total: 'Total',
+      address: 'Delivery address',
+      contains: 'Contains',
+    },
     cta: 'Visit the shop',
     footer: 'You receive this email because you placed an order at Mattheos Selections. Questions? Just reply to this email.',
   },
@@ -69,7 +76,14 @@ const EMAILS = {
       subject: 'Order {number} har annullerats',
       text: 'Hej {name}, order {number} har annullerats och ett eventuellt reserverat belopp har släppts. Hör av dig om du inte väntade dig detta.',
     },
-    summary: { subtotal: 'Delsumma', shipping: 'Frakt', free: 'Fri frakt', total: 'Totalt', address: 'Leveransadress' },
+    summary: {
+      subtotal: 'Delsumma',
+      shipping: 'Frakt',
+      free: 'Fri frakt',
+      total: 'Totalt',
+      address: 'Leveransadress',
+      contains: 'Innehåller',
+    },
     cta: 'Till butiken',
     footer: 'Du får det här mejlet eftersom du har lagt en beställning hos Mattheos Selections. Frågor? Svara bara på det här mejlet.',
   },
@@ -98,7 +112,14 @@ const EMAILS = {
       subject: 'Η παραγγελία {number} ακυρώθηκε',
       text: 'Γεια σας {name}, η παραγγελία {number} ακυρώθηκε και τυχόν δεσμευμένη πληρωμή αποδεσμεύτηκε. Επικοινωνήστε μαζί μας αν δεν το περιμένατε.',
     },
-    summary: { subtotal: 'Υποσύνολο', shipping: 'Μεταφορικά', free: 'Δωρεάν', total: 'Σύνολο', address: 'Διεύθυνση παράδοσης' },
+    summary: {
+      subtotal: 'Υποσύνολο',
+      shipping: 'Μεταφορικά',
+      free: 'Δωρεάν',
+      total: 'Σύνολο',
+      address: 'Διεύθυνση παράδοσης',
+      contains: 'Περιέχει',
+    },
     cta: 'Επισκεφθείτε το κατάστημα',
     footer: 'Λαμβάνετε αυτό το email επειδή κάνατε μια παραγγελία στη Mattheos Selections. Απορίες; Απαντήστε απλώς σε αυτό το email.',
   },
@@ -116,8 +137,13 @@ function countryIn(code, locale) {
 /** The items, totals and delivery address, as an HTML block and its plain-text twin. */
 function renderSummary(order, copy, locale) {
   const price = (amount) => formatPrice(amount ?? 0, locale);
-  const line = (item) =>
-    `${item.name}${item.variantLabel ? ` (${item.variantLabel})` : ''} × ${item.quantity}`;
+  const named = (entry) => `${entry.name}${entry.variantLabel ? ` (${entry.variantLabel})` : ''}`;
+  const line = (item) => `${named(item)} × ${item.quantity}`;
+  // A pack: what goes into one, e.g. "Contains: 1 × Thyme Honey (450 g), 1 × Beeswax Cream (50 ml)".
+  const contents = (item) =>
+    item.contents?.length
+      ? `${copy.summary.contains}: ${item.contents.map((entry) => `${entry.quantity} × ${named(entry)}`).join(', ')}`
+      : '';
   const shipping = order.shippingFee > 0 ? price(order.shippingFee) : copy.summary.free;
   const address = [
     order.shippingAddress.line1,
@@ -137,7 +163,9 @@ function renderSummary(order, copy, locale) {
         ${order.items
           .map(
             (item) =>
-              `<tr><td style="${cell}">${escapeHtml(line(item))}</td>
+              `<tr><td style="${cell}">${escapeHtml(line(item))}${
+                contents(item) ? `<br><span style="font-size:13px;color:#8a8172">${escapeHtml(contents(item))}</span>` : ''
+              }</td>
                 <td style="${cell};text-align:right;white-space:nowrap">${escapeHtml(price(item.lineTotal))}</td></tr>`
           )
           .join('')}
@@ -151,7 +179,9 @@ function renderSummary(order, copy, locale) {
     </p>`;
 
   const text = [
-    ...order.items.map((item) => `- ${line(item)} — ${price(item.lineTotal)}`),
+    ...order.items.map((item) =>
+      [`- ${line(item)} — ${price(item.lineTotal)}`, contents(item) && `  ${contents(item)}`].filter(Boolean).join('\n')
+    ),
     `${copy.summary.subtotal}: ${price(order.subtotal)}`,
     `${copy.summary.shipping}: ${shipping}`,
     `${copy.summary.total}: ${price(order.total)}`,

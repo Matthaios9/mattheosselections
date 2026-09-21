@@ -62,6 +62,21 @@ export const productInput = z
             .min(0, 'Cannot be negative')
             .max(100_000),
           image: z.string().trim().default(''),
+          // Packs only: the products inside one pack.
+          contents: z
+            .array(
+              z.object({
+                product: objectId('Choose a product'),
+                variantKey: z.string().trim().min(1, 'Choose a size').max(40),
+                quantity: z.coerce
+                  .number({ message: 'Enter a quantity' })
+                  .int('Whole numbers only')
+                  .min(1, 'At least 1')
+                  .max(1000),
+              })
+            )
+            .max(30)
+            .default([]),
         })
       )
       .min(1, 'Add at least one size')
@@ -70,11 +85,40 @@ export const productInput = z
         message: 'Each size needs a different label',
       }),
     defaultVariant: z.string().trim().default(''),
+    isPack: z.boolean().default(false),
     badge: z.enum(PRODUCT_BADGES).default(''),
     featured: z.boolean().default(false),
     status: z.enum(PRODUCT_STATUSES).default('active'),
   })
-  .strip();
+  .strip()
+  .superRefine((product, context) => {
+    if (!product.isPack) return;
+    product.variants.forEach((variant, index) => {
+      if (!variant.contents.length) {
+        context.addIssue({
+          code: 'custom',
+          path: ['variants', index, 'contents'],
+          message: 'Add the products that go into this pack',
+        });
+      }
+      const seen = new Set();
+      variant.contents.forEach((item, position) => {
+        const key = `${item.product}:${item.variantKey}`;
+        if (seen.has(key)) {
+          context.addIssue({
+            code: 'custom',
+            path: ['variants', index, 'contents', position, 'product'],
+            message: 'Already in this pack — raise its quantity instead',
+          });
+        }
+        seen.add(key);
+      });
+    });
+  })
+  // Only packs have contents (their stock is worked out from them when saved).
+  .transform((product) =>
+    product.isPack ? product : { ...product, variants: product.variants.map((variant) => ({ ...variant, contents: [] })) }
+  );
 
 /** Quick toggles from the product list. Stock is edited per size in the product form. */
 export const productFlagsInput = z

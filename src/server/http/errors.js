@@ -42,5 +42,8 @@ export const conflict = (message, code = 'conflict', extra) => new ApiError(409,
 export const unavailable = (message = 'This service is not available right now.', code = 'unavailable') =>
   new ApiError(503, code, message);
 
-export const validationError = (zodError, message = 'Please fix the highlighted fields.') =>
-  new ApiError(422, 'validation', message, { fieldErrors: toFieldErrors(zodError) });
+/** Field errors found beyond the request schema (e.g. rules that need the database). */
+export const invalidFields = (fieldErrors, message = 'Please fix the highlighted fields.') =>
+  new ApiError(422, 'validation', message, { fieldErrors });
+
+export const validationError = (zodError, message) => invalidFields(toFieldErrors(zodError), message);

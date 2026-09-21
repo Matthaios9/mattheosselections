@@ -5,6 +5,18 @@ export const ORDER_STATUSES = ['pending', 'processing', 'shipped', 'delivered', 
 // 'authorized': reserved by Kustom at checkout, captured (→ 'paid') when the order ships.
 export const PAYMENT_STATUSES = ['unpaid', 'authorized', 'paid', 'refunded'];
 
+// One product inside a pack as it was ordered (quantity per pack). Cancelling returns exactly these to stock.
+const packItemSchema = new mongoose.Schema(
+  {
+    product: { type: mongoose.Schema.Types.ObjectId, ref: 'Product' },
+    name: { type: String, default: '' },
+    variantKey: { type: String, default: '' },
+    variantLabel: { type: String, default: '' },
+    quantity: { type: Number, required: true, min: 1 },
+  },
+  { _id: false }
+);
+
 const orderItemSchema = new mongoose.Schema(
   {
     product: { type: mongoose.Schema.Types.ObjectId, ref: 'Product' },
@@ -15,6 +27,7 @@ const orderItemSchema = new mongoose.Schema(
     price: { type: Number, required: true, min: 0 },
     quantity: { type: Number, required: true, min: 1 },
     lineTotal: { type: Number, required: true, min: 0 },
+    contents: { type: [packItemSchema], default: [] }, // packs only
   },
   { _id: false }
 );

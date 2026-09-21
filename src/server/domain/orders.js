@@ -2,7 +2,7 @@ import 'server-only';
 import { connectToDatabase } from '@/server/db';
 import { Order, Product } from '@/server/models';
 import { calculateShipping } from '@/utils/shipping';
-import { releaseStock, reserveStock } from './inventory';
+import { releaseStock, reserveStock, stockMoves } from './inventory';
 import { PaymentUpdateError, settleKustomPayment } from './settlement';
 import { escapeRegex, isObjectId, pageParams, pageResult, toId, toIso } from '@/server/utils';
 
@@ -34,6 +34,13 @@ export function serializeOrder(doc) {
       price: item.price,
       quantity: item.quantity,
       lineTotal: item.lineTotal,
+      contents: (item.contents ?? []).map((entry) => ({
+        product: toId(entry.product),
+        name: entry.name,
+        variantKey: entry.variantKey,
+        variantLabel: entry.variantLabel,
+        quantity: entry.quantity,
+      })),
     })),
     itemCount: (doc.items ?? []).reduce((sum, item) => sum + item.quantity, 0),
     subtotal: doc.subtotal,
@@ -59,12 +66,18 @@ export function serializeOrder(doc) {
   };
 }
 
-export const stockLine = (item) => ({ product: item.product, variantKey: item.variantKey, quantity: item.quantity });
+export const stockLine = (item) => ({
+  product: item.product,
+  variantKey: item.variantKey,
+  quantity: item.quantity,
+  contents: (item.contents ?? []).map(({ product, variantKey, quantity }) => ({ product, variantKey, quantity })),
+});
 
 /**
  * Price a cart for checkout. Prices, names and stock are always re-read from the
  * database — the client only sends ids and quantities. Nothing is saved here: the
  * order is created once the payment succeeds (see payments.js).
+ * A pack line carries its `contents` (with names), so the order records what went into it.
  * Returns { ok, lines, subtotal, shippingFee, total } or { ok: false, problems }.
  */
 export async function priceCart({ items, country, locale }) {
@@ -81,28 +94,65 @@ export async function priceCart({ items, country, locale }) {
   const ids = [...new Set(wanted.map((item) => item.productId))].filter(isObjectId);
   const products = await Product.find({ _id: { $in: ids }, status: 'active' }).lean();
   const byId = new Map(products.map((product) => [toId(product._id), product]));
+  // The products inside packs (in any status: some are only sold in packs).
+  const packedIds = products.flatMap((product) =>
+    product.variants.flatMap((variant) => (variant.contents ?? []).map((item) => item.product))
+  );
+  const packed = packedIds.length ? await Product.find({ _id: { $in: packedIds } }, { name: 1, variants: 1 }).lean() : [];
+  const sizes = new Map(
+    [...products, ...packed].flatMap((product) =>
+      product.variants.map((variant) => [`${product._id}:${variant.key}`, { product, variant }])
+    )
+  );
+  const localized = (value) => value?.[locale] || value?.en;
 
   const lines = [];
   const problems = [];
   for (const item of wanted) {
     const product = byId.get(item.productId);
     const variant = product?.variants.find((entry) => entry.key === item.variantId);
-    const available = variant?.stock ?? 0;
-    if (!product || !variant || available < item.quantity) {
-      problems.push({ productId: item.productId, variantId: item.variantId, available });
+    const contents = variant?.contents ?? [];
+    const inside = contents.map((entry) => sizes.get(`${entry.product}:${entry.variantKey}`));
+    if (!product || !variant || inside.some((entry) => !entry)) {
+      problems.push({ productId: item.productId, variantId: item.variantId, available: 0 });
       continue;
     }
     lines.push({
       product: product._id,
       slug: product.slug ?? '',
-      name: product.name?.[locale] || product.name?.en,
+      name: localized(product.name),
       variantKey: variant.key,
-      variantLabel: variant.label?.[locale] || variant.label?.en,
+      variantLabel: localized(variant.label),
       image: variant.image || product.images?.[0]?.url || '',
       price: variant.price,
       quantity: item.quantity,
       lineTotal: variant.price * item.quantity,
+      ...(contents.length && {
+        contents: contents.map((entry, index) => ({
+          product: entry.product,
+          name: localized(inside[index].product.name),
+          variantKey: entry.variantKey,
+          variantLabel: localized(inside[index].variant.label),
+          quantity: entry.quantity,
+        })),
+      }),
     });
+  }
+
+  // Check stock for the cart as a whole: a pack needs the products inside it, which may also be in the cart on their own.
+  const needed = new Map();
+  for (const move of lines.flatMap(stockMoves)) {
+    const key = `${move.product}:${move.variantKey}`;
+    needed.set(key, (needed.get(key) ?? 0) + move.quantity);
+  }
+  const short = new Set(
+    [...needed].filter(([key, quantity]) => (sizes.get(key)?.variant.stock ?? 0) < quantity).map(([key]) => key)
+  );
+  for (const line of lines) {
+    if (stockMoves(line).some((move) => short.has(`${move.product}:${move.variantKey}`))) {
+      const available = sizes.get(`${line.product}:${line.variantKey}`).variant.stock ?? 0;
+      problems.push({ productId: toId(line.product), variantId: line.variantKey, available });
+    }
   }
   if (problems.length) return { ok: false, problems };
 

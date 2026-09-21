@@ -120,6 +120,60 @@
   color: var(--ms-ink);
 }
 
+/* Packs ----------------------------------------------------------------------- */
+
+.packToggle {
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+}
+
+.packToggle :global(.form-check) {
+  margin: 0;
+  font-weight: 600;
+}
+
+.pack {
+  display: flex;
+  flex-direction: column;
+  gap: 0.6rem;
+  margin-top: 0.85rem;
+}
+
+.packRow {
+  display: grid;
+  grid-template-columns: 5.5rem minmax(0, 1fr) 2rem;
+  grid-template-areas:
+    'product product product'
+    'qty size remove';
+  gap: 0.5rem;
+  align-items: start;
+}
+
+@media (min-width: 768px) {
+  .packRow {
+    grid-template-columns: 5.5rem minmax(0, 2fr) minmax(0, 1fr) 2rem;
+    grid-template-areas: 'qty product size remove';
+  }
+}
+
+.packQty {
+  grid-area: qty;
+}
+
+.packProduct {
+  grid-area: product;
+}
+
+.packSize {
+  grid-area: size;
+}
+
+.packRow .removeVariant {
+  grid-area: remove;
+  margin-top: 0.2rem;
+}
+
 /* Sticky save bar ------------------------------------------------------------- */
 
 .saveBar {

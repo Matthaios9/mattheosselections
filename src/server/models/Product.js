@@ -5,13 +5,25 @@ import { getModel, imageSchema, localizedString } from './shared.js';
 export const PRODUCT_BADGES = ['', 'bestseller', 'limited', 'new', 'signature', 'gift'];
 export const PRODUCT_STATUSES = ['active', 'draft'];
 
+// One product inside a pack: which of its sizes, and how many go into each pack.
+const packItemSchema = new mongoose.Schema(
+  {
+    product: { type: mongoose.Schema.Types.ObjectId, ref: 'Product', required: true },
+    variantKey: { type: String, required: true, trim: true },
+    quantity: { type: Number, required: true, min: 1, default: 1 },
+  },
+  { _id: false }
+);
+
 const variantSchema = new mongoose.Schema(
   {
     key: { type: String, required: true, trim: true }, // stable id used by carts, e.g. "450g"
     label: { type: localizedString({ required: true }), required: true },
     price: { type: Number, required: true, min: 0 },
-    stock: { type: Number, required: true, min: 0, default: 0 }, // units available for this size
+    // Units available for this size. For a pack: how many complete packs the contents make up (see inventory.js).
+    stock: { type: Number, required: true, min: 0, default: 0 },
     image: { type: String, default: '' }, // optional override (one of the product images)
+    contents: { type: [packItemSchema], default: [] }, // packs only: the products inside
   },
   { _id: false }
 );
@@ -30,6 +42,8 @@ const productSchema = new mongoose.Schema(
       validate: [(value) => value.length > 0, 'A product needs at least one size.'],
     },
     defaultVariant: { type: String, default: '' },
+    // A pack (e.g. a gift box) of other products at its own price: selling one takes each product inside out of stock.
+    isPack: { type: Boolean, default: false },
     price: { type: Number, default: 0, index: true }, // lowest size price, kept in sync below
     inStock: { type: Boolean, default: false, index: true }, // true when any size has stock, kept in sync
     badge: { type: String, enum: PRODUCT_BADGES, default: '' },
@@ -39,6 +53,9 @@ const productSchema = new mongoose.Schema(
   },
   { timestamps: true }
 );
+
+// Finds the packs a product is in (stock sync, delete checks).
+productSchema.index({ 'variants.contents.product': 1 });
 
 productSchema.pre('validate', function syncDerivedFields() {
   if (this.variants?.length) {

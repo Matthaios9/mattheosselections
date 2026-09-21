@@ -51,3 +51,9 @@ export const updateProductFlags = async (id, flags) => {
 export const deleteProduct = async (id) => {
   await GetApiData(`/admin/products/${id}`, 'DELETE');
 };
+
+/** Products that can go into a pack, with their sizes and stock → [{ id, name, status, defaultVariant, variants }] */
+export const getPackChoices = async () => {
+  const { data } = await GetApiData('/admin/products/pack-choices', 'GET');
+  return data;
+};

@@ -120,7 +120,12 @@ export async function sendStockAlertConfirmation(alertId, { origin } = {}) {
 export async function sendBackInStockEmails({ productIds, origin } = {}) {
   await connectToDatabase();
   const filter = { status: 'waiting' };
-  if (productIds) filter.product = { $in: productIds.filter(isObjectId) };
+  if (productIds) {
+    const ids = productIds.filter(isObjectId);
+    // Packs come back when the products inside them do.
+    const packIds = await Product.find({ isPack: true, 'variants.contents.product': { $in: ids } }).distinct('_id');
+    filter.product = { $in: [...ids, ...packIds] };
+  }
   const alerts = await StockAlert.find(filter).lean();
   if (!alerts.length) return { sent: 0, failed: 0, due: 0, configured: isMailConfigured() };
 

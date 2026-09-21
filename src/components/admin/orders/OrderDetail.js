@@ -75,6 +75,16 @@ export default function OrderDetail({ id }) {
                                     <span className="cell-strong">{item.name}</span>
                                   )}
                                   <div className="cell-muted">{item.variantLabel}</div>
+                                  {item.contents.length > 0 && (
+                                    <ul className={styles.packContents} aria-label="In each pack">
+                                      {item.contents.map((entry) => (
+                                        <li key={`${entry.product}-${entry.variantKey}`}>
+                                          {entry.quantity} × {entry.name}
+                                          {entry.variantLabel && ` (${entry.variantLabel})`}
+                                        </li>
+                                      ))}
+                                    </ul>
+                                  )}
                                 </div>
                               </div>
                             </td>

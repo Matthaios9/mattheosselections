@@ -1,7 +1,7 @@
 import { after } from 'next/server';
-import { deleteProduct, getProduct, setProductFlags, updateProduct } from '@/server/domain/products';
+import { checkPackRules, deleteProduct, getProduct, setProductFlags, updateProduct } from '@/server/domain/products';
 import { sendBackInStockEmails } from '@/server/domain/stock-alerts';
-import { notFound, parseBody, requestOrigin, revalidateStorefront, withApi } from '@/server/http';
+import { conflict, invalidFields, notFound, parseBody, requestOrigin, revalidateStorefront, withApi } from '@/server/http';
 import { productFlagsInput, productInput } from '@/server/validation';
 
 const missing = () => notFound('Product not found.');
@@ -26,10 +26,16 @@ export const GET = withApi(
   { auth: 'admin' }
 );
 
-/** PUT /api/admin/products/:id — save the full product form (restocked sizes trigger back-in-stock emails). */
+/**
+ * PUT /api/admin/products/:id — save the full product form (restocked sizes trigger back-in-stock emails,
+ * also for the packs this product is in).
+ */
 export const PUT = withApi(
   async ({ request, params }) => {
-    const product = await updateProduct(params.id, await parseBody(request, productInput));
+    const input = await parseBody(request, productInput);
+    const problems = await checkPackRules(input, params.id);
+    if (problems) throw invalidFields(problems);
+    const product = await updateProduct(params.id, input);
     if (!product) throw missing();
     revalidateStorefront();
     notifyRestock(request, params.id);
@@ -50,10 +56,12 @@ export const PATCH = withApi(
   { auth: 'admin' }
 );
 
-/** DELETE /api/admin/products/:id — also removes its Cloudinary images. */
+/** DELETE /api/admin/products/:id — also removes its Cloudinary images. Refused while the product is in a pack. */
 export const DELETE = withApi(
   async ({ params }) => {
-    if (!(await deleteProduct(params.id))) throw missing();
+    const result = await deleteProduct(params.id);
+    if (result.reason === 'in-pack') throw conflict(result.message, 'in-pack');
+    if (!result.ok) throw missing();
     revalidateStorefront();
     return { ok: true };
   },

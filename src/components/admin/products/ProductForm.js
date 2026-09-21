@@ -13,9 +13,11 @@ import { PiPlus, PiStarFill, PiTrash } from 'react-icons/pi';
 import ConfirmDialog from '@/components/admin/ConfirmDialog';
 import ImageUploader from '@/components/admin/ImageUploader';
 import LocaleTabs from '@/components/admin/LocaleTabs';
+import PackContents, { emptyPackItem } from '@/components/admin/products/PackContents';
 import { locales } from '@/i18n/config';
 import { useAdminAction } from '@/hooks/useAdminAction';
-import { createProduct, deleteProduct, updateProduct } from '@/services/product';
+import { useApiQuery } from '@/hooks/useApiQuery';
+import { createProduct, deleteProduct, getPackChoices, updateProduct } from '@/services/product';
 import { getErrorMessage, getFieldErrors } from '@/utils/errors';
 import { variantKeyFrom } from '@/utils/variant-key';
 import styles from './ProductForm.module.css';
@@ -30,7 +32,14 @@ const BADGES = [
 ];
 
 const emptyLocalized = () => Object.fromEntries(locales.map((locale) => [locale.code, '']));
-const emptySize = () => ({ key: '', label: emptyLocalized(), price: '', stock: '', image: '' });
+const emptySize = (isPack = false) => ({
+  key: '',
+  label: emptyLocalized(),
+  price: '',
+  stock: '',
+  image: '',
+  contents: isPack ? [emptyPackItem()] : [],
+});
 
 function toFormState(product) {
   if (!product) {
@@ -43,6 +52,7 @@ function toFormState(product) {
       images: [],
       variants: [emptySize()],
       defaultIndex: 0,
+      isPack: false,
       badge: '',
       featured: false,
       status: 'active',
@@ -55,15 +65,24 @@ function toFormState(product) {
     category: product.category ?? '',
     description: product.description,
     images: product.images,
-    variants: product.variants.map((variant) => ({ ...variant, price: String(variant.price), stock: String(variant.stock) })),
+    variants: product.variants.map((variant) => ({
+      ...variant,
+      price: String(variant.price),
+      stock: String(variant.stock),
+      contents: variant.contents.map((item) => ({ ...item, quantity: String(item.quantity) })),
+    })),
     defaultIndex: Math.max(0, product.variants.findIndex((variant) => variant.key === product.defaultVariant)),
+    isPack: product.isPack,
     badge: product.badge,
     featured: product.featured,
     status: product.status,
   };
 }
 
-/** Existing sizes keep their internal id; new sizes get one generated from the English label. */
+/**
+ * Existing sizes keep their internal id; new sizes get one generated from the English label.
+ * A pack sends its contents instead of stock (the server works its stock out from them).
+ */
 function toPayload(form) {
   const used = new Set(form.variants.map((variant) => variant.key).filter(Boolean));
   const variants = form.variants.map((variant, index) => {
@@ -75,7 +94,13 @@ function toPayload(form) {
       used.add(key);
     }
     const toNumber = (value) => (value === '' ? NaN : Number(value));
-    return { ...variant, key, price: toNumber(variant.price), stock: toNumber(variant.stock) };
+    return {
+      ...variant,
+      key,
+      price: toNumber(variant.price),
+      stock: form.isPack ? 0 : toNumber(variant.stock),
+      contents: form.isPack ? variant.contents.map((item) => ({ ...item, quantity: toNumber(item.quantity) })) : [],
+    };
   });
   const { defaultIndex, ...rest } = form;
   return { ...rest, variants, defaultVariant: variants[defaultIndex]?.key ?? variants[0]?.key ?? '' };
@@ -108,6 +133,9 @@ export default function ProductForm({ product, categories, onSaved }) {
 
   const dirty = JSON.stringify(form) !== JSON.stringify(initial);
   const totalUnits = form.variants.reduce((sum, variant) => sum + (Number(variant.stock) || 0), 0);
+  const packChoices = useApiQuery(['admin-pack-choices'], getPackChoices, { enabled: form.isPack });
+  // A pack can't hold itself.
+  const choices = { ...packChoices, data: packChoices.data?.filter((choice) => choice.id !== product?.id) };
 
   useEffect(() => {
     if (!dirty) return undefined;
@@ -123,7 +151,26 @@ export default function ProductForm({ product, categories, onSaved }) {
   };
   const error = (key) => errors[key];
 
-  const addSize = () => setForm((current) => ({ ...current, variants: [...current.variants, emptySize()] }));
+  const addSize = () => setForm((current) => ({ ...current, variants: [...current.variants, emptySize(current.isPack)] }));
+
+  /** Turning a pack on starts each size with an empty row; turning it off drops rows never filled in. */
+  const setPack = (isPack) => {
+    setForm((current) => ({
+      ...current,
+      isPack,
+      variants: current.variants.map((variant) => {
+        const contents = variant.contents.filter((item) => item.product);
+        return { ...variant, contents: isPack && !contents.length ? [emptyPackItem()] : contents };
+      }),
+    }));
+    if (errors.isPack) setErrors(({ isPack: _cleared, ...rest }) => rest);
+  };
+
+  const setContents = (index, contents) => {
+    setForm((current) => setIn(current, ['variants', index, 'contents'], contents));
+    const prefix = `variants.${index}.contents`;
+    setErrors((current) => Object.fromEntries(Object.entries(current).filter(([key]) => !key.startsWith(prefix))));
+  };
 
   const removeSize = (index) =>
     setForm((current) => {
@@ -226,14 +273,30 @@ export default function ProductForm({ product, categories, onSaved }) {
           <section className="admin-card">
             <div className="admin-card-header">
               <div>
-                <h2 className="admin-card-title">Sizes, prices & stock</h2>
-                <span className="small text-muted-ms">{totalUnits} units in stock in total</span>
+                <h2 className="admin-card-title">{form.isPack ? 'Sizes, prices & contents' : 'Sizes, prices & stock'}</h2>
+                <span className="small text-muted-ms">
+                  {form.isPack ? 'Stock follows the products inside' : `${totalUnits} units in stock in total`}
+                </span>
               </div>
               <Button variant="ms-outline" size="sm" onClick={addSize} disabled={form.variants.length >= 12}>
                 <PiPlus aria-hidden="true" /> Add size
               </Button>
             </div>
             <div className="admin-card-body d-flex flex-column gap-3">
+              <div className={styles.packToggle}>
+                <Form.Check
+                  type="switch"
+                  id="is-pack"
+                  label="This is a pack of other products"
+                  checked={form.isPack}
+                  onChange={(event) => setPack(event.target.checked)}
+                />
+                <Form.Text className="mt-0">
+                  Sell several products together at their own price, e.g. a gift box. Selling one pack takes each product
+                  inside it out of stock.
+                </Form.Text>
+                {error('isPack') && <p className="text-danger small mb-0">{error('isPack')}</p>}
+              </div>
               {error('variants') && (
                 <Alert variant="danger" className="mb-0 py-2">
                   {error('variants')}
@@ -273,7 +336,9 @@ export default function ProductForm({ product, categories, onSaved }) {
                         <Form.Control
                           value={variant.label[locale.code]}
                           onChange={(event) => update(['variants', index, 'label', locale.code], event.target.value)}
-                          placeholder={locale.code === 'en' ? 'e.g. 450 g or Large' : variant.label.en}
+                          placeholder={
+                            locale.code === 'en' ? (form.isPack ? 'e.g. Gift box' : 'e.g. 450 g or Large') : variant.label.en
+                          }
                           isInvalid={Boolean(error(`variants.${index}.label.${locale.code}`))}
                         />
                         <Form.Control.Feedback type="invalid">
@@ -302,27 +367,38 @@ export default function ProductForm({ product, categories, onSaved }) {
                         <Form.Control.Feedback type="invalid">{error(`variants.${index}.price`)}</Form.Control.Feedback>
                       </InputGroup>
                     </Form.Group>
-                    <Form.Group controlId={`variant-${index}-stock`}>
-                      <Form.Label>
-                        Quantity in stock <span className="text-danger">*</span>
-                      </Form.Label>
-                      <InputGroup hasValidation>
-                        <Form.Control
-                          type="number"
-                          min="0"
-                          step="1"
-                          inputMode="numeric"
-                          value={variant.stock}
-                          onFocus={selectAll}
-                          onChange={(event) => update(['variants', index, 'stock'], event.target.value)}
-                          isInvalid={Boolean(error(`variants.${index}.stock`))}
-                          placeholder="0"
-                        />
-                        <InputGroup.Text>units</InputGroup.Text>
-                        <Form.Control.Feedback type="invalid">{error(`variants.${index}.stock`)}</Form.Control.Feedback>
-                      </InputGroup>
-                    </Form.Group>
+                    {!form.isPack && (
+                      <Form.Group controlId={`variant-${index}-stock`}>
+                        <Form.Label>
+                          Quantity in stock <span className="text-danger">*</span>
+                        </Form.Label>
+                        <InputGroup hasValidation>
+                          <Form.Control
+                            type="number"
+                            min="0"
+                            step="1"
+                            inputMode="numeric"
+                            value={variant.stock}
+                            onFocus={selectAll}
+                            onChange={(event) => update(['variants', index, 'stock'], event.target.value)}
+                            isInvalid={Boolean(error(`variants.${index}.stock`))}
+                            placeholder="0"
+                          />
+                          <InputGroup.Text>units</InputGroup.Text>
+                          <Form.Control.Feedback type="invalid">{error(`variants.${index}.stock`)}</Form.Control.Feedback>
+                        </InputGroup>
+                      </Form.Group>
+                    )}
                   </div>
+                  {form.isPack && (
+                    <PackContents
+                      id={`variant-${index}`}
+                      contents={variant.contents}
+                      choices={choices}
+                      error={(key) => error(key ? `variants.${index}.contents.${key}` : `variants.${index}.contents`)}
+                      onChange={(contents) => setContents(index, contents)}
+                    />
+                  )}
                   {form.images.length > 1 && (
                     <div className={styles.variantImages}>
                       <span className="form-label mb-0">Image for this size</span>

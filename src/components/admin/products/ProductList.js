@@ -54,6 +54,7 @@ export default function ProductList() {
               {product.name.en}
             </Link>
             <span className="cell-muted">
+              {product.isPack ? 'Pack · ' : ''}
               {product.sku ? `${product.sku} · ` : ''}
               {plural(product.variants.length, 'size')}
             </span>
