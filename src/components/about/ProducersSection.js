@@ -1,7 +1,8 @@
-import Image from 'next/image';
+import CloudinaryImage from '@/components/common/CloudinaryImage';
 import Container from 'react-bootstrap/Container';
 import { PiCheck, PiMapPin } from 'react-icons/pi';
 import Reveal from '@/components/common/Reveal';
+import { PHOTOS } from '@/config/photos';
 import styles from './ProducersSection.module.css';
 
 export default function ProducersSection({ copy }) {
@@ -26,7 +27,7 @@ export default function ProducersSection({ copy }) {
           </Reveal>
 
           <Reveal className={styles.visual} delay={120}>
-            <Image
+            <CloudinaryImage
               src="/images/editorial/meteora-kalabaka.jpg"
               alt={copy.caption}
               fill
@@ -37,7 +38,7 @@ export default function ProducersSection({ copy }) {
               <PiMapPin aria-hidden="true" /> {copy.caption}
             </span>
             <div className={styles.jar}>
-              <Image src="/images/editorial/bees-honeycomb.jpg" alt="" fill sizes="180px" className="img-cover" />
+              <CloudinaryImage src={PHOTOS.hivesMountainRoad} alt="" fill sizes="180px" className="img-cover" />
             </div>
           </Reveal>
         </div>

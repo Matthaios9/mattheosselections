@@ -1,8 +1,9 @@
-import Image from 'next/image';
+import CloudinaryImage from '@/components/common/CloudinaryImage';
 import Link from 'next/link';
 import Container from 'react-bootstrap/Container';
 import { PiArrowRight, PiMapPin } from 'react-icons/pi';
 import Reveal from '@/components/common/Reveal';
+import { PHOTOS } from '@/config/photos';
 import styles from './BrandStory.module.css';
 
 export default function BrandStory({ copy, href }) {
@@ -12,8 +13,8 @@ export default function BrandStory({ copy, href }) {
         <div className={styles.grid}>
           <Reveal className={styles.visual}>
             <div className={styles.mainImage}>
-              <Image
-                src="/images/editorial/beekeeper-blue-hives.jpg"
+              <CloudinaryImage
+                src={PHOTOS.hivesChestnutGrove}
                 alt={copy.imageCaption}
                 fill
                 sizes="(min-width: 992px) 45vw, 100vw"
@@ -21,7 +22,7 @@ export default function BrandStory({ copy, href }) {
               />
             </div>
             <div className={styles.portrait}>
-              <Image src="/images/brand/founder.jpg" alt={copy.signature} fill sizes="200px" className="img-cover" />
+              <CloudinaryImage src="/images/brand/founder.jpg" alt={copy.signature} fill sizes="200px" className="img-cover" />
             </div>
             <span className={styles.caption}>
               <PiMapPin aria-hidden="true" /> {copy.imageCaption}

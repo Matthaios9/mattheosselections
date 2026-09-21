@@ -2,7 +2,9 @@ import Image from 'next/image';
 import Container from 'react-bootstrap/Container';
 import { PiArrowRight, PiGift, PiSealCheck } from 'react-icons/pi';
 import ButtonLink from '@/components/common/ButtonLink';
+import CloudinaryImage from '@/components/common/CloudinaryImage';
 import Reveal from '@/components/common/Reveal';
+import { PHOTOS } from '@/config/photos';
 import { formatPrice } from '@/utils/format';
 import PromoAddButton from './PromoAddButton';
 import styles from './PromoBanner.module.css';
@@ -42,8 +44,8 @@ export default function PromoBanner({ copy, product, href, locale }) {
           </div>
 
           <div className={styles.visual}>
-            <Image
-              src="/images/editorial/honey-dipper-dark.jpg"
+            <CloudinaryImage
+              src={PHOTOS.hiveWildComb}
               alt=""
               fill
               sizes="(min-width: 992px) 50vw, 100vw"

@@ -1,11 +1,12 @@
 'use client';
 
 import { useState } from 'react';
-import Image from 'next/image';
 import Carousel from 'react-bootstrap/Carousel';
 import Container from 'react-bootstrap/Container';
 import { PiArrowLeft, PiArrowRight, PiQuotes } from 'react-icons/pi';
+import CloudinaryImage from './CloudinaryImage';
 import Reveal from './Reveal';
+import { PHOTOS } from '@/config/photos';
 import { useI18n } from '@/i18n/I18nProvider';
 import styles from './Testimonials.module.css';
 
@@ -23,7 +24,7 @@ export default function Testimonials({ className = 'bg-sand' }) {
         <div className={styles.grid}>
           <Reveal className={styles.visual}>
             <div className={styles.image}>
-              <Image src="/images/editorial/honey-hand-dipper.jpg" alt="" fill sizes="(min-width: 992px) 30vw, 80vw" className="img-cover" />
+              <CloudinaryImage src={PHOTOS.beekeepersHillside} alt="" fill sizes="(min-width: 992px) 30vw, 80vw" className="img-cover" />
             </div>
             <span className={styles.quoteBadge} aria-hidden="true">
               <PiQuotes />

@@ -5,6 +5,7 @@ import AppProviders from '@/context/AppProviders';
 import Footer from '@/components/layout/Footer';
 import GlobalOverlays from '@/components/layout/GlobalOverlays';
 import Header from '@/components/layout/Header';
+import { SHARE_IMAGE } from '@/config/photos';
 import { siteConfig } from '@/config/site';
 import { getLocaleConfig, locales } from '@/i18n/config';
 import { getDictionary } from '@/i18n/dictionaries';
@@ -33,7 +34,7 @@ export async function generateMetadata({ params }) {
       siteName: dict.meta.siteName,
       locale: getLocaleConfig(lang).ogLocale,
       type: 'website',
-      images: ['/images/editorial/hero-honey-jar.jpg'],
+      images: [{ url: SHARE_IMAGE, width: 1200, height: 630 }],
     },
   };
 }

@@ -1,6 +1,7 @@
-import Image from 'next/image';
+import CloudinaryImage from '@/components/common/CloudinaryImage';
 import Container from 'react-bootstrap/Container';
 import Reveal from '@/components/common/Reveal';
+import { PHOTOS } from '@/config/photos';
 import styles from './StorySection.module.css';
 
 export default function StorySection({ copy }) {
@@ -10,10 +11,10 @@ export default function StorySection({ copy }) {
         <div className={styles.grid}>
           <Reveal className={styles.visual}>
             <div className={styles.texture}>
-              <Image src="/images/editorial/honeycomb-texture.jpg" alt="" fill sizes="30vw" className="img-cover" />
+              <CloudinaryImage src={PHOTOS.beekeepingFamilyBw} alt="" fill sizes="30vw" className="img-cover" />
             </div>
             <div className={styles.portrait}>
-              <Image
+              <CloudinaryImage
                 src="/images/brand/founder.jpg"
                 alt={`${copy.signature} — ${copy.role}`}
                 fill

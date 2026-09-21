@@ -1,13 +1,14 @@
 'use client';
 
 import { useState } from 'react';
-import Image from 'next/image';
 import Button from 'react-bootstrap/Button';
 import Modal from 'react-bootstrap/Modal';
 import { PiCheck, PiSealCheck, PiX } from 'react-icons/pi';
 import LoginForm from './LoginForm';
 import SignupForm from './SignupForm';
 import ForgotPasswordForm from './ForgotPasswordForm';
+import CloudinaryImage from '@/components/common/CloudinaryImage';
+import { PHOTOS } from '@/config/photos';
 import { useUI } from '@/context/UIContext';
 import { useI18n } from '@/i18n/I18nProvider';
 import styles from './AuthModal.module.css';
@@ -40,7 +41,7 @@ export default function AuthModal() {
       </button>
       <div className={styles.layout}>
         <aside className={styles.brand}>
-          <Image src="/images/editorial/honey-blossoms.jpg" alt="" fill sizes="380px" className={styles.brandImage} />
+          <CloudinaryImage src={PHOTOS.beekeeperWildflowers} alt="" fill sizes="380px" className={styles.brandImage} />
           <div className={styles.brandOverlay} aria-hidden="true" />
           <div className={styles.brandContent}>
             <span className="eyebrow eyebrow-light">Mattheos Selections</span>

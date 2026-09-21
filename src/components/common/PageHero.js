@@ -1,6 +1,6 @@
-import Image from 'next/image';
 import Container from 'react-bootstrap/Container';
 import Breadcrumbs from './Breadcrumbs';
+import CloudinaryImage from './CloudinaryImage';
 import styles from './PageHero.module.css';
 
 /**
@@ -21,7 +21,7 @@ export default function PageHero({
   return (
     <section className={`${styles.wrap} ${styles[size]} ${overlap ? styles.overlap : ''}`}>
       <div className={styles.frame}>
-        <Image
+        <CloudinaryImage
           src={image}
           alt={imageAlt}
           fill

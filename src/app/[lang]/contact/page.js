@@ -5,6 +5,7 @@ import ContactAside from '@/components/contact/ContactAside';
 import ContactForm from '@/components/contact/ContactForm';
 import ContactInfoCards from '@/components/contact/ContactInfoCards';
 import FaqSection from '@/components/contact/FaqSection';
+import { PHOTOS } from '@/config/photos';
 import { localizePath } from '@/i18n/config';
 import { getDictionary } from '@/i18n/dictionaries';
 import styles from './page.module.css';
@@ -25,7 +26,7 @@ export default async function ContactPage({ params }) {
       <PageHero
         size="sm"
         overlap
-        image="/images/editorial/honey-pour.jpg"
+        image={PHOTOS.hivesMountainRoad}
         eyebrow={contact.hero.eyebrow}
         title={contact.hero.title}
         text={contact.hero.text}

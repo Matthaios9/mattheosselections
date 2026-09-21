@@ -1,6 +1,7 @@
-import Image from 'next/image';
+import CloudinaryImage from '@/components/common/CloudinaryImage';
 import Container from 'react-bootstrap/Container';
 import Reveal from '@/components/common/Reveal';
+import { PHOTOS } from '@/config/photos';
 import styles from './ProcessSteps.module.css';
 
 export default function ProcessSteps({ copy }) {
@@ -10,8 +11,8 @@ export default function ProcessSteps({ copy }) {
         <div className={styles.grid}>
           <div className={styles.visual}>
             <Reveal className={styles.imageMain}>
-              <Image
-                src="/images/editorial/beekeeper-frame.jpg"
+              <CloudinaryImage
+                src={PHOTOS.beekeepersSmoker}
                 alt=""
                 fill
                 sizes="(min-width: 992px) 30vw, 100vw"
@@ -19,7 +20,7 @@ export default function ProcessSteps({ copy }) {
               />
             </Reveal>
             <Reveal className={styles.imageSmall} delay={150}>
-              <Image src="/images/editorial/bee-flower.jpg" alt="" fill sizes="(min-width: 992px) 16vw, 45vw" className="img-cover" />
+              <CloudinaryImage src={PHOTOS.hiveWildComb} alt="" fill sizes="(min-width: 992px) 16vw, 45vw" className="img-cover" />
             </Reveal>
           </div>
 

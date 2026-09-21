@@ -1,7 +1,7 @@
 'use client';
 
 import { useState } from 'react';
-import Image from 'next/image';
+import CloudinaryImage from '@/components/common/CloudinaryImage';
 import Carousel from 'react-bootstrap/Carousel';
 import { HERO_SLIDES } from '@/config/home';
 import { interpolate } from '@/i18n/translate';
@@ -25,7 +25,7 @@ export default function HeroCarousel({ alt, slideLabel }) {
       >
         {HERO_SLIDES.map((slide, i) => (
           <Carousel.Item key={slide.src} className={styles.slide}>
-            <Image
+            <CloudinaryImage
               src={slide.src}
               alt={`${alt} — ${interpolate(slideLabel, { index: i + 1, total })}`}
               fill
