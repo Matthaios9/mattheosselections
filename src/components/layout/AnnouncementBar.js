@@ -9,7 +9,7 @@ export default function AnnouncementBar() {
   const messages = t('announcement');
 
   return (
-    <div className={styles.bar} role="region" aria-label="Announcements">
+    <div className={styles.bar} role="region" aria-label={t('nav.announcements')}>
       <Carousel
         fade
         controls={false}

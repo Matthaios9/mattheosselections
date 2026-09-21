@@ -153,33 +153,33 @@ const en = {
 
 const sv = {
   eyebrow: 'Juridiskt',
-  title: 'Villkor och försäljningsvillkor',
+  title: 'Allmänna försäljningsvillkor',
   contents: 'Innehåll',
   sections: [
     {
       id: 'introduction',
       title: 'Inledning',
       blocks: [
-        'Mattheos Selections är en webbutik som erbjuder högkvalitativ honung, olivolja och kurerade presentset inspirerade av grekiska smaker. Vi betjänar både privatpersoner och företag i Sverige och internationellt. Vårt uppdrag är att leverera de finaste naturprodukterna till din dörr med exceptionell service och transparens.',
-        'Dessa villkor reglerar din användning av vår webbplats och ditt köp av våra produkter. Genom att besöka webbplatsen eller göra en beställning godkänner du att vara bunden av dessa villkor.',
+        'Mattheos Selections är en webbutik som erbjuder högkvalitativ honung, olivolja och noga utvalda presentset inspirerade av grekiska smaker. Vi säljer till både privatpersoner och företag, i Sverige och internationellt. Vårt uppdrag är att leverera de finaste naturprodukterna till din dörr med exceptionell service och transparens.',
+        'Dessa villkor reglerar din användning av vår webbplats och ditt köp av våra produkter. Genom att besöka webbplatsen eller göra en beställning samtycker du till att vara bunden av dessa villkor.',
         'Vi kan komma att uppdatera dessa villkor då och då. Alla ändringar träder i kraft omedelbart efter att de publicerats på webbplatsen. Det är ditt ansvar att regelbundet granska villkoren. Din fortsatta användning av webbplatsen innebär att du godkänner eventuella uppdateringar.',
         'Mattheos Selections förbehåller sig även rätten att:',
         {
           list: [
-            'Ändra, stänga av eller säga upp åtkomst till någon del av webbplatsen;',
+            'Ändra, begränsa eller avsluta åtkomsten till någon del av webbplatsen;',
             'Uppdatera eller ändra innehåll, funktioner eller policyer utan föregående meddelande;',
-            'Stäng av webbplatsen tillfälligt för underhåll eller uppdateringar.',
+            'Tillfälligt stänga ner webbplatsen för underhåll eller uppdateringar.',
           ],
         },
       ],
     },
     {
       id: 'orders',
-      title: 'Orderacceptans',
+      title: 'Godkännande av beställningar',
       blocks: [
-        'Alla beställningar är beroende av tillgänglighet och godkännande. Vi förbehåller oss rätten att avbryta eller neka beställningar efter eget gottfinnande.',
+        'Alla beställningar förutsätter att vi godkänner dem och att produkterna finns i lager. Vi förbehåller oss rätten att annullera eller neka en beställning efter eget gottfinnande.',
         'Alla priser på webbplatsen anges i svenska kronor (SEK) inklusive moms. Inget läggs till i kassan utöver eventuell frakt; momsen som ingår i din beställning visas i kassan.',
-        'En beställning anses endast accepterad efter att vi skickat ett e-postmeddelande som bekräftar leveransen.',
+        'En beställning anses godkänd först när vi har skickat ett e-postmeddelande som bekräftar att den har skickats.',
       ],
     },
     {
@@ -189,14 +189,14 @@ const sv = {
         'Alla priser inkluderar moms enligt satserna nedan.',
         {
           list: [
-            'Momsen är 6% för alla privat- och företagskunder inom Sverige.',
-            'Momsen är 6% för privatkunder utanför Sverige.',
-            'Moms är 6 % för företagskunder utanför Sverige, förutsatt att ett giltigt momsregistreringsnummer anges.',
+            'Momsen är 6 % för alla privat- och företagskunder inom Sverige.',
+            'Momsen är 6 % för privatkunder utanför Sverige.',
+            'Momsen är 6 % för företagskunder utanför Sverige, förutsatt att ett giltigt momsregistreringsnummer anges.',
           ],
         },
         { heading: 'Verifiering av momsregistreringsnummer' },
         'Vi verifierar momsregistreringsnummer manuellt efter att vi mottagit beställningen.',
-        'Notera: Om det angivna momsregistreringsnumret är ogiltigt och kunden inte svarar med ett giltigt nummer förbehåller vi oss rätten att annullera beställningen.',
+        'Observera: Om det angivna momsregistreringsnumret är ogiltigt och kunden inte svarar med ett giltigt nummer förbehåller vi oss rätten att annullera beställningen.',
       ],
     },
     {
@@ -205,36 +205,36 @@ const sv = {
       blocks: [
         {
           list: [
-            'Inom Sverige: 69 kr fast pris. Fri frakt på beställningar över 799 kr.',
-            'Utanför Sverige: Fast pris 25 EUR. Fri frakt på beställningar över 179 EUR.',
+            'Inom Sverige: fast pris 69 kr. Fri frakt vid köp över 799 kr.',
+            'Utanför Sverige: fast pris 25 EUR. Fri frakt vid köp över 179 EUR.',
           ],
         },
-        'Frakt är tillgänglig inom Sverige och internationellt. Leveranstider och leveransmetoder varierar beroende på plats. Alla leveranser är säkert förpackade.',
+        'Vi skickar inom Sverige och internationellt. Leveranstider och leveranssätt varierar beroende på destination. Alla försändelser packas säkert.',
       ],
     },
     {
       id: 'payment',
       title: 'Betalning',
       blocks: [
-        'Vi accepterar säkra onlinebetalningar med pålitliga metoder.',
+        'Vi tar emot säkra onlinebetalningar via pålitliga betalsätt.',
         'För kunder inom Sverige erbjuder vi flexibla betalningsalternativ via Klarna, inklusive faktura- och avbetalningsalternativ, där sådana finns tillgängliga.',
         'Alla transaktioner måste godkännas av din betalningsleverantör och Mattheos Selections förbehåller sig rätten att annullera beställningar vid bedrägeri eller obehörig aktivitet.',
       ],
     },
     {
       id: 'returns',
-      title: 'Avbokningar, returer och återbetalningar',
+      title: 'Avbeställningar, returer och återbetalningar',
       blocks: [
-        { heading: 'Avbokning av order' },
-        'Du kan avbryta din beställning inom 1 timme efter att du lagt den genom att kontakta oss direkt. Beställningar som redan har behandlats eller skickats kan inte avbrytas.',
+        { heading: 'Avbeställning' },
+        'Du kan avbeställa inom 1 timme efter att du har lagt din beställning genom att kontakta oss direkt. Beställningar som redan har behandlats eller skickats kan inte avbeställas.',
         { heading: 'Returer och återbetalningar' },
-        'Du kan returnera oöppnade och oanvända varor inom 14 dagar efter leverans. För att initiera en retur, vänligen kontakta oss först för godkännande. Obehöriga returer accepteras inte.',
+        'Du kan returnera oöppnade och oanvända varor inom 14 dagar efter leverans. Kontakta oss först för att få returen godkänd. Returer som inte har godkänts i förväg tas inte emot.',
         {
           list: [
-            'Varorna måste vara i originalskick och förpackning.',
-            'Kunderna ansvarar för returfraktkostnaderna.',
-            'Återbetalningar utfärdas till den ursprungliga betalningsmetoden när varorna har mottagits och inspekterats.',
-            'Fraktkostnader återbetalas inte om inte returen beror på vårt fel.',
+            'Varorna måste vara i originalskick och i originalförpackning.',
+            'Kunden står för kostnaden för returfrakten.',
+            'Återbetalning sker till det ursprungliga betalsättet när vi har tagit emot och kontrollerat varorna.',
+            'Fraktkostnaden återbetalas inte, såvida inte returen beror på ett fel från vår sida.',
           ],
         },
       ],
@@ -243,21 +243,21 @@ const sv = {
       id: 'copyright',
       title: 'Upphovsrätt och immateriella rättigheter',
       blocks: [
-        'Allt innehåll på denna webbplats – inklusive bilder, logotyper, produktbeskrivningar och text – tillhör Mattheos Selections och är skyddat enligt upphovsrätt och immaterialrättslagar. Du får inte kopiera, reproducera eller använda något innehåll utan vårt föregående skriftliga medgivande.',
+        'Allt innehåll på denna webbplats – inklusive bilder, logotyper, produktbeskrivningar och text – tillhör Mattheos Selections och är skyddat av upphovsrättslagen och annan immaterialrättslig lagstiftning. Du får inte kopiera, reproducera eller använda något innehåll utan vårt föregående skriftliga medgivande.',
       ],
     },
     {
       id: 'commercial-use',
       title: 'Kommersiell användning',
       blocks: [
-        'Produkter som köps är avsedda för personligt bruk eller godkända affärsgåvor. Återförsäljning eller kommersiell distribution är inte tillåten utan vårt uttryckliga tillstånd.',
+        'Köpta produkter är avsedda för personligt bruk eller för godkända företagsgåvor. Återförsäljning eller kommersiell distribution är inte tillåten utan vårt uttryckliga tillstånd.',
       ],
     },
     {
       id: 'force-majeure',
       title: 'Force majeure',
       blocks: [
-        'Vi ansvarar inte för förseningar eller underlåtenhet att utföra tjänster på grund av händelser utanför vår kontroll, inklusive naturkatastrofer, transportstörningar eller andra oförutsedda omständigheter.',
+        'Vi ansvarar inte för förseningar eller för att vi inte kan fullgöra våra åtaganden på grund av händelser utanför vår kontroll, inklusive naturkatastrofer, transportstörningar eller andra oförutsedda omständigheter.',
       ],
     },
     {
@@ -265,8 +265,8 @@ const sv = {
       title: 'Integritet och dataskydd',
       blocks: [
         {
-          text: 'Vi värdesätter din integritet och skyddar dina personuppgifter i enlighet med GDPR och svensk dataskyddslag. För fullständig information, vänligen läs vår Integritetspolicy.',
-          links: [{ label: 'Integritetspolicy', path: '/privacy-policy' }],
+          text: 'Vi värdesätter din integritet och skyddar dina personuppgifter i enlighet med GDPR och svensk dataskyddslagstiftning. Läs vår integritetspolicy för fullständig information.',
+          links: [{ label: 'integritetspolicy', path: '/privacy-policy' }],
         },
       ],
     },
@@ -274,23 +274,23 @@ const sv = {
       id: 'liability',
       title: 'Ansvarsbegränsning',
       blocks: [
-        'Vi strävar efter att säkerställa noggrannheten och säkerheten hos våra tjänster och produkter, men ansvarar inte för några indirekta skador eller följdskador som uppstår till följd av deras användning. Produkterna ska användas som avsett och i enlighet med alla angivna instruktioner.',
+        'Vi strävar efter att våra tjänster och produkter ska vara korrekta och säkra, men ansvarar inte för indirekta skador eller följdskador som uppstår vid användningen av dem. Produkterna ska användas på avsett sätt och enligt eventuella medföljande anvisningar.',
       ],
     },
     {
       id: 'law',
       title: 'Tillämplig lag',
-      blocks: ['Dessa villkor regleras av svensk lag. Eventuella tvister ska hanteras av svensk domstol.'],
+      blocks: ['Dessa villkor regleras av svensk lag. Eventuella tvister avgörs av svensk domstol.'],
     },
     {
       id: 'complaints',
       title: 'Klagomål och kundtjänst',
       blocks: [
-        'Mattheos Selections strävar efter att tillhandahålla högkvalitativa produkter och utmärkt kundservice. Om du har några klagomål angående din beställning, vänligen kontakta oss omedelbart på info@mattheosselections.com eller via post till:',
-        { lines: ['Mattheos Selections', 'Ekfatsgatan 4', 'Stockholm 11757', 'Sverige'] },
-        'För privatkunder inom Sverige och Europeiska unionen följer vi alla tillämpliga konsumentskyddslagar, inklusive konsumentköplagen och EU:s konsumenträttsdirektiv. Det innebär att du har rätt att meddela oss om eventuella problem med ditt köp inom de lagstadgade tidsramarna. Vi kommer att bekräfta ditt klagomål och svara inom den tidsfrist som krävs enligt lag, i syfte att lösa problemet effektivt och rättvist.',
+        'Mattheos Selections strävar efter att tillhandahålla högkvalitativa produkter och utmärkt kundservice. Om du har klagomål på din beställning ber vi dig kontakta oss snarast på info@mattheosselections.com eller per post till:',
+        { lines: ['Mattheos Selections', 'Ekfatsgatan 4', '117 57 Stockholm', 'Sverige'] },
+        'För privatkunder inom Sverige och Europeiska unionen följer vi alla tillämpliga konsumentskyddslagar, inklusive konsumentköplagen och EU:s konsumenträttsdirektiv. Det innebär att du har rätt att meddela oss om eventuella problem med ditt köp inom de lagstadgade tidsramarna. Vi bekräftar att vi har tagit emot ditt klagomål och svarar inom den tid som lagen kräver, i syfte att lösa problemet effektivt och rättvist.',
         'För företagskunder och kunder utanför EU regleras klagomålshanteringen av avtalsvillkoren och relevanta lokala lagar.',
-        'Om du inte är nöjd med vår hantering av ditt klagomål kan du söka hjälp från relevanta konsumentskyddsmyndigheter i ditt land.',
+        'Om du inte är nöjd med vår hantering av ditt klagomål kan du vända dig till behöriga konsumentmyndigheter i ditt land.',
       ],
     },
   ],
@@ -362,18 +362,18 @@ const el = {
       title: 'Πληρωμή',
       blocks: [
         'Δεχόμαστε ασφαλείς ηλεκτρονικές πληρωμές με αξιόπιστους τρόπους.',
-        'Για πελάτες εντός Σουηδίας προσφέρουμε ευέλικτους τρόπους πληρωμής μέσω Klarna, συμπεριλαμβανομένης της πληρωμής με τιμολόγιο και σε δόσεις, όπου είναι διαθέσιμες.',
+        'Για πελάτες εντός Σουηδίας προσφέρουμε ευέλικτους τρόπους πληρωμής μέσω Klarna, όπως πληρωμή με τιμολόγιο ή σε δόσεις, όπου είναι διαθέσιμοι.',
         'Όλες οι συναλλαγές πρέπει να εγκρίνονται από τον πάροχο πληρωμών σας και η Mattheos Selections διατηρεί το δικαίωμα να ακυρώνει παραγγελίες σε περίπτωση απάτης ή μη εξουσιοδοτημένης δραστηριότητας.',
       ],
     },
     {
       id: 'returns',
-      title: 'Ακυρώσεις, επιστροφές & επιστροφές χρημάτων',
+      title: 'Ακυρώσεις, επιστροφές προϊόντων & χρημάτων',
       blocks: [
         { heading: 'Ακύρωση παραγγελίας' },
         'Μπορείτε να ακυρώσετε την παραγγελία σας εντός 1 ώρας από την υποβολή της, επικοινωνώντας απευθείας μαζί μας. Παραγγελίες που έχουν ήδη διεκπεραιωθεί ή αποσταλεί δεν μπορούν να ακυρωθούν.',
-        { heading: 'Επιστροφές & επιστροφές χρημάτων' },
-        'Μπορείτε να επιστρέψετε κλειστά και αχρησιμοποίητα προϊόντα εντός 14 ημερών από την παράδοση. Για να ξεκινήσετε μια επιστροφή, επικοινωνήστε πρώτα μαζί μας για έγκριση. Μη εγκεκριμένες επιστροφές δεν γίνονται δεκτές.',
+        { heading: 'Επιστροφές προϊόντων & χρημάτων' },
+        'Μπορείτε να επιστρέψετε σφραγισμένα και αχρησιμοποίητα προϊόντα εντός 14 ημερών από την παράδοση. Για να ξεκινήσετε μια επιστροφή, επικοινωνήστε πρώτα μαζί μας για έγκριση. Μη εγκεκριμένες επιστροφές δεν γίνονται δεκτές.',
         {
           list: [
             'Τα προϊόντα πρέπει να είναι στην αρχική τους κατάσταση και συσκευασία.',
@@ -432,7 +432,7 @@ const el = {
       title: 'Παράπονα και εξυπηρέτηση πελατών',
       blocks: [
         'Η Mattheos Selections δεσμεύεται να προσφέρει προϊόντα υψηλής ποιότητας και άριστη εξυπηρέτηση. Αν έχετε κάποιο παράπονο σχετικά με την παραγγελία σας, επικοινωνήστε μαζί μας άμεσα στο info@mattheosselections.com ή ταχυδρομικά στη διεύθυνση:',
-        { lines: ['Mattheos Selections', 'Ekfatsgatan 4', 'Stockholm 11757', 'Σουηδία'] },
+        { lines: ['Mattheos Selections', 'Ekfatsgatan 4', '117 57 Stockholm', 'Σουηδία'] },
         'Για ιδιώτες καταναλωτές εντός Σουηδίας και Ευρωπαϊκής Ένωσης, συμμορφωνόμαστε με όλους τους ισχύοντες νόμους προστασίας των καταναλωτών, συμπεριλαμβανομένου του σουηδικού νόμου για τις καταναλωτικές πωλήσεις (Konsumentköplagen) και της Οδηγίας της ΕΕ για τα δικαιώματα των καταναλωτών. Αυτό σημαίνει ότι έχετε δικαίωμα να μας ενημερώσετε για τυχόν προβλήματα με την αγορά σας εντός των νόμιμων προθεσμιών. Θα επιβεβαιώσουμε τη λήψη του παραπόνου σας και θα απαντήσουμε εντός της προθεσμίας που ορίζει ο νόμος, με στόχο να επιλύσουμε το ζήτημα αποτελεσματικά και δίκαια.',
         'Για επιχειρήσεις και πελάτες εκτός ΕΕ, ο χειρισμός των παραπόνων διέπεται από τους όρους της σύμβασης και την εκάστοτε τοπική νομοθεσία.',
         'Αν δεν είστε ικανοποιημένοι με τον χειρισμό του παραπόνου σας, μπορείτε να απευθυνθείτε στις αρμόδιες αρχές προστασίας καταναλωτών της χώρας σας.',

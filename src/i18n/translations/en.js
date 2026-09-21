@@ -56,6 +56,7 @@ const en = {
     shopAll: 'Shop all products',
     editorsPick: "Editor's pick",
     needHelp: 'Need help?',
+    announcements: 'Announcements',
   },
 
   account: {
@@ -665,6 +666,7 @@ const en = {
     secure: 'Secure SSL checkout',
     languageLabel: 'Language',
     followUs: 'Follow us',
+    navLabel: 'Footer',
   },
 
   notFound: {

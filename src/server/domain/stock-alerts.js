@@ -28,19 +28,19 @@ const EMAILS = {
   sv: {
     confirmSubject: 'Vi hör av oss när {product} finns igen',
     confirmText:
-      'Tack för ditt intresse för {product} ({size}). Den är slutsåld just nu, och vi mejlar dig så snart den finns i lager igen.',
+      'Tack för ditt intresse för {product} ({size}). Produkten är slutsåld just nu, och vi mejlar dig så snart den finns i lager igen.',
     restockSubject: '{product} finns i lager igen',
     restockText: 'Goda nyheter! {product} ({size}) finns i lager igen hos Mattheos Selections. Antalet är begränsat, så beställ snart.',
     cta: 'Handla nu',
     footer: 'Du får det här mejlet eftersom du bad oss meddela dig när produkten finns i lager igen. Vi skickar det bara en gång.',
   },
   el: {
-    confirmSubject: 'Θα σας ενημερώσουμε όταν το {product} είναι ξανά διαθέσιμο',
+    confirmSubject: 'Θα σας ενημερώσουμε όταν το προϊόν «{product}» είναι ξανά διαθέσιμο',
     confirmText:
-      'Ευχαριστούμε για το ενδιαφέρον σας για το {product} ({size}). Αυτή τη στιγμή έχει εξαντληθεί και θα σας στείλουμε email μόλις είναι ξανά διαθέσιμο.',
-    restockSubject: 'Το {product} είναι ξανά διαθέσιμο',
+      'Ευχαριστούμε για το ενδιαφέρον σας για το προϊόν «{product}» ({size}). Αυτή τη στιγμή έχει εξαντληθεί και θα σας στείλουμε email μόλις είναι ξανά διαθέσιμο.',
+    restockSubject: 'Ξανά διαθέσιμο: {product}',
     restockText:
-      'Καλά νέα! Το {product} ({size}) είναι ξανά διαθέσιμο στη Mattheos Selections. Οι ποσότητες είναι περιορισμένες, γι’ αυτό παραγγείλτε σύντομα.',
+      'Καλά νέα! Το προϊόν «{product}» ({size}) είναι ξανά διαθέσιμο στη Mattheos Selections. Οι ποσότητες είναι περιορισμένες, γι’ αυτό παραγγείλτε σύντομα.',
     cta: 'Αγοράστε τώρα',
     footer: 'Λαμβάνετε αυτό το email επειδή ζητήσατε να ενημερωθείτε όταν το προϊόν είναι ξανά διαθέσιμο. Το στέλνουμε μόνο μία φορά.',
   },

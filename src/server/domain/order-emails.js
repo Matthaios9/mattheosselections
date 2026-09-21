@@ -67,7 +67,7 @@ const EMAILS = {
     },
     cancelled: {
       subject: 'Order {number} har annullerats',
-      text: 'Hej {name}, order {number} har annullerats och en eventuell reserverad betalning har frisläppts. Hör av dig om det här inte var väntat.',
+      text: 'Hej {name}, order {number} har annullerats och ett eventuellt reserverat belopp har släppts. Hör av dig om du inte väntade dig detta.',
     },
     summary: { subtotal: 'Delsumma', shipping: 'Frakt', free: 'Fri frakt', total: 'Totalt', address: 'Leveransadress' },
     cta: 'Till butiken',
@@ -84,11 +84,11 @@ const EMAILS = {
     },
     processing: {
       subject: 'Η παραγγελία {number} προετοιμάζεται',
-      text: 'Γεια σας {name}, ετοιμάζουμε αυτή τη στιγμή την παραγγελία {number}. Θα σας ενημερώσουμε μόλις ξεκινήσει.',
+      text: 'Γεια σας {name}, ετοιμάζουμε και συσκευάζουμε αυτή τη στιγμή την παραγγελία {number}. Θα σας ενημερώσουμε μόλις αποσταλεί.',
     },
     shipped: {
       subject: 'Η παραγγελία {number} βρίσκεται καθ’ οδόν',
-      text: 'Καλά νέα, {name} — η παραγγελία {number} έφυγε από εμάς και έρχεται σε εσάς.',
+      text: 'Καλά νέα, {name} — η παραγγελία {number} έφυγε από την αποθήκη μας και είναι καθ’ οδόν προς εσάς.',
     },
     delivered: {
       subject: 'Η παραγγελία {number} παραδόθηκε',
@@ -98,8 +98,8 @@ const EMAILS = {
       subject: 'Η παραγγελία {number} ακυρώθηκε',
       text: 'Γεια σας {name}, η παραγγελία {number} ακυρώθηκε και τυχόν δεσμευμένη πληρωμή αποδεσμεύτηκε. Επικοινωνήστε μαζί μας αν δεν το περιμένατε.',
     },
-    summary: { subtotal: 'Υποσύνολο', shipping: 'Αποστολή', free: 'Δωρεάν', total: 'Σύνολο', address: 'Διεύθυνση παράδοσης' },
-    cta: 'Στο κατάστημα',
+    summary: { subtotal: 'Υποσύνολο', shipping: 'Μεταφορικά', free: 'Δωρεάν', total: 'Σύνολο', address: 'Διεύθυνση παράδοσης' },
+    cta: 'Επισκεφθείτε το κατάστημα',
     footer: 'Λαμβάνετε αυτό το email επειδή κάνατε μια παραγγελία στη Mattheos Selections. Απορίες; Απαντήστε απλώς σε αυτό το email.',
   },
 };

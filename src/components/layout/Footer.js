@@ -52,7 +52,7 @@ export default function Footer({ locale, dict, categories }) {
             </div>
           </div>
 
-          <nav className={styles.columns} aria-label="Footer">
+          <nav className={styles.columns} aria-label={f.navLabel}>
             {columns.map((column) => (
               <div key={column.title}>
                 <p className={styles.heading}>{column.title}</p>

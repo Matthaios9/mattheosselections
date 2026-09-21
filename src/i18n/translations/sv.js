@@ -10,7 +10,7 @@ const sv = {
     about: {
       title: 'Om oss',
       description:
-        'Möt Mattheos Selections: äkta, naturliga produkter från små grekiska producenter, delade med Skandinavien.',
+        'Möt Mattheos Selections: äkta, naturliga produkter från små grekiska producenter, som vi delar med Skandinavien.',
     },
     shop: {
       title: 'Butik',
@@ -26,7 +26,7 @@ const sv = {
       description: 'Hur Mattheos Selections (Pasver AB) samlar in, använder och skyddar dina personuppgifter, och vilka rättigheter du har enligt GDPR.',
     },
     terms: {
-      title: 'Villkor och försäljningsvillkor',
+      title: 'Allmänna villkor',
       description: 'Försäljningsvillkor för Mattheos Selections: beställningar, moms, frakt, betalning, returer och klagomål.',
     },
     notFound: { title: 'Sidan hittades inte' },
@@ -56,6 +56,7 @@ const sv = {
     shopAll: 'Se alla produkter',
     editorsPick: 'Vårt val',
     needHelp: 'Behöver du hjälp?',
+    announcements: 'Meddelanden',
   },
 
   account: {
@@ -202,7 +203,7 @@ const sv = {
     freeShippingUnlocked: 'Du har fått fri frakt!',
     addedTitle: 'Tillagd i varukorgen',
     limitTitle: 'Lagergränsen nådd',
-    limitReached: 'Du har redan alla tillgängliga i varukorgen.',
+    limitReached: 'Du har redan alla tillgängliga exemplar i varukorgen.',
     stockWarning: 'Endast {count} tillgängliga – minska antalet.',
     viewCart: 'Visa varukorg',
     youMayLike: 'Komplettera din beställning',
@@ -239,8 +240,8 @@ const sv = {
     paymentSubtitle: 'Slutför ditt köp säkert med Kustom Checkout.',
     back: 'Ändra leveransland eller meddelande',
     shipping: 'Frakt',
-    vatFood: 'Moms {rate}% (Mat)',
-    vatShipping: 'Moms {rate}% (Frakt)',
+    vatFood: 'Moms {rate} % (livsmedel)',
+    vatShipping: 'Moms {rate} % (frakt)',
     vatIncluded: 'inkl. {amount}',
     free: 'Gratis',
     total: 'Totalt',
@@ -275,7 +276,7 @@ const sv = {
       titleAfter: 'alltid har gjort den.',
       intro: 'Med rötter i naturen. Utvalt med omsorg.',
       text: 'Vi söker upp enastående naturprodukter från små familjeproducenter som bevarar traditionella metoder och arbetar i harmoni med naturen.',
-      tagline: 'Äkta till ursprunget. Ren till karaktären. Som naturen avsett.',
+      tagline: 'Äkta i sitt ursprung. Ren i sin karaktär. Så som naturen avsett.',
       primaryCta: 'Upptäck kollektionen',
       secondaryCta: 'Vår historia',
       trust: ['100 % rå & ovärmd', 'Familjeproducenter i Grekland', 'Fri frakt över 799 kr'],
@@ -348,7 +349,7 @@ const sv = {
         { value: '1 200 m', label: 'Högsta skördehöjd' },
         { value: '0', label: 'Tillsatser, någonsin' },
       ],
-      imageCaption: 'Vandrande bikupor, södra Olympen',
+      imageCaption: 'Kupor i vandringsbiodling, södra Olympen',
     },
     testimonials: {
       eyebrow: 'Vänliga ord',
@@ -356,7 +357,7 @@ const sv = {
       text: 'Den största komplimangen är när någon kommer tillbaka för ännu en burk. Här är några ord från kunder som upptäckt något annorlunda i vår honung.',
       items: [
         {
-          quote: 'Granhonungen är något av det mest unika jag någonsin smakat. Jag hade aldrig upplevt honung som den förut. Det har blivit den jag alltid kommer tillbaka till.',
+          quote: 'Granhonungen är något av det mest unika jag någonsin smakat. Jag hade aldrig upplevt honung som den förut. Den har blivit den jag alltid återvänder till.',
           name: 'Sofia',
           location: 'Stockholm',
         },
@@ -366,7 +367,7 @@ const sv = {
           location: 'Uppsala',
         },
         {
-          quote: 'Timjanhonungen är olik allt jag hittat i svenska mataffärer. Vi är redan på vår tredje burk.',
+          quote: 'Timjanhonungen går inte att jämföra med något jag har hittat i svenska mataffärer. Vi är redan på vår tredje burk.',
           name: 'David',
           location: 'Stockholm',
         },
@@ -390,7 +391,7 @@ const sv = {
   about: {
     hero: {
       eyebrow: 'Om oss',
-      title: 'Rotad i Grekland. Delad med Sverige.',
+      title: 'Med rötter i Grekland. Hemma i Sverige.',
       text: 'Mattheos Selections för de rena, obearbetade smakerna från den grekiska naturen till skandinaviska bord – ärligt inköpta, noga utvalda och levererade med omsorg.',
     },
     story: {
@@ -398,7 +399,7 @@ const sv = {
       title: 'Det började med en passion för riktig, naturlig mat',
       paragraphs: [
         'Jag heter Mattheos Tasios och har alltid haft en passion för naturliga produkter – sådana som ger äkta energi och välmående, inte bara sötma. Under min uppväxt var honung från de grekiska bergen en del av vardagen.',
-        'När jag bosatte mig i Stockholm hittade jag inget som smakade som hemma. Så jag gick tillbaka till källan: små producenter i Grekland som arbetar som deras familjer alltid har gjort – tålmodigt, hållbart och utan genvägar.',
+        'När jag bosatte mig i Stockholm hittade jag inget som smakade som hemma. Så jag sökte mig tillbaka till källan: små producenter i Grekland som arbetar som deras familjer alltid har gjort – tålmodigt, hållbart och utan genvägar.',
         'Det som började med några burkar till vänner har vuxit till Mattheos Selections: en noga utvald kollektion av råhonung, kallpressad olivolja, supermat och naturlig hudvård som vi är stolta över att dela med dig.',
       ],
       quote: 'Äkta honung behöver inga tillsatser. Vårt jobb är helt enkelt att skydda det naturen redan har fulländat.',
@@ -419,11 +420,11 @@ const sv = {
       items: [
         {
           title: '100 % naturligt & rent',
-          text: 'Inga tillsatser, inga konserveringsmedel, ingen värmebehandling. Bara ren natur, precis som den är tänkt.',
+          text: 'Inga tillsatser, inga konserveringsmedel, ingen värmebehandling. Bara ren natur, precis som naturen avsett.',
         },
         {
           title: 'Hållbar biodling',
-          text: 'Våra producenter bedriver etisk, vandrande biodling som skyddar bisamhällena och landskapen de är beroende av.',
+          text: 'Våra producenter bedriver etisk vandringsbiodling som skyddar bisamhällena och landskapen de är beroende av.',
         },
         {
           title: 'Äkta ursprung',
@@ -444,7 +445,7 @@ const sv = {
     process: {
       eyebrow: 'Från kupa till hem',
       title: 'Långsamt av naturen, noggrant i varje steg',
-      text: 'Vandrande biodling innebär att följa blomningen: kuporna flyttas från kustens timjan till bergens granskogar när årstiderna skiftar. Resultatet är honung med verklig karaktär.',
+      text: 'Vandringsbiodling innebär att följa blomningen: kuporna flyttas från kustens timjan till bergens granskogar när årstiderna skiftar. Resultatet är honung med verklig karaktär.',
       steps: [
         {
           title: 'Följ blomningen',
@@ -467,9 +468,9 @@ const sv = {
     producers: {
       eyebrow: 'Våra producenter',
       title: 'Biodlarna från södra Olympen',
-      text: 'Varje ákesis-burk bär namnet på familjen Vassiliou-Kontos – vandrande biodlare vars kupor följer årstiderna från Thessaliens slätter till ekskogarna ovanför Kalabaka, i skuggan av Meteora.',
+      text: 'Varje ákesis-burk bär namnet på familjen Vassiliou-Kontos – vandringsbiodlare vars kupor följer årstiderna från Thessaliens slätter till ekskogarna ovanför Kalabaka, i skuggan av Meteora.',
       points: [
-        'Vandrande biodling, säsong för säsong',
+        'Vandringsbiodling, säsong för säsong',
         'Skördar från havsnivå till 1 200 meter',
         'Honung som kristalliseras naturligt',
       ],
@@ -665,6 +666,7 @@ const sv = {
     secure: 'Säker SSL-kassa',
     languageLabel: 'Språk',
     followUs: 'Följ oss',
+    navLabel: 'Sidfot',
   },
 
   notFound: {
