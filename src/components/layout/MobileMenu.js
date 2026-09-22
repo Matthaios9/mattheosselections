@@ -50,6 +50,18 @@ export default function MobileMenu() {
                 </Link>
               </li>
             ))}
+            {/* The header's heart is hidden on phones, so the saved products are reachable here. */}
+            <li style={{ '--i': NAV_LINKS.length }}>
+              <Link
+                href={href('/wishlist')}
+                className={`${styles.link} ${isActive('/wishlist') ? styles.active : ''}`}
+                aria-current={isActive('/wishlist') ? 'page' : undefined}
+                onClick={closeMenu}
+              >
+                {t('nav.wishlist')}
+                <PiArrowRight className="flip-rtl" aria-hidden="true" />
+              </Link>
+            </li>
           </ul>
         </nav>
 

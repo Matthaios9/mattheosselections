@@ -2,6 +2,10 @@ const en = {
   meta: {
     siteName: 'Mattheos Selections',
     tagline: 'Raw Greek honey & natural products',
+    wishlist: {
+      title: 'Your Wishlist',
+      description: 'The products you have saved at Mattheos Selections.',
+    },
     home: {
       title: 'Raw Greek Honey, Olive Oil & Natural Gifts',
       description:
@@ -52,6 +56,7 @@ const en = {
     search: 'Search',
     account: 'Account',
     cart: 'Cart',
+    wishlist: 'Wishlist',
     language: 'Language',
     skipToContent: 'Skip to content',
     mainNavigation: 'Main navigation',
@@ -141,6 +146,23 @@ const en = {
       expired: 'This link is no longer valid — reset links last an hour and work only once.',
       askAgain: 'Send me a new link',
     },
+  },
+
+  wishlist: {
+    hero: {
+      eyebrow: 'Saved by you',
+      title: 'Your wishlist',
+      text: 'The products you have saved, kept on this device. Prices and availability are always shown as they are right now.',
+    },
+    count: '{count} products saved',
+    countOne: '{count} product saved',
+    clear: 'Clear the list',
+    loading: 'Loading your wishlist',
+    failed: 'We could not load your saved products just now.',
+    retry: 'Try again',
+    emptyTitle: 'Nothing saved yet',
+    emptyText: 'Tap the heart on any product to keep it here for later.',
+    emptyCta: 'Browse the shop',
   },
 
   common: {

@@ -6,7 +6,7 @@ import { usePathname } from 'next/navigation';
 import Container from 'react-bootstrap/Container';
 import Nav from 'react-bootstrap/Nav';
 import Navbar from 'react-bootstrap/Navbar';
-import { PiCaretDown, PiHandbagSimple, PiList, PiMagnifyingGlass } from 'react-icons/pi';
+import { PiCaretDown, PiHandbagSimple, PiHeart, PiList, PiMagnifyingGlass } from 'react-icons/pi';
 import AccountMenu from './AccountMenu';
 import AnnouncementBar from './AnnouncementBar';
 import LanguageSelector from './LanguageSelector';
@@ -14,6 +14,7 @@ import Logo from './Logo';
 import MegaMenu from './MegaMenu';
 import { NAV_LINKS } from '@/config/navigation';
 import { useStoreCart } from '@/context/CartContext';
+import { useWishlist } from '@/context/WishlistContext';
 import { useUI } from '@/context/UIContext';
 import { useScrolled } from '@/hooks/useScrolled';
 import { useI18n } from '@/i18n/I18nProvider';
@@ -25,6 +26,7 @@ export default function Header() {
   const scrolled = useScrolled(12);
   const { openSearch, openMenu, openCart } = useUI();
   const { totalItems } = useStoreCart();
+  const { count: savedCount } = useWishlist();
   // The Shop flyout opens on hover/focus, which both outlast a client-side navigation.
   // Picking a link closes it until the pointer leaves or focus comes back.
   const [megaClosed, setMegaClosed] = useState(false);
@@ -81,6 +83,18 @@ export default function Header() {
               <PiMagnifyingGlass />
             </button>
             <AccountMenu className="d-none d-sm-block" />
+            <Link
+              href={href('/wishlist')}
+              className={`icon-btn ${styles.cartButton}`}
+              aria-label={`${t('nav.wishlist')} (${savedCount})`}
+            >
+              <PiHeart />
+              {savedCount > 0 && (
+                <span key={savedCount} className={styles.badge} aria-hidden="true">
+                  {savedCount > 99 ? '99+' : savedCount}
+                </span>
+              )}
+            </Link>
             <button
               type="button"
               className={`icon-btn ${styles.cartButton}`}

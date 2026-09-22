@@ -59,7 +59,7 @@ function toVisitorLocale(request, path) {
   response.headers.set('Vary', 'Accept-Language, Cookie');
   return response;
 }
-const STOREFRONT_PATH = /^\/(about|contact|privacy-policy|terms-and-conditions|shop(\/[^/]+)?|product\/[^/]+)?$/;
+const STOREFRONT_PATH = /^\/(about|contact|wishlist|privacy-policy|terms-and-conditions|shop(\/[^/]+)?|product\/[^/]+)?$/;
 
 const GONE_PAGE = `<!doctype html>
 <html lang="sv"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="robots" content="noindex">

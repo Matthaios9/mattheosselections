@@ -2,6 +2,10 @@ const sv = {
   meta: {
     siteName: 'Mattheos Selections',
     tagline: 'Grekisk råhonung & naturliga produkter',
+    wishlist: {
+      title: 'Din önskelista',
+      description: 'Produkterna du har sparat hos Mattheos Selections.',
+    },
     home: {
       title: 'Grekisk råhonung, olivolja & naturliga presenter',
       description:
@@ -52,6 +56,7 @@ const sv = {
     search: 'Sök',
     account: 'Konto',
     cart: 'Varukorg',
+    wishlist: 'Önskelista',
     language: 'Språk',
     skipToContent: 'Hoppa till innehållet',
     mainNavigation: 'Huvudnavigering',
@@ -141,6 +146,23 @@ const sv = {
       expired: 'Länken gäller inte längre — återställningslänkar varar en timme och kan bara användas en gång.',
       askAgain: 'Skicka en ny länk',
     },
+  },
+
+  wishlist: {
+    hero: {
+      eyebrow: 'Sparat av dig',
+      title: 'Din önskelista',
+      text: 'Produkterna du har sparat, lagrade på den här enheten. Priser och lagersaldo visas alltid som de är just nu.',
+    },
+    count: '{count} produkter sparade',
+    countOne: '{count} produkt sparad',
+    clear: 'Töm listan',
+    loading: 'Laddar din önskelista',
+    failed: 'Vi kunde inte hämta dina sparade produkter just nu.',
+    retry: 'Försök igen',
+    emptyTitle: 'Inget sparat ännu',
+    emptyText: 'Tryck på hjärtat på en produkt för att spara den här till senare.',
+    emptyCta: 'Utforska butiken',
   },
 
   common: {
