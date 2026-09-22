@@ -21,9 +21,12 @@ export function vatBreakdown(parts) {
   for (const { amount, rate } of parts) {
     if (!amount) continue;
     const key = rate ?? storeConfig.vatRate;
-    byRate.set(key, (byRate.get(key) ?? 0) + amount);
+    // Each line's VAT is rounded on its own and the rounded figures are added up — the order Kustom
+    // works in (total_tax_amount per order line). Adding first and rounding once would leave the VAT
+    // shown here an öre away from the payment provider's figure on some orders.
+    byRate.set(key, Math.round((byRate.get(key) ?? 0) * 100 + includedVat(amount, key) * 100) / 100);
   }
   return [...byRate.entries()]
     .sort(([a], [b]) => a - b)
-    .map(([rate, amount]) => ({ rate, amount: includedVat(amount, rate) }));
+    .map(([rate, amount]) => ({ rate, amount }));
 }
