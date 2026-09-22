@@ -11,7 +11,7 @@ import { useAdminSession } from '@/context/AdminSessionContext';
 import { useApiQuery } from '@/hooks/useApiQuery';
 import { getOrderById } from '@/services/order';
 import { countryName, formatDateTime, money, plural } from '@/utils/format';
-import { includedVat } from '@/utils/vat';
+import { includedVat, vatBreakdown } from '@/utils/vat';
 import styles from './OrderDetail.module.css';
 
 /** One order: items, totals, timeline, customer, and the fulfilment / payment / note cards. */
@@ -113,10 +113,20 @@ export default function OrderDetail({ id }) {
                     </div>
                     {order.vatRate != null && (
                       <>
-                        <div className={styles.vat}>
-                          <dt>VAT {order.vatRate}% (food), included</dt>
-                          <dd>{money(includedVat(order.subtotal - (order.discount ?? 0), order.vatRate), { decimals: 2 })}</dd>
-                        </div>
+                        {/* One row per rate the order mixes: food (honey, olive oil) and standard (beeswax…). */}
+                        {vatBreakdown(
+                          (order.items ?? []).map((item) => ({
+                            amount: item.lineTotal - (item.discount ?? 0),
+                            rate: item.vatRate ?? order.vatRate,
+                          }))
+                        ).map(({ rate, amount }) => (
+                          <div key={rate} className={styles.vat}>
+                            <dt>
+                              VAT {rate}% ({rate === order.vatRate ? 'food' : 'other goods'}), included
+                            </dt>
+                            <dd>{money(amount, { decimals: 2 })}</dd>
+                          </div>
+                        ))}
                         {order.shippingFee > 0 && (
                           <div className={styles.vat}>
                             <dt>VAT {order.vatRate}% (shipping), included</dt>

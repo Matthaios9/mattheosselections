@@ -19,7 +19,7 @@ import { useFormState } from '@/hooks/useFormState';
 import { useI18n } from '@/i18n/I18nProvider';
 import { confirmPayment, getWelcomeOffer, startCheckout } from '@/services/checkout';
 import { calculateShipping, SHIPPING_COUNTRIES } from '@/utils/shipping';
-import { includedVat } from '@/utils/vat';
+import { includedVat, vatBreakdown } from '@/utils/vat';
 import styles from './CheckoutModal.module.css';
 
 /**
@@ -64,6 +64,10 @@ export default function CheckoutModal() {
   const goods = cart.subtotal - discount;
   const shipping = calculateShipping(cart.subtotal, form.values.country);
   const total = goods + shipping;
+  // VAT per rate: honey and olive oil are food, beeswax and the like are not (see utils/vat.js).
+  // The offer comes off every line by the same percentage, so each rate's share shrinks with it.
+  const afterOffer = (amount) => (cart.subtotal > 0 ? (amount * goods) / cart.subtotal : amount);
+  const goodsVat = vatBreakdown(cart.items.map((item) => ({ amount: afterOffer(item.itemTotal), rate: item.vatRate })));
   const busy = status === 'opening' || status === 'confirming';
 
   const handlePaymentReturn = useEffectEvent(async (payment, orderId) => {
@@ -343,10 +347,12 @@ export default function CheckoutModal() {
                     <dt>{t('checkout.shipping')}</dt>
                     <dd>{shipping === 0 ? t('checkout.free') : price(shipping)}</dd>
                   </div>
-                  <div className={styles.vat}>
-                    <dt>{t('checkout.vatFood', { rate: storeConfig.vatRate })}</dt>
-                    <dd>{t('checkout.vatIncluded', { amount: price(includedVat(goods), { decimals: 2 }) })}</dd>
-                  </div>
+                  {goodsVat.map(({ rate, amount }) => (
+                    <div key={rate} className={styles.vat}>
+                      <dt>{t(rate === storeConfig.vatRate ? 'checkout.vatFood' : 'checkout.vatOther', { rate })}</dt>
+                      <dd>{t('checkout.vatIncluded', { amount: price(amount, { decimals: 2 }) })}</dd>
+                    </div>
+                  ))}
                   {shipping > 0 && (
                     <div className={styles.vat}>
                       <dt>{t('checkout.vatShipping', { rate: storeConfig.vatRate })}</dt>
