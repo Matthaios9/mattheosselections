@@ -38,6 +38,9 @@ export const storeConfig = {
   // Swedish VAT included in all prices, sent to Kustom Checkout per order line. Food (honey, olive oil)
   // is 6% from 1 April 2026 to 31 December 2027 (12% before and after) — confirm with the accountant.
   vatRate: 6,
+  // The welcome offer: this much off the goods on a signed-in customer's first order. Set to 0 to
+  // switch it off everywhere — the checkout, the home page block and the discount all read it here.
+  welcomeDiscountPercent: 10,
   // Sizes with this many units or fewer show "Only a few left" and appear as low stock in the admin.
   lowStockThreshold: 5,
   // The "Single-origin honeys" figure on the home and about pages is the number of products in this

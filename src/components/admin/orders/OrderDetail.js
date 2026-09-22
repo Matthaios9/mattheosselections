@@ -101,6 +101,12 @@ export default function OrderDetail({ id }) {
                       <dt>Subtotal</dt>
                       <dd>{money(order.subtotal)}</dd>
                     </div>
+                    {order.discount > 0 && (
+                      <div>
+                        <dt>Welcome offer (first order)</dt>
+                        <dd>−{money(order.discount)}</dd>
+                      </div>
+                    )}
                     <div>
                       <dt>Shipping</dt>
                       <dd>{order.shippingFee ? money(order.shippingFee) : 'Free'}</dd>
@@ -109,7 +115,7 @@ export default function OrderDetail({ id }) {
                       <>
                         <div className={styles.vat}>
                           <dt>VAT {order.vatRate}% (food), included</dt>
-                          <dd>{money(includedVat(order.subtotal, order.vatRate), { decimals: 2 })}</dd>
+                          <dd>{money(includedVat(order.subtotal - (order.discount ?? 0), order.vatRate), { decimals: 2 })}</dd>
                         </div>
                         {order.shippingFee > 0 && (
                           <div className={styles.vat}>

@@ -225,6 +225,12 @@ const sv = {
   },
 
   checkout: {
+    offer: {
+      guest: 'Din första beställning hos oss? Logga in eller skapa ett konto så får du {percent}% rabatt på den.',
+      login: 'Logga in',
+      applied: 'Din välkomstrabatt på {percent}% är med nedan.',
+      line: 'Välkomsterbjudande −{percent}%',
+    },
     title: 'Kassa',
     subtitle: 'Välj vart vi ska leverera och betala sedan säkert med Kustom Checkout.',
     summaryTitle: 'Ordersammanfattning',
@@ -391,9 +397,10 @@ const sv = {
   },
 
   newsletter: {
-    eyebrow: 'Nyhetsbrev',
-    title: 'Håll kontakten',
-    text: 'Anmäl dig för nyheter om nya skördar, säsongens favoriter och presenttips från Mattheos Selections.',
+    eyebrow: 'Välkomsterbjudande',
+    title: 'En liten present till dig',
+    offer: 'Få {percent}% rabatt på din första beställning.',
+    text: 'Beställ med ett konto så dras rabatten av automatiskt i kassan. Anmäl dig nedan för nyheter om nya skördar, säsongens favoriter och presenttips från Mattheos Selections.',
     label: 'E-postadress',
     placeholder: 'Din e-postadress',
     submit: 'Registrera dig',

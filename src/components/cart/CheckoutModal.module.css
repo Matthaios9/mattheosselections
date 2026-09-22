@@ -240,3 +240,43 @@
 .backLink:hover {
   color: var(--ms-ink);
 }
+
+/* Welcome offer: the invitation to sign in, and the confirmation once it applies. */
+.offerNote {
+  display: flex;
+  gap: 0.55rem;
+  align-items: flex-start;
+  margin: 0;
+  padding: 0.7rem 0.85rem;
+  border-radius: var(--ms-radius-sm);
+  background: var(--ms-sand);
+  color: var(--ms-ink);
+  font-size: 0.88rem;
+  line-height: 1.45;
+}
+
+.offerNote svg {
+  flex: none;
+  margin-top: 0.15rem;
+  font-size: 1.1rem;
+  color: var(--ms-honey-deep);
+}
+
+.offerApplied {
+  background: var(--ms-honey-soft);
+}
+
+.offerLink {
+  padding: 0;
+  border: 0;
+  background: none;
+  color: var(--ms-honey-deep);
+  font: inherit;
+  font-weight: 600;
+  text-decoration: underline;
+}
+
+.totals > .discount dt,
+.totals > .discount dd {
+  color: var(--ms-honey-deep);
+}

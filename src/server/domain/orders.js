@@ -4,6 +4,7 @@ import { Order, Product } from '@/server/models';
 import { calculateShipping } from '@/utils/shipping';
 import { releaseStock, reserveStock, stockMoves } from './inventory';
 import { PaymentUpdateError, settleKustomPayment } from './settlement';
+import { discountOn } from './welcome-offer';
 import { escapeRegex, isObjectId, pageParams, pageResult, toId, toIso } from '@/server/utils';
 
 export function serializeOrder(doc) {
@@ -44,6 +45,7 @@ export function serializeOrder(doc) {
     })),
     itemCount: (doc.items ?? []).reduce((sum, item) => sum + item.quantity, 0),
     subtotal: doc.subtotal,
+    discount: doc.discount ?? 0,
     shippingFee: doc.shippingFee,
     total: doc.total,
     currency: doc.currency,
@@ -80,7 +82,7 @@ export const stockLine = (item) => ({
  * A pack line carries its `contents` (with names), so the order records what went into it.
  * Returns { ok, lines, subtotal, shippingFee, total } or { ok: false, problems }.
  */
-export async function priceCart({ items, country, locale }) {
+export async function priceCart({ items, country, locale, discountRate = 0 }) {
   await connectToDatabase();
 
   // Merge duplicate lines for the same product + size.
@@ -157,8 +159,11 @@ export async function priceCart({ items, country, locale }) {
   if (problems.length) return { ok: false, problems };
 
   const subtotal = lines.reduce((sum, line) => sum + line.lineTotal, 0);
+  // Shipping is worked out on the full subtotal on purpose: a discount must never push an order
+  // back below the free-shipping threshold and hand the customer a fee they didn't have before.
   const shippingFee = calculateShipping(subtotal, country);
-  return { ok: true, lines, subtotal, shippingFee, total: subtotal + shippingFee };
+  const discount = discountOn(subtotal, discountRate);
+  return { ok: true, lines, subtotal, discount, shippingFee, total: subtotal - discount + shippingFee };
 }
 
 export async function listOrders({ q = '', status = '', page, pageSize = 20 } = {}) {

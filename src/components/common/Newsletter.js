@@ -10,6 +10,7 @@ import InputGroup from 'react-bootstrap/InputGroup';
 import { PiCheckCircle, PiPaperPlaneTilt } from 'react-icons/pi';
 import Honeypot from './Honeypot';
 import Reveal from './Reveal';
+import { storeConfig } from '@/config/site';
 import { useI18n } from '@/i18n/I18nProvider';
 import { subscribeNewsletter } from '@/services/submission';
 import { isEmail } from '@/utils/validation';
@@ -48,6 +49,9 @@ export default function Newsletter() {
             <div className={styles.copy}>
               <span className="eyebrow eyebrow-light">{t('newsletter.eyebrow')}</span>
               <h2 className={styles.title}>{t('newsletter.title')}</h2>
+              {storeConfig.welcomeDiscountPercent > 0 && (
+                <p className={styles.offer}>{t('newsletter.offer', { percent: storeConfig.welcomeDiscountPercent })}</p>
+              )}
               <p className={styles.text}>{t('newsletter.text')}</p>
             </div>
 

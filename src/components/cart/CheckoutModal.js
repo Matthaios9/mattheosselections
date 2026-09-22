@@ -7,16 +7,17 @@ import Button from 'react-bootstrap/Button';
 import Form from 'react-bootstrap/Form';
 import Modal from 'react-bootstrap/Modal';
 import Spinner from 'react-bootstrap/Spinner';
-import { PiArrowLeft, PiCheck, PiLockSimple, PiWarningCircle, PiX } from 'react-icons/pi';
+import { PiArrowLeft, PiCheck, PiLockSimple, PiSealPercent, PiWarningCircle, PiX } from 'react-icons/pi';
 import CartLine from './CartLine';
 import TextField from '@/components/common/TextField';
 import KustomCheckout from './KustomCheckout';
+import { useAuth } from '@/context/AuthContext';
 import { useStoreCart } from '@/context/CartContext';
 import { useUI } from '@/context/UIContext';
 import { storeConfig } from '@/config/site';
 import { useFormState } from '@/hooks/useFormState';
 import { useI18n } from '@/i18n/I18nProvider';
-import { confirmPayment, startCheckout } from '@/services/checkout';
+import { confirmPayment, getWelcomeOffer, startCheckout } from '@/services/checkout';
 import { calculateShipping, SHIPPING_COUNTRIES } from '@/utils/shipping';
 import { includedVat } from '@/utils/vat';
 import styles from './CheckoutModal.module.css';
@@ -30,20 +31,39 @@ import styles from './CheckoutModal.module.css';
  */
 export default function CheckoutModal() {
   const { t, href, price, locale } = useI18n();
-  const { checkoutOpen, openCheckout, closeCheckout } = useUI();
+  const { checkoutOpen, openAuth, openCheckout, closeCheckout } = useUI();
   const cart = useStoreCart();
+  const { user } = useAuth();
   const form = useFormState({ customerType: 'private', company: '', country: 'SE', note: '' });
   const [status, setStatus] = useState('details'); // details | opening | payment | confirming | confirmed | failed
   const [snippet, setSnippet] = useState(null);
   const [serverError, setServerError] = useState(null);
   const [outcome, setOutcome] = useState(null); // { number } when confirmed, { message } when failed
+  const [offer, setOffer] = useState(null); // { eligible, percent } — the welcome offer, as the server sees it
+
+  // Whether the welcome offer applies is the server's answer, not the cart's: it depends on who is
+  // signed in and whether they have ordered before. Re-asked when someone logs in from right here.
+  useEffect(() => {
+    if (!checkoutOpen) return undefined;
+    let active = true;
+    getWelcomeOffer()
+      .then((result) => active && setOffer(result))
+      .catch(() => active && setOffer(null));
+    return () => {
+      active = false;
+    };
+  }, [checkoutOpen, user?.id]);
 
   const countryNames = new Intl.DisplayNames([locale], { type: 'region' });
   const countries = SHIPPING_COUNTRIES.map((code) => ({ code, name: countryNames.of(code) })).sort((a, b) =>
     a.name.localeCompare(b.name, locale)
   );
+  // Mirrors the server's sums (see priceCart): shipping is charged on the full subtotal, so the
+  // welcome offer can never cost someone their free shipping.
+  const discount = offer?.eligible ? Math.round(cart.subtotal * (offer.percent / 100) * 100) / 100 : 0;
+  const goods = cart.subtotal - discount;
   const shipping = calculateShipping(cart.subtotal, form.values.country);
-  const total = cart.subtotal + shipping;
+  const total = goods + shipping;
   const busy = status === 'opening' || status === 'confirming';
 
   const handlePaymentReturn = useEffectEvent(async (payment, orderId) => {
@@ -243,6 +263,25 @@ export default function CheckoutModal() {
                     {serverError}
                   </Alert>
                 )}
+                {/* Guests are invited to sign in, because only a signed-in customer's first order can be
+                    recognised as one. Customers who have ordered before see nothing at all. */}
+                {offer && !offer.eligible && !user && (
+                  <p className={styles.offerNote}>
+                    <PiSealPercent aria-hidden="true" />
+                    <span>
+                      {t('checkout.offer.guest', { percent: offer.percent })}{' '}
+                      <button type="button" className={styles.offerLink} onClick={() => openAuth('login')}>
+                        {t('checkout.offer.login')}
+                      </button>
+                    </span>
+                  </p>
+                )}
+                {discount > 0 && (
+                  <p className={`${styles.offerNote} ${styles.offerApplied}`}>
+                    <PiSealPercent aria-hidden="true" />
+                    <span>{t('checkout.offer.applied', { percent: offer.percent })}</span>
+                  </p>
+                )}
                 <fieldset className={styles.fieldset}>
                   <legend className={styles.legend}>{t('checkout.customerTitle')}</legend>
                   <Form.Group controlId="checkout-customer-type">
@@ -294,13 +333,19 @@ export default function CheckoutModal() {
                     <dt>{t('cart.subtotal')}</dt>
                     <dd>{price(cart.subtotal)}</dd>
                   </div>
+                  {discount > 0 && (
+                    <div className={styles.discount}>
+                      <dt>{t('checkout.offer.line', { percent: offer.percent })}</dt>
+                      <dd>−{price(discount)}</dd>
+                    </div>
+                  )}
                   <div>
                     <dt>{t('checkout.shipping')}</dt>
                     <dd>{shipping === 0 ? t('checkout.free') : price(shipping)}</dd>
                   </div>
                   <div className={styles.vat}>
                     <dt>{t('checkout.vatFood', { rate: storeConfig.vatRate })}</dt>
-                    <dd>{t('checkout.vatIncluded', { amount: price(includedVat(cart.subtotal), { decimals: 2 }) })}</dd>
+                    <dd>{t('checkout.vatIncluded', { amount: price(includedVat(goods), { decimals: 2 }) })}</dd>
                   </div>
                   {shipping > 0 && (
                     <div className={styles.vat}>

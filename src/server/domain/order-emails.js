@@ -42,6 +42,7 @@ const EMAILS = {
     },
     summary: {
       subtotal: 'Subtotal',
+      discount: 'Welcome offer',
       shipping: 'Shipping',
       free: 'Free',
       total: 'Total',
@@ -78,6 +79,7 @@ const EMAILS = {
     },
     summary: {
       subtotal: 'Delsumma',
+      discount: 'Välkomsterbjudande',
       shipping: 'Frakt',
       free: 'Fri frakt',
       total: 'Totalt',
@@ -114,6 +116,7 @@ const EMAILS = {
     },
     summary: {
       subtotal: 'Υποσύνολο',
+      discount: 'Προσφορά καλωσορίσματος',
       shipping: 'Μεταφορικά',
       free: 'Δωρεάν',
       total: 'Σύνολο',
@@ -170,6 +173,7 @@ function renderSummary(order, copy, locale) {
           )
           .join('')}
         ${totalRow(copy.summary.subtotal, price(order.subtotal))}
+        ${order.discount > 0 ? totalRow(copy.summary.discount, `−${price(order.discount)}`) : ''}
         ${totalRow(copy.summary.shipping, shipping)}
         ${totalRow(copy.summary.total, price(order.total), true)}
       </tbody>
@@ -183,6 +187,7 @@ function renderSummary(order, copy, locale) {
       [`- ${line(item)} — ${price(item.lineTotal)}`, contents(item) && `  ${contents(item)}`].filter(Boolean).join('\n')
     ),
     `${copy.summary.subtotal}: ${price(order.subtotal)}`,
+    ...(order.discount > 0 ? [`${copy.summary.discount}: −${price(order.discount)}`] : []),
     `${copy.summary.shipping}: ${shipping}`,
     `${copy.summary.total}: ${price(order.total)}`,
     '',

@@ -225,6 +225,12 @@ const en = {
   },
 
   checkout: {
+    offer: {
+      guest: 'First order with us? Log in or create an account and get {percent}% off it.',
+      login: 'Log in',
+      applied: 'Your {percent}% welcome offer is included below.',
+      line: 'Welcome offer −{percent}%',
+    },
     title: 'Checkout',
     subtitle: 'Choose where we deliver, then pay securely with Kustom Checkout.',
     summaryTitle: 'Order summary',
@@ -391,9 +397,10 @@ const en = {
   },
 
   newsletter: {
-    eyebrow: 'Newsletter',
-    title: 'Stay in Touch',
-    text: 'Sign up for news about new harvests, seasonal favourites and gift ideas from Mattheos Selections.',
+    eyebrow: 'Welcome offer',
+    title: 'A Little Something for You',
+    offer: 'Enjoy {percent}% off your first order.',
+    text: 'Order with an account and it comes off automatically at checkout. Sign up below for news about new harvests, seasonal favourites and gift ideas from Mattheos Selections.',
     label: 'Email address',
     placeholder: 'Your email address',
     submit: 'Sign up',

@@ -14,6 +14,7 @@ import { isObjectId } from '@/server/utils';
 import { SHIPPING_COUNTRIES } from '@/utils/shipping';
 import { reserveStock } from './inventory';
 import { priceCart, serializeOrder, stockLine } from './orders';
+import { WELCOME_DISCOUNT_PERCENT, welcomeDiscountRate } from './welcome-offer';
 
 /**
  * Payments with Kustom Checkout (embedded checkout, formerly Klarna Checkout).
@@ -55,7 +56,9 @@ function orderLine({ type, reference, name, quantity, unitPrice, imageUrl, produ
 
 export async function startCheckout({ items, customerType, company, country, note, locale, returnPath }, user, { origin }) {
   await connectToDatabase();
-  const priced = await priceCart({ items, country, locale });
+  // Decided here, never taken from the request: the welcome offer is 10% off a signed-in
+  // customer's first order (see welcome-offer.js).
+  const priced = await priceCart({ items, country, locale, discountRate: await welcomeDiscountRate(user) });
   if (!priced.ok) return priced;
 
   const checkout = await Checkout.create({
@@ -63,6 +66,7 @@ export async function startCheckout({ items, customerType, company, country, not
       user: user?.id ?? null,
       items: priced.lines,
       subtotal: priced.subtotal,
+      discount: priced.discount,
       shippingFee: priced.shippingFee,
       total: priced.total,
       vatRate: storeConfig.vatRate,
@@ -86,6 +90,18 @@ export async function startCheckout({ items, customerType, company, country, not
           : `${origin}/${locale}/shop?q=${encodeURIComponent(line.name)}`,
       })
     ),
+    // A Kustom discount line is a negative amount, so the order total it sums up matches ours.
+    ...(priced.discount > 0
+      ? [
+          orderLine({
+            type: 'discount',
+            reference: 'welcome-offer',
+            name: `Welcome offer (${WELCOME_DISCOUNT_PERCENT}% off your first order)`,
+            quantity: 1,
+            unitPrice: -priced.discount,
+          }),
+        ]
+      : []),
     ...(priced.shippingFee > 0
       ? [orderLine({ type: 'shipping_fee', reference: 'shipping', name: 'Shipping', quantity: 1, unitPrice: priced.shippingFee })]
       : []),

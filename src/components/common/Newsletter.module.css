@@ -48,6 +48,15 @@
   color: #fff;
 }
 
+/* The offer itself, set above the smaller explanatory line. */
+.offer {
+  margin: 0;
+  color: #fff;
+  font-family: var(--ms-font-serif);
+  font-size: clamp(1.15rem, 2.2vw, 1.4rem);
+  line-height: 1.4;
+}
+
 .text {
   margin: 0;
   max-width: 30rem;
