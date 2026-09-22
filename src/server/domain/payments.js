@@ -14,7 +14,7 @@ import { isObjectId } from '@/server/utils';
 import { SHIPPING_COUNTRIES } from '@/utils/shipping';
 import { reserveStock } from './inventory';
 import { priceCart, serializeOrder, stockLine } from './orders';
-import { welcomeDiscountRate } from './welcome-offer';
+import { joinListForWelcomeOffer, markWelcomeDiscountUsed, WELCOME_DISCOUNT_RATE, welcomeOfferStatus } from './welcome-offer';
 
 /**
  * Payments with Kustom Checkout (embedded checkout, formerly Klarna Checkout).
@@ -58,11 +58,12 @@ function orderLine({ type, reference, name, quantity, unitPrice, vatRate = store
   };
 }
 
-export async function startCheckout({ items, customerType, company, country, note, locale, returnPath }, user, { origin }) {
+export async function startCheckout({ items, customerType, company, country, note, locale, returnPath, joinEmailList }, user, { origin }) {
   await connectToDatabase();
-  // Decided here, never taken from the request: the welcome offer is 10% off a signed-in
-  // customer's first order (see welcome-offer.js).
-  const priced = await priceCart({ items, country, locale, discountRate: await welcomeDiscountRate(user) });
+  // Ticking the box at checkout is the sign-up itself, and it only counts when there is an offer left
+  // to claim. Whether the discount applies is always decided here, never taken from the request.
+  const offer = joinEmailList ? await joinListForWelcomeOffer(user, locale) : await welcomeOfferStatus(user);
+  const priced = await priceCart({ items, country, locale, discountRate: offer.eligible ? WELCOME_DISCOUNT_RATE : 0 });
   if (!priced.ok) return priced;
 
   const checkout = await Checkout.create({
@@ -242,6 +243,9 @@ export async function finalizeCheckout(kustomOrderId) {
     const created = await Order.findOne({ kustomOrderId }).lean();
     return created ? { ok: true, order: serializeOrder(created) } : { ok: false, reason: 'not-found' };
   }
+  // The welcome discount is spent the moment an order carries it: cancelling this order later, or
+  // leaving and rejoining the email list, can never bring it back (see welcome-offer.js).
+  if (order.discount > 0 && order.user) await markWelcomeDiscountUsed(order.user);
   return completeOrder(order, kustomOrderId);
 }
 

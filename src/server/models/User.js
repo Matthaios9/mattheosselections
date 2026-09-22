@@ -13,6 +13,9 @@ const userSchema = new mongoose.Schema(
     status: { type: String, enum: USER_STATUSES, default: 'active' },
     phone: { type: String, trim: true, default: '' },
     lastLoginAt: { type: Date },
+    // When this customer's one welcome discount was spent. Kept on the account, not on the newsletter
+    // list: unsubscribing deletes that row, so leaving and rejoining must not mint a second discount.
+    welcomeDiscountUsedAt: { type: Date, default: null },
   },
   { timestamps: true }
 );

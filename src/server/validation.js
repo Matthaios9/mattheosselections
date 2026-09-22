@@ -214,6 +214,8 @@ export const checkoutInput = z
     country: z.enum(SHIPPING_COUNTRIES).default('SE'),
     note: text(1000),
     locale: storeLocale,
+    // Ticked at checkout to join the email list and claim the welcome offer.
+    joinEmailList: z.boolean().default(false),
     returnPath: z.string().max(200).default(''),
   })
   .refine((input) => input.customerType === 'private' || input.company, {

@@ -34,7 +34,7 @@ export default function CheckoutModal() {
   const { checkoutOpen, openAuth, openCheckout, closeCheckout } = useUI();
   const cart = useStoreCart();
   const { user } = useAuth();
-  const form = useFormState({ customerType: 'private', company: '', country: 'SE', note: '' });
+  const form = useFormState({ customerType: 'private', company: '', country: 'SE', note: '', joinEmailList: false });
   const [status, setStatus] = useState('details'); // details | opening | payment | confirming | confirmed | failed
   const [snippet, setSnippet] = useState(null);
   const [serverError, setServerError] = useState(null);
@@ -60,7 +60,9 @@ export default function CheckoutModal() {
   );
   // Mirrors the server's sums (see priceCart): shipping is charged on the full subtotal, so the
   // welcome offer can never cost someone their free shipping.
-  const discount = offer?.eligible ? Math.round(cart.subtotal * (offer.percent / 100) * 100) / 100 : 0;
+  // Already on the list, or joining with the tick below — either way the discount is on this order.
+  const claiming = Boolean(offer?.canJoinToClaim && form.values.joinEmailList);
+  const discount = offer?.eligible || claiming ? Math.round(cart.subtotal * (offer.percent / 100) * 100) / 100 : 0;
   const goods = cart.subtotal - discount;
   const shipping = calculateShipping(cart.subtotal, form.values.country);
   const total = goods + shipping;
@@ -142,6 +144,7 @@ export default function CheckoutModal() {
         company: form.values.customerType === 'company' ? form.values.company : '',
         country: form.values.country,
         note: form.values.note,
+        joinEmailList: form.values.joinEmailList,
         locale,
         returnPath: window.location.pathname,
       });
@@ -269,7 +272,7 @@ export default function CheckoutModal() {
                 )}
                 {/* Guests are invited to sign in, because only a signed-in customer's first order can be
                     recognised as one. Customers who have ordered before see nothing at all. */}
-                {offer && !offer.eligible && !user && (
+                {offer?.percent > 0 && !user && (
                   <p className={styles.offerNote}>
                     <PiSealPercent aria-hidden="true" />
                     <span>
@@ -280,10 +283,25 @@ export default function CheckoutModal() {
                     </span>
                   </p>
                 )}
+                {/* The sign-up is the offer: joining the list here claims it on this order. */}
+                {offer?.canJoinToClaim && (
+                  <div className={styles.offerNote}>
+                    <PiSealPercent aria-hidden="true" />
+                    <div>
+                      <Form.Check
+                        type="checkbox"
+                        id="checkout-join-list"
+                        label={t('checkout.offer.join', { percent: offer.percent })}
+                        {...form.checkbox('joinEmailList')}
+                      />
+                      <Form.Text className="mt-0">{t('checkout.offer.joinHint')}</Form.Text>
+                    </div>
+                  </div>
+                )}
                 {discount > 0 && (
                   <p className={`${styles.offerNote} ${styles.offerApplied}`}>
                     <PiSealPercent aria-hidden="true" />
-                    <span>{t('checkout.offer.applied', { percent: offer.percent })}</span>
+                    <span>{t(claiming ? 'checkout.offer.claiming' : 'checkout.offer.applied', { percent: offer.percent })}</span>
                   </p>
                 )}
                 <fieldset className={styles.fieldset}>
