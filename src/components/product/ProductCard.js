@@ -16,7 +16,7 @@ import { useI18n } from '@/i18n/I18nProvider';
 import styles from './ProductCard.module.css';
 
 export default function ProductCard({ product, imageSizes, preload = false }) {
-  const { t, price, href } = useI18n();
+  const { t, price, euro, href } = useI18n();
   const { openQuickView } = useUI();
   const addToCart = useAddToCart();
   const [variantId, setVariantId] = useState(product.defaultVariant);
@@ -100,7 +100,10 @@ export default function ProductCard({ product, imageSizes, preload = false }) {
         </div>
 
         <div className={styles.footer}>
-          <span className={styles.price}>{price(variant.price)}</span>
+          <span className={styles.price}>
+            {price(variant.price)}
+            <span className={styles.euro}>{t('common.approxEuro', { amount: euro(variant.price) })}</span>
+          </span>
           {soldOut ? (
             // Sold out: open the quick view, where the customer can ask to be notified when it is back.
             <Button

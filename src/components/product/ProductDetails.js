@@ -22,7 +22,7 @@ import styles from './ProductDetails.module.css';
  * which calls `onClose` after adding and links to the full page) and the product page (`variant="page"`, with an h1).
  */
 export default function ProductDetails({ product, initialVariant, onClose, variant: layout = 'page', titleId }) {
-  const { t, price, href } = useI18n();
+  const { t, price, euro, href } = useI18n();
   const addToCart = useAddToCart();
   const { availableToAdd, quantityInCart } = useStoreCart();
   const [variantId, setVariantId] = useState(initialVariant ?? product.defaultVariant);
@@ -96,6 +96,7 @@ export default function ProductDetails({ product, initialVariant, onClose, varia
         </Title>
         <p className={styles.price}>
           {price(variant.price)} <span className={styles.vat}>{t('common.inclVat')}</span>
+          <span className={styles.euro}>{t('common.approxEuro', { amount: euro(variant.price) })}</span>
         </p>
         {product.description && <p className={styles.description}>{product.description}</p>}
 

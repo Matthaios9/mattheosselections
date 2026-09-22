@@ -241,6 +241,13 @@
   white-space: nowrap;
 }
 
+.euro {
+  display: block;
+  font-size: 0.75rem;
+  font-weight: 500;
+  color: var(--ms-muted);
+}
+
 .addButton {
   --bs-btn-padding-x: 1rem;
   --bs-btn-padding-y: 0.55rem;

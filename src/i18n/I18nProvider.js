@@ -3,7 +3,7 @@
 import { createContext, useContext } from 'react';
 import { getLocaleConfig, localizePath } from './config';
 import { createTranslator } from './translate';
-import { formatPrice } from '@/utils/format';
+import { formatEuro, formatPrice } from '@/utils/format';
 
 const I18nContext = createContext(null);
 
@@ -19,6 +19,7 @@ export function I18nProvider({ locale, dict, children }) {
     t: createTranslator(dict),
     href: (path) => localizePath(path, locale),
     price: (amount, options) => formatPrice(amount, locale, options),
+    euro: (amount) => formatEuro(amount, locale),
   };
 
   return <I18nContext.Provider value={value}>{children}</I18nContext.Provider>;
@@ -26,8 +27,8 @@ export function I18nProvider({ locale, dict, children }) {
 
 /**
  * Access translations in Client Components:
- *   const { t, href, price, locale } = useI18n();
- *   t('cart.title'); href('/shop'); price(490);
+ *   const { t, href, price, euro, locale } = useI18n();
+ *   t('cart.title'); href('/shop'); price(490); euro(490);
  */
 export function useI18n() {
   const context = useContext(I18nContext);

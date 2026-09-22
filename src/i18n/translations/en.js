@@ -138,6 +138,7 @@ const en = {
     quickView: 'Quick view',
     viewDetails: 'View details',
     inclVat: 'incl. VAT',
+    approxEuro: 'Approx. {amount}',
     addToWishlist: 'Save to wishlist',
     removeFromWishlist: 'Remove from wishlist',
     size: 'Size',

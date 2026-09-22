@@ -12,12 +12,25 @@ import { storeConfig } from '@/config/site';
  * spaces), which would cause hydration mismatches, so grouping is done by hand.
  */
 export function formatPrice(amount, locale, { decimals = 0 } = {}) {
+  return `${formatNumber(amount, locale, decimals)} ${storeConfig.currencySymbol}`;
+}
+
+/**
+ * The approximate euro price shown under a kr price, as on the old WordPress shop: a flat
+ * kr ÷ 10, with cents only when there are any (250 kr → "€25", 399 kr → "€39.90").
+ */
+export function formatEuro(amountSek, locale) {
+  const euros = Math.round(((Number(amountSek) || 0) / storeConfig.sekPerEuro) * 100) / 100;
+  return `€${formatNumber(euros, locale, Number.isInteger(euros) ? 0 : 2)}`;
+}
+
+function formatNumber(amount, locale, decimals) {
   const { groupSeparator, decimalSeparator } = getLocaleConfig(locale);
   const factor = 10 ** decimals;
   const scaled = Math.round((Number(amount) || 0) * factor);
   const whole = String(Math.floor(Math.abs(scaled) / factor)).replace(/\B(?=(\d{3})+(?!\d))/g, groupSeparator);
   const fraction = decimals ? `${decimalSeparator}${String(Math.abs(scaled) % factor).padStart(decimals, '0')}` : '';
-  return `${scaled < 0 ? '−' : ''}${whole}${fraction} ${storeConfig.currencySymbol}`;
+  return `${scaled < 0 ? '−' : ''}${whole}${fraction}`;
 }
 
 /* Admin formatting (English, Stockholm time) ---------------------------------- */

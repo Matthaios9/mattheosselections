@@ -138,6 +138,7 @@ const sv = {
     quickView: 'Snabbvy',
     viewDetails: 'Visa detaljer',
     inclVat: 'inkl. moms',
+    approxEuro: 'Ca {amount}',
     addToWishlist: 'Spara i önskelista',
     removeFromWishlist: 'Ta bort från önskelista',
     size: 'Storlek',

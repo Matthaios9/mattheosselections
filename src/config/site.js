@@ -29,6 +29,8 @@ export const siteConfig = {
 export const storeConfig = {
   currency: 'SEK',
   currencySymbol: 'kr',
+  // Product prices also show an approximate euro price: kr ÷ this (see formatEuro in src/utils/format.js).
+  sekPerEuro: 10,
   shippingFee: 69,
   freeShippingThreshold: 799,
   shipping: {

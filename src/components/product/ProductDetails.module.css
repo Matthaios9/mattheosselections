@@ -133,6 +133,13 @@
   color: var(--ms-muted);
 }
 
+.euro {
+  display: block;
+  font-size: 0.9rem;
+  font-weight: 500;
+  color: var(--ms-muted);
+}
+
 .description {
   margin: 0;
   color: var(--ms-muted);
