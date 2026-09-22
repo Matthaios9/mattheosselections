@@ -32,8 +32,8 @@ export const storeConfig = {
   sekPerEuro: 10,
   shipping: {
     domestic: { fee: 69, freeOver: 799 },
-    // Approximates the site's €25 / free over €179 European rates — confirm with the client.
-    international: { fee: 290, freeOver: 2000 },
+    // The €25 / free over €179 European rates the terms and the FAQ promise, at sekPerEuro above.
+    international: { fee: 290, freeOver: 1790 },
   },
   // Swedish VAT included in all prices, sent to Kustom Checkout per order line. Food (honey, olive oil)
   // is 6% from 1 April 2026 to 31 December 2027 (12% before and after) — confirm with the accountant.
