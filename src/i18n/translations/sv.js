@@ -292,10 +292,10 @@ const sv = {
   home: {
     hero: {
       eyebrow: 'Rå · Naturlig · Obearbetad',
-      titleBefore: 'Honung, så som',
-      titleAccent: 'Grekland',
-      titleAfter: 'alltid har gjort den.',
-      intro: 'Med rötter i naturen. Utvalt med omsorg.',
+      titleBefore: 'Naturen, i sin',
+      titleAccent: 'finaste',
+      titleAfter: 'form.',
+      intro: 'Med rötter i Grekland. Utvalt med omsorg.',
       text: 'Vi söker upp enastående naturprodukter från små familjeproducenter som bevarar traditionella metoder och arbetar i harmoni med naturen.',
       tagline: 'Äkta i sitt ursprung. Ren i sin karaktär. Så som naturen avsett.',
       primaryCta: 'Upptäck kollektionen',

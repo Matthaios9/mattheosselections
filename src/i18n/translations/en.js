@@ -292,10 +292,10 @@ const en = {
   home: {
     hero: {
       eyebrow: 'Raw · Natural · Unprocessed',
-      titleBefore: 'Honey, the way',
-      titleAccent: 'Greece',
-      titleAfter: 'has always made it.',
-      intro: 'Rooted in nature. Chosen with care.',
+      titleBefore: 'Nature, in its',
+      titleAccent: 'finest',
+      titleAfter: 'form.',
+      intro: 'Rooted in Greece. Chosen with care.',
       text: 'We seek out remarkable natural products from small family producers who preserve traditional methods and work in harmony with nature.',
       tagline: 'Authentic in origin. Pure in character. Made as nature intended.',
       primaryCta: 'Shop the collection',
