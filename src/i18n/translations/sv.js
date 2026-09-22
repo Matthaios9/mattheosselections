@@ -262,6 +262,7 @@ const sv = {
     back: 'Ändra leveransland eller meddelande',
     shipping: 'Frakt',
     vatFood: 'Moms {rate} % (livsmedel)',
+    vatOther: 'Moms {rate} % (övriga varor)',
     vatShipping: 'Moms {rate} % (frakt)',
     vatIncluded: 'inkl. {amount}',
     free: 'Gratis',

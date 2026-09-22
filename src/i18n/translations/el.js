@@ -262,6 +262,7 @@ const el = {
     back: 'Αλλαγή χώρας παράδοσης ή σημείωσης',
     shipping: 'Μεταφορικά',
     vatFood: 'ΦΠΑ {rate}% (τρόφιμα)',
+    vatOther: 'ΦΠΑ {rate}% (λοιπά είδη)',
     vatShipping: 'ΦΠΑ {rate}% (μεταφορικά)',
     vatIncluded: 'συμπ. {amount}',
     free: 'Δωρεάν',

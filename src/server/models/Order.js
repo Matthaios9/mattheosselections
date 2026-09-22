@@ -25,8 +25,12 @@ const orderItemSchema = new mongoose.Schema(
     variantLabel: { type: String, default: '' },
     image: { type: String, default: '' },
     price: { type: Number, required: true, min: 0 },
+    // The VAT rate (%) this product was sold at — food or standard. Null on orders from before it was stored.
+    vatRate: { type: Number, default: null },
     quantity: { type: Number, required: true, min: 1 },
     lineTotal: { type: Number, required: true, min: 0 },
+    // This line's share of the order discount, so VAT stays right at each rate.
+    discount: { type: Number, default: 0, min: 0 },
     contents: { type: [packItemSchema], default: [] }, // packs only
   },
   { _id: false }

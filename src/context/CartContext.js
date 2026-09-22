@@ -2,6 +2,7 @@
 
 import { createContext, useContext } from 'react';
 import { CartProvider, useCart } from 'react-use-cart';
+import { storeConfig } from '@/config/site';
 import { useApiQuery } from '@/hooks/useApiQuery';
 import { useHydrated } from '@/hooks/useHydrated';
 import { useI18n } from '@/i18n/I18nProvider';
@@ -59,6 +60,8 @@ function CartStateProvider({ children }) {
           // The saved image only stands in until live data arrives. A product that no longer exists
           // may point at storage this site no longer serves (e.g. a previous Cloudinary account).
           image: variant?.image ?? (settled && !product ? null : item.image),
+          // The live rate, falling back to the one saved when the item was added (see utils/vat.js).
+          vatRate: product?.vatRate ?? item.vatRate ?? storeConfig.vatRate,
           maxQuantity: product ? (variant?.stock ?? 0) : settled ? 0 : (item.stock ?? item.quantity),
         };
       })
@@ -89,6 +92,7 @@ function CartStateProvider({ children }) {
         variantLabel: variant.label,
         image: variant.image,
         stock: variant.stock,
+        vatRate: product.vatRate,
       },
       units
     );

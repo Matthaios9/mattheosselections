@@ -14,6 +14,7 @@ import ConfirmDialog from '@/components/admin/ConfirmDialog';
 import ImageUploader from '@/components/admin/ImageUploader';
 import LocaleTabs from '@/components/admin/LocaleTabs';
 import PackContents, { emptyPackItem } from '@/components/admin/products/PackContents';
+import { storeConfig } from '@/config/site';
 import { locales } from '@/i18n/config';
 import { useAdminAction } from '@/hooks/useAdminAction';
 import { useApiQuery } from '@/hooks/useApiQuery';
@@ -53,6 +54,7 @@ function toFormState(product) {
       variants: [emptySize()],
       defaultIndex: 0,
       isPack: false,
+      standardVat: false,
       badge: '',
       featured: false,
       status: 'active',
@@ -73,6 +75,7 @@ function toFormState(product) {
     })),
     defaultIndex: Math.max(0, product.variants.findIndex((variant) => variant.key === product.defaultVariant)),
     isPack: product.isPack,
+    standardVat: Boolean(product.standardVat),
     badge: product.badge,
     featured: product.featured,
     status: product.status,
@@ -296,6 +299,19 @@ export default function ProductForm({ product, categories, onSaved }) {
                   inside it out of stock.
                 </Form.Text>
                 {error('isPack') && <p className="text-danger small mb-0">{error('isPack')}</p>}
+              </div>
+              <div className={styles.packToggle}>
+                <Form.Check
+                  type="switch"
+                  id="standard-vat"
+                  label={`Standard VAT (${storeConfig.standardVatRate}%)`}
+                  checked={form.standardVat}
+                  onChange={(event) => update(['standardVat'], event.target.checked)}
+                />
+                <Form.Text className="mt-0">
+                  For goods that aren&apos;t food — beeswax, cosmetics and the like. Left off, the product is sold as food
+                  at {storeConfig.vatRate}%. Prices always include VAT; this only changes how much of the price is VAT.
+                </Form.Text>
               </div>
               {error('variants') && (
                 <Alert variant="danger" className="mb-0 py-2">

@@ -21,8 +21,11 @@ export const WELCOME_DISCOUNT_PERCENT = storeConfig.welcomeDiscountPercent;
 
 export const WELCOME_DISCOUNT_RATE = WELCOME_DISCOUNT_PERCENT / 100;
 
-/** What `rate` takes off `subtotal`, rounded to whole öre so the totals stay exact in Kustom. */
-export const discountOn = (subtotal, rate) => (rate > 0 ? Math.round(subtotal * rate * 100) / 100 : 0);
+/** Round kronor to whole öre — amounts below that can't be charged and would drift from Kustom. */
+export const toOre = (amount) => Math.round(amount * 100) / 100;
+
+/** What `rate` takes off `amount`, rounded to whole öre so the totals stay exact in Kustom. */
+export const discountOn = (amount, rate) => (rate > 0 ? toOre(amount * rate) : 0);
 
 /** True when this signed-in customer has never completed an order. */
 export async function isWelcomeOfferEligible(user) {

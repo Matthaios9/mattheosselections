@@ -14,7 +14,7 @@ import { isObjectId } from '@/server/utils';
 import { SHIPPING_COUNTRIES } from '@/utils/shipping';
 import { reserveStock } from './inventory';
 import { priceCart, serializeOrder, stockLine } from './orders';
-import { WELCOME_DISCOUNT_PERCENT, welcomeDiscountRate } from './welcome-offer';
+import { welcomeDiscountRate } from './welcome-offer';
 
 /**
  * Payments with Kustom Checkout (embedded checkout, formerly Klarna Checkout).
@@ -30,14 +30,18 @@ import { WELCOME_DISCOUNT_PERCENT, welcomeDiscountRate } from './welcome-offer';
  */
 
 const toMinorUnits = (amount) => Math.round(amount * 100); // kr → öre
-const taxRate = () => Math.round(storeConfig.vatRate * 100); // 6% → 600
 const kustomLocale = (locale) => (locale === 'sv' ? 'sv-SE' : 'en-SE'); // Greek shoppers get English
 
-/** One Kustom order line; prices include VAT, amounts in öre. */
-function orderLine({ type, reference, name, quantity, unitPrice, imageUrl, productUrl }) {
+/**
+ * One Kustom order line; prices include VAT, amounts in öre.
+ * `vatRate` is the rate this line is sold at — food or standard, per product (see utils/vat.js).
+ * `discount` is taken off this line, which keeps the VAT of a discounted order right at every rate.
+ */
+function orderLine({ type, reference, name, quantity, unitPrice, vatRate = storeConfig.vatRate, discount = 0, imageUrl, productUrl }) {
   const unit = toMinorUnits(unitPrice);
-  const total = unit * quantity;
-  const rate = taxRate();
+  const off = toMinorUnits(discount);
+  const total = unit * quantity - off;
+  const rate = Math.round(vatRate * 100); // 6% → 600
   return {
     type,
     reference: reference.slice(0, 255),
@@ -47,7 +51,7 @@ function orderLine({ type, reference, name, quantity, unitPrice, imageUrl, produ
     unit_price: unit,
     tax_rate: rate,
     total_amount: total,
-    total_discount_amount: 0,
+    total_discount_amount: off,
     total_tax_amount: Math.round(total - (total * 10000) / (10000 + rate)),
     ...(imageUrl?.startsWith('https://') && { image_url: imageUrl }),
     ...(productUrl && { product_url: productUrl }),
@@ -84,24 +88,14 @@ export async function startCheckout({ items, customerType, company, country, not
         name: line.variantLabel ? `${line.name} (${line.variantLabel})` : line.name,
         quantity: line.quantity,
         unitPrice: line.price,
+        vatRate: line.vatRate,
+        discount: line.discount,
         imageUrl: line.image,
         productUrl: line.slug
           ? `${origin}/${locale}/product/${line.slug}`
           : `${origin}/${locale}/shop?q=${encodeURIComponent(line.name)}`,
       })
     ),
-    // A Kustom discount line is a negative amount, so the order total it sums up matches ours.
-    ...(priced.discount > 0
-      ? [
-          orderLine({
-            type: 'discount',
-            reference: 'welcome-offer',
-            name: `Welcome offer (${WELCOME_DISCOUNT_PERCENT}% off your first order)`,
-            quantity: 1,
-            unitPrice: -priced.discount,
-          }),
-        ]
-      : []),
     ...(priced.shippingFee > 0
       ? [orderLine({ type: 'shipping_fee', reference: 'shipping', name: 'Shipping', quantity: 1, unitPrice: priced.shippingFee })]
       : []),

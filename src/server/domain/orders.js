@@ -2,9 +2,10 @@ import 'server-only';
 import { connectToDatabase } from '@/server/db';
 import { Order, Product } from '@/server/models';
 import { calculateShipping } from '@/utils/shipping';
+import { vatRateFor } from '@/utils/vat';
 import { releaseStock, reserveStock, stockMoves } from './inventory';
 import { PaymentUpdateError, settleKustomPayment } from './settlement';
-import { discountOn } from './welcome-offer';
+import { discountOn, toOre } from './welcome-offer';
 import { escapeRegex, isObjectId, pageParams, pageResult, toId, toIso } from '@/server/utils';
 
 export function serializeOrder(doc) {
@@ -33,8 +34,10 @@ export function serializeOrder(doc) {
       variantLabel: item.variantLabel,
       image: item.image,
       price: item.price,
+      vatRate: item.vatRate ?? null,
       quantity: item.quantity,
       lineTotal: item.lineTotal,
+      discount: item.discount ?? 0,
       contents: (item.contents ?? []).map((entry) => ({
         product: toId(entry.product),
         name: entry.name,
@@ -127,6 +130,7 @@ export async function priceCart({ items, country, locale, discountRate = 0 }) {
       variantLabel: localized(variant.label),
       image: variant.image || product.images?.[0]?.url || '',
       price: variant.price,
+      vatRate: vatRateFor(product.standardVat),
       quantity: item.quantity,
       lineTotal: variant.price * item.quantity,
       ...(contents.length && {
@@ -162,7 +166,10 @@ export async function priceCart({ items, country, locale, discountRate = 0 }) {
   // Shipping is worked out on the full subtotal on purpose: a discount must never push an order
   // back below the free-shipping threshold and hand the customer a fee they didn't have before.
   const shippingFee = calculateShipping(subtotal, country);
-  const discount = discountOn(subtotal, discountRate);
+  // A discount comes off each line rather than off the sum, so every line keeps its own VAT rate and
+  // the order lines sent to Kustom add up to exactly the total below, to the öre.
+  for (const line of lines) line.discount = discountOn(line.lineTotal, discountRate);
+  const discount = toOre(lines.reduce((sum, line) => sum + line.discount, 0));
   return { ok: true, lines, subtotal, discount, shippingFee, total: subtotal - discount + shippingFee };
 }
 

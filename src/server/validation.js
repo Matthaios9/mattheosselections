@@ -95,6 +95,7 @@ export const productInput = z
       }),
     defaultVariant: z.string().trim().default(''),
     isPack: z.boolean().default(false),
+    standardVat: z.boolean().default(false),
     badge: z.enum(PRODUCT_BADGES).default(''),
     featured: z.boolean().default(false),
     status: z.enum(PRODUCT_STATUSES).default('active'),

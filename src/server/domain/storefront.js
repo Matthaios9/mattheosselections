@@ -11,6 +11,7 @@ import { isObjectId, pageParams, pageResult, toId, toIso } from '@/server/utils'
 import { pickLocalized } from '@/utils/localize';
 import { categorySlug } from '@/utils/slug';
 import { splitList } from '@/utils/url';
+import { vatRateFor } from '@/utils/vat';
 
 /**
  * Public catalogue: active products in visible categories, localized for one
@@ -69,6 +70,7 @@ function localizeProduct(doc, categoriesById, locale) {
     categorySlug: category ? categorySlug(category) : null,
     categoryName: category ? pickLocalized(category.name, locale) : '',
     price: doc.price,
+    vatRate: vatRateFor(doc.standardVat),
     image,
     variants,
     defaultVariant: selected?.id ?? '',

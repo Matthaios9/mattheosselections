@@ -35,6 +35,7 @@ export function serializeProduct(doc) {
     variants,
     defaultVariant: doc.defaultVariant ?? '',
     isPack: Boolean(doc.isPack),
+    standardVat: Boolean(doc.standardVat),
     price: doc.price ?? 0,
     totalStock: totalStock(variants),
     inStock: variants.some((variant) => variant.stock > 0),

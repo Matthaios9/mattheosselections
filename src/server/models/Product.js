@@ -44,6 +44,8 @@ const productSchema = new mongoose.Schema(
     defaultVariant: { type: String, default: '' },
     // A pack (e.g. a gift box) of other products at its own price: selling one takes each product inside out of stock.
     isPack: { type: Boolean, default: false },
+    // Not food (beeswax cream and other cosmetics): sold at the standard VAT rate instead of the food rate.
+    standardVat: { type: Boolean, default: false },
     price: { type: Number, default: 0, index: true }, // lowest size price, kept in sync below
     inStock: { type: Boolean, default: false, index: true }, // true when any size has stock, kept in sync
     badge: { type: String, enum: PRODUCT_BADGES, default: '' },

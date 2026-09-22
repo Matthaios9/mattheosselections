@@ -262,6 +262,7 @@ const en = {
     back: 'Change delivery country or note',
     shipping: 'Shipping',
     vatFood: 'VAT {rate}% (food)',
+    vatOther: 'VAT {rate}% (other goods)',
     vatShipping: 'VAT {rate}% (shipping)',
     vatIncluded: 'incl. {amount}',
     free: 'Free',
