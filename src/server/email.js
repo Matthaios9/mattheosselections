@@ -10,6 +10,26 @@ import { siteConfig } from '@/config/site';
 export const escapeHtml = (value) =>
   String(value).replace(/[&<>"']/g, (char) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' })[char]);
 
+/** Label/value rows as a details block, skipping empty values: `renderRows([['Email', 'anna@…']])`. */
+export function renderRows(rows) {
+  const filled = rows.filter(([, value]) => value);
+  const html = `
+    <table role="presentation" width="100%" style="margin:28px 0 0;border-collapse:collapse;font-size:15px">
+      <tbody>
+        ${filled
+          .map(
+            ([label, value]) =>
+              `<tr><td style="padding:4px 16px 4px 0;color:#8a8172;vertical-align:top;white-space:nowrap">${escapeHtml(label)}</td>
+                <td style="padding:4px 0">${escapeHtml(value)}</td></tr>`
+          )
+          .join('')}
+      </tbody>
+    </table>`;
+  const text = filled.map(([label, value]) => `${label}: ${value}`).join('\n');
+
+  return { html, text };
+}
+
 /**
  * Build one email: `{ to, subject, text, html }` for sendMail.
  * `details` is a pre-rendered `{ html, text }` block shown under the paragraph.

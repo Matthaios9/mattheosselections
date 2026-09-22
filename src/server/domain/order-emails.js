@@ -1,7 +1,7 @@
 import 'server-only';
 import { siteConfig } from '@/config/site';
 import { interpolate } from '@/i18n/translate';
-import { escapeHtml, renderEmail } from '@/server/email';
+import { escapeHtml, renderEmail, renderRows } from '@/server/email';
 import { isMailConfigured, sendMail } from '@/server/mailer';
 import { firstName, formatPrice, plural } from '@/utils/format';
 
@@ -195,7 +195,7 @@ function renderSummary(order, copy, locale) {
 /** Who ordered — contact details, language and their note — for the admin notice. */
 function renderCustomer(order) {
   const { customer } = order;
-  const rows = [
+  return renderRows([
     ['Customer', customer.name],
     ['Company', customer.company],
     ['Org. number', customer.organizationNumber],
@@ -203,23 +203,7 @@ function renderCustomer(order) {
     ['Phone', customer.phone],
     ['Language', order.locale?.toUpperCase()],
     ['Note', order.customerNote],
-  ].filter(([, value]) => value);
-
-  const html = `
-    <table role="presentation" width="100%" style="margin:28px 0 0;border-collapse:collapse;font-size:15px">
-      <tbody>
-        ${rows
-          .map(
-            ([label, value]) =>
-              `<tr><td style="padding:4px 16px 4px 0;color:#8a8172;vertical-align:top;white-space:nowrap">${escapeHtml(label)}</td>
-                <td style="padding:4px 0">${escapeHtml(value)}</td></tr>`
-          )
-          .join('')}
-      </tbody>
-    </table>`;
-  const text = rows.map(([label, value]) => `${label}: ${value}`).join('\n');
-
-  return { html, text };
+  ]);
 }
 
 /**
