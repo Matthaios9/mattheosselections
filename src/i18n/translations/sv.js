@@ -100,6 +100,7 @@ const sv = {
       disabled: 'Kontot har inaktiverats. Kontakta oss.',
       emailTaken: 'Det finns redan ett konto med den här e-postadressen.',
       unavailable: 'Kontotjänsten är tillfälligt otillgänglig. Försök igen.',
+      tooMany: 'För många försök. Vänta några minuter och försök igen.',
     },
     login: {
       title: 'Välkommen tillbaka',
@@ -129,6 +130,16 @@ const sv = {
       back: 'Tillbaka till inloggning',
       successTitle: 'Kolla din inkorg',
       success: 'Om det finns ett konto för {email} är en återställningslänk på väg.',
+    },
+    reset: {
+      title: 'Välj ett nytt lösenord',
+      subtitle: 'Välj ett lösenord du inte använder någon annanstans — minst 8 tecken.',
+      newPassword: 'Nytt lösenord',
+      submit: 'Spara nytt lösenord',
+      successTitle: 'Ditt lösenord är uppdaterat',
+      success: 'Du är inloggad, {name}. Logga in med ditt nya lösenord hädanefter.',
+      expired: 'Länken gäller inte längre — återställningslänkar varar en timme och kan bara användas en gång.',
+      askAgain: 'Skicka en ny länk',
     },
   },
 

@@ -12,6 +12,7 @@ import { slugify } from '@/utils/slug';
 const text = (max = 5000) => z.string().trim().max(max).default('');
 // The storefront language a request comes from; anything else counts as English.
 const storeLocale = z.enum(['en', 'sv', 'el']).catch('en');
+const emailAddress = z.string().trim().toLowerCase().max(254).pipe(z.email('Enter a valid email address'));
 
 const localized = ({ required = false, max = 5000 } = {}) =>
   z.object({
@@ -176,6 +177,16 @@ export const registerInput = z.object({
 
 export const adminUserInput = registerInput.extend({ role: z.enum(USER_ROLES).default('admin') });
 
+/** Ask for a reset link. `locale` picks the language of the email and the link it carries. */
+export const forgotPasswordInput = z.object({ email: emailAddress, locale: storeLocale }).strip();
+
+/** Spend a reset link: the token from the email plus the new password. */
+export const resetPasswordInput = z.object({
+  token: z.string().trim().min(20, 'This reset link is not valid').max(200),
+  password,
+}).strip();
+
+
 export const userRoleInput = z.object({ role: z.enum(USER_ROLES) });
 export const userStatusInput = z.object({ status: z.enum(USER_STATUSES) });
 
@@ -223,7 +234,6 @@ export const kustomValidationInput = z
 
 export const uploadSignatureInput = z.object({ target: z.enum(UPLOAD_TARGETS) });
 
-const emailAddress = z.string().trim().toLowerCase().max(254).pipe(z.email('Enter a valid email address'));
 // Hidden form field that people never see: bots fill it in, and their submissions are dropped.
 const honeypot = z.string().max(500).default('');
 

@@ -43,6 +43,8 @@ export function AuthProvider({ children }) {
     isAuthenticated: Boolean(user),
     login: (values) => attempt(() => authService.login(values)),
     signup: (values) => attempt(() => authService.register(values)),
+    /** Finish a "forgot password" link: sets the new password and signs the customer in. */
+    resetPassword: (values) => attempt(() => authService.resetPassword(values)),
     logout: async () => {
       setUser(null);
       await authService.logout().catch(() => {});

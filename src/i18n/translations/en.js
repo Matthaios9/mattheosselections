@@ -100,6 +100,7 @@ const en = {
       disabled: 'This account has been disabled. Please contact us.',
       emailTaken: 'An account with this email already exists.',
       unavailable: 'Accounts are temporarily unavailable. Please try again.',
+      tooMany: 'Too many attempts. Please wait a few minutes and try again.',
     },
     login: {
       title: 'Welcome back',
@@ -129,6 +130,16 @@ const en = {
       back: 'Back to log in',
       successTitle: 'Check your inbox',
       success: 'If an account exists for {email}, a reset link is on its way.',
+    },
+    reset: {
+      title: 'Choose a new password',
+      subtitle: 'Pick a password you do not use anywhere else — at least 8 characters.',
+      newPassword: 'New password',
+      submit: 'Save new password',
+      successTitle: 'Your password is updated',
+      success: 'You are signed in, {name}. From now on, log in with your new password.',
+      expired: 'This link is no longer valid — reset links last an hour and work only once.',
+      askAgain: 'Send me a new link',
     },
   },
 

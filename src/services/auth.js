@@ -14,6 +14,20 @@ export const register = async ({ name, email, password }) => {
   return data.user;
 };
 
+/**
+ * Ask for a password reset link. Resolves the same way whether or not the address has an
+ * account — the API never reveals that, so the UI always shows "check your inbox".
+ */
+export const requestPasswordReset = async ({ email, locale }) => {
+  await GetApiData('/auth/forgot-password', 'POST', { email, locale }, false);
+};
+
+/** Set a new password with the token from the email, and sign in. Rejects with code 'invalid-token' | 'disabled'. */
+export const resetPassword = async ({ token, password }) => {
+  const { data } = await GetApiData('/auth/reset-password', 'POST', { token, password }, false);
+  return data.user;
+};
+
 export const logout = async () => {
   await GetApiData('/auth/logout', 'POST', null, false);
 };
