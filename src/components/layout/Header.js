@@ -83,18 +83,20 @@ export default function Header() {
               <PiMagnifyingGlass />
             </button>
             <AccountMenu className="d-none d-sm-block" />
-            <Link
-              href={href('/wishlist')}
-              className={`icon-btn ${styles.cartButton}`}
-              aria-label={`${t('nav.wishlist')} (${savedCount})`}
-            >
-              <PiHeart />
-              {savedCount > 0 && (
+            {/* Nothing saved, nothing to show: the heart appears only once there is a list behind it.
+                Saved products live in local storage, so it is always absent until hydration. */}
+            {savedCount > 0 && (
+              <Link
+                href={href('/wishlist')}
+                className={`icon-btn ${styles.cartButton}`}
+                aria-label={`${t('nav.wishlist')} (${savedCount})`}
+              >
+                <PiHeart />
                 <span key={savedCount} className={styles.badge} aria-hidden="true">
                   {savedCount > 99 ? '99+' : savedCount}
                 </span>
-              )}
-            </Link>
+              </Link>
+            )}
             <button
               type="button"
               className={`icon-btn ${styles.cartButton}`}

@@ -12,6 +12,7 @@ import { NAV_LINKS } from '@/config/navigation';
 import { siteConfig } from '@/config/site';
 import { useAuth } from '@/context/AuthContext';
 import { useCatalog } from '@/context/CatalogContext';
+import { useWishlist } from '@/context/WishlistContext';
 import { useUI } from '@/context/UIContext';
 import { useI18n } from '@/i18n/I18nProvider';
 import styles from './MobileMenu.module.css';
@@ -22,6 +23,7 @@ export default function MobileMenu() {
   const { menuOpen, closeMenu, openAuth } = useUI();
   const { categories } = useCatalog();
   const { user, logout } = useAuth();
+  const { count: savedCount } = useWishlist();
 
   const isActive = (path) => (path === '/' ? pathname === href('/') : pathname.startsWith(href(path)));
 
@@ -50,18 +52,20 @@ export default function MobileMenu() {
                 </Link>
               </li>
             ))}
-            {/* The header's heart is hidden on phones, so the saved products are reachable here. */}
-            <li style={{ '--i': NAV_LINKS.length }}>
-              <Link
-                href={href('/wishlist')}
-                className={`${styles.link} ${isActive('/wishlist') ? styles.active : ''}`}
-                aria-current={isActive('/wishlist') ? 'page' : undefined}
-                onClick={closeMenu}
-              >
-                {t('nav.wishlist')}
-                <PiArrowRight className="flip-rtl" aria-hidden="true" />
-              </Link>
-            </li>
+            {/* Shown on the same terms as the heart in the header: only when something is saved. */}
+            {savedCount > 0 && (
+              <li style={{ '--i': NAV_LINKS.length }}>
+                <Link
+                  href={href('/wishlist')}
+                  className={`${styles.link} ${isActive('/wishlist') ? styles.active : ''}`}
+                  aria-current={isActive('/wishlist') ? 'page' : undefined}
+                  onClick={closeMenu}
+                >
+                  {t('nav.wishlist')}
+                  <PiArrowRight className="flip-rtl" aria-hidden="true" />
+                </Link>
+              </li>
+            )}
           </ul>
         </nav>
 
