@@ -9,6 +9,7 @@ import { Category, Product } from '@/server/models';
 import { accentInsensitiveRegex, searchWords } from '@/server/search';
 import { isObjectId, pageParams, pageResult, toId, toIso } from '@/server/utils';
 import { pickLocalized } from '@/utils/localize';
+import { categorySlug } from '@/utils/slug';
 import { splitList } from '@/utils/url';
 
 /**
@@ -65,6 +66,7 @@ function localizeProduct(doc, categoriesById, locale) {
     sku: doc.sku ?? '',
     slug: doc.slug ?? '',
     category: category ? toId(doc.category) : null,
+    categorySlug: category ? categorySlug(category) : null,
     categoryName: category ? pickLocalized(category.name, locale) : '',
     price: doc.price,
     image,
@@ -108,7 +110,7 @@ export function storeQueryToOptions(query = {}) {
   const flag = (value) => value === '1' || value === 'true' || value === true;
   return {
     locale: isLocale(query.locale) ? query.locale : 'en',
-    q: query.q ?? '',
+    q: String(query.q ?? '').slice(0, 100), // a search longer than this is not a real one
     category: query.category ?? '',
     price: query.price ?? '',
     sizes: splitList(query.sizes),
@@ -262,10 +264,7 @@ export const getStoreCategories = cache(async (locale) => {
     const counts = await Product.aggregate([{ $match: base }, { $group: { _id: '$category', count: { $sum: 1 } } }]);
     const countById = new Map(counts.map((row) => [toId(row._id), row.count]));
     return categories.map((category) => ({
-      id: toId(category._id),
-      image: category.image?.url ?? PLACEHOLDER_IMAGE,
-      name: pickLocalized(category.name, locale),
-      description: pickLocalized(category.description, locale),
+      ...localizeCategory(category, locale),
       count: countById.get(toId(category._id)) ?? 0,
     }));
   } catch (error) {
@@ -273,6 +272,40 @@ export const getStoreCategories = cache(async (locale) => {
     return [];
   }
 });
+
+function localizeCategory(category, locale) {
+  return {
+    id: toId(category._id),
+    slug: categorySlug(category),
+    image: category.image?.url ?? PLACEHOLDER_IMAGE,
+    name: pickLocalized(category.name, locale),
+    description: pickLocalized(category.description, locale),
+    updatedAt: toIso(category.updatedAt),
+  };
+}
+
+/**
+ * One visible category by its page slug, localized, or null. Unlike getStoreCategories this
+ * throws when the database is unreachable, so a category page fails (500) instead of answering 404.
+ */
+export const getStoreCategory = cache(async (slug, locale) => {
+  if (!isDatabaseConfigured() || !slug) return null;
+  const { categories, base } = await loadVisibility();
+  const category = categories.find((item) => categorySlug(item) === slug);
+  if (!category) return null;
+  const count = await Product.countDocuments({ $and: [base, { category: category._id }] });
+  return { ...localizeCategory(category, locale), count };
+});
+
+/** Slug and last change of every visible category that has products, for the sitemap. */
+export async function getCategorySlugs() {
+  if (!isDatabaseConfigured()) return [];
+  const { categories, base } = await loadVisibility();
+  const filled = new Set((await Product.distinct('category', base)).map(toId));
+  return categories
+    .filter((category) => filled.has(toId(category._id)))
+    .map((category) => ({ slug: categorySlug(category), updatedAt: toIso(category.updatedAt) }));
+}
 
 /** Languages a product has been translated into (its name is filled in). English is always present. */
 const translatedLocales = (doc) => localeCodes.filter((code) => code === defaultLocale || Boolean(doc.name?.[code]?.trim()));

@@ -7,6 +7,7 @@ import Spinner from 'react-bootstrap/Spinner';
 import { PiBellSimpleRinging, PiCheckCircle } from 'react-icons/pi';
 import { useAuth } from '@/context/AuthContext';
 import { useI18n } from '@/i18n/I18nProvider';
+import Honeypot from '@/components/common/Honeypot';
 import { subscribeStockAlert } from '@/services/stock-alert';
 import { getErrorCode } from '@/utils/errors';
 import { isEmail } from '@/utils/validation';
@@ -19,6 +20,7 @@ export default function BackInStockForm({ product, variant }) {
   const { t, locale } = useI18n();
   const { user } = useAuth();
   const [email, setEmail] = useState(user?.email ?? '');
+  const [website, setWebsite] = useState('');
   const [status, setStatus] = useState('idle'); // idle | sending | success
   const [error, setError] = useState(null);
   const name = product.variants.length > 1 ? `${product.name} (${variant.label})` : product.name;
@@ -32,7 +34,7 @@ export default function BackInStockForm({ product, variant }) {
     setStatus('sending');
     setError(null);
     try {
-      await subscribeStockAlert({ productId: product.id, variantKey: variant.id, email: email.trim(), locale });
+      await subscribeStockAlert({ productId: product.id, variantKey: variant.id, email: email.trim(), locale, website });
       setStatus('success');
     } catch (failure) {
       setStatus('idle');
@@ -81,6 +83,7 @@ export default function BackInStockForm({ product, variant }) {
           {t('product.backInStock.submit')}
         </Button>
       </div>
+      <Honeypot value={website} onChange={setWebsite} />
       {error && (
         <p id={`${inputId}-error`} className={styles.error} role="alert">
           {t(`product.backInStock.errors.${error}`)}

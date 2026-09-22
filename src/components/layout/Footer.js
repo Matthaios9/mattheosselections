@@ -19,7 +19,7 @@ export default function Footer({ locale, dict, categories }) {
       title: f.shopTitle,
       links: [
         { label: f.allProducts, href: href('/shop') },
-        ...categories.map((category) => ({ label: category.name, href: `${href('/shop')}?category=${category.id}` })),
+        ...categories.map((category) => ({ label: category.name, href: href(`/shop/${category.slug}`) })),
       ],
     },
     {

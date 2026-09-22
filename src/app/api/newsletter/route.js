@@ -8,4 +8,4 @@ export const POST = withApi(async ({ request }) => {
   // The hidden honeypot field is only ever filled in by bots: answer as usual, save nothing.
   if (!website) await subscribeToNewsletter(input);
   return created({ ok: true });
-});
+}, { rateLimit: { name: 'newsletter', limit: 5, window: 600 } });

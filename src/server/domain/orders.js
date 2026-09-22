@@ -244,6 +244,22 @@ export async function updateOrderStatus(id, { status, note }, admin) {
   return { ok: true, changed: previousStatus !== status, order: serializeOrder(order.toObject()) };
 }
 
+/**
+ * Set the payment status by hand — for orders paid outside Kustom. A Kustom payment follows the order
+ * status instead (see settlement.js), so changing it here would put it out of step with Kustom.
+ * Returns { ok, order } or { ok: false, reason: 'not-found' | 'kustom' }.
+ */
+export async function updatePaymentStatus(id, paymentStatus) {
+  if (!isObjectId(id)) return { ok: false, reason: 'not-found' };
+  await connectToDatabase();
+  const order = await Order.findById(id);
+  if (!order) return { ok: false, reason: 'not-found' };
+  if (order.paymentMethod === 'kustom') return { ok: false, reason: 'kustom' };
+  order.paymentStatus = paymentStatus;
+  await order.save();
+  return { ok: true, order: serializeOrder(order.toObject()) };
+}
+
 export async function updateOrderFields(id, fields) {
   if (!isObjectId(id)) return null;
   await connectToDatabase();

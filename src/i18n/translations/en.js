@@ -29,6 +29,9 @@ const en = {
       title: 'Terms and Conditions',
       description: 'Terms and conditions of sale for Mattheos Selections: orders, VAT, shipping, payment, returns and complaints.',
     },
+    category: {
+      description: 'Shop {category} at Mattheos Selections: raw Greek honey and natural products from small family producers.',
+    },
     notFound: { title: 'Page not found' },
   },
 
@@ -200,8 +203,8 @@ const en = {
     subtotal: 'Subtotal',
     shippingNote: 'Prices include VAT. Shipping is calculated at checkout.',
     checkout: 'Checkout',
-    freeShippingRemaining: 'You are {amount} away from free shipping',
-    freeShippingUnlocked: 'You have unlocked free shipping!',
+    freeShippingRemaining: 'You are {amount} away from free shipping in Sweden',
+    freeShippingUnlocked: 'You have unlocked free shipping in Sweden!',
     addedTitle: 'Added to your cart',
     limitTitle: 'Stock limit reached',
     limitReached: 'You already have all available units in your cart.',

@@ -29,6 +29,9 @@ const el = {
       title: 'Όροι και προϋποθέσεις',
       description: 'Όροι πώλησης της Mattheos Selections: παραγγελίες, ΦΠΑ, αποστολή, πληρωμή, επιστροφές και παράπονα.',
     },
+    category: {
+      description: 'Αγοράστε {category} από τη Mattheos Selections: ακατέργαστο ελληνικό μέλι και φυσικά προϊόντα από μικρούς οικογενειακούς παραγωγούς.',
+    },
     notFound: { title: 'Η σελίδα δεν βρέθηκε' },
   },
 
@@ -200,8 +203,8 @@ const el = {
     subtotal: 'Υποσύνολο',
     shippingNote: 'Οι τιμές περιλαμβάνουν ΦΠΑ. Τα μεταφορικά υπολογίζονται στο ταμείο.',
     checkout: 'Ολοκλήρωση αγοράς',
-    freeShippingRemaining: 'Απέχετε {amount} από τη δωρεάν αποστολή',
-    freeShippingUnlocked: 'Κερδίσατε δωρεάν αποστολή!',
+    freeShippingRemaining: 'Απέχετε {amount} από τη δωρεάν αποστολή εντός Σουηδίας',
+    freeShippingUnlocked: 'Κερδίσατε δωρεάν αποστολή εντός Σουηδίας!',
     addedTitle: 'Προστέθηκε στο καλάθι',
     limitTitle: 'Όριο αποθέματος',
     limitReached: 'Έχετε ήδη όλα τα διαθέσιμα τεμάχια στο καλάθι σας.',

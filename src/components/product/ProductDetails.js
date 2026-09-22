@@ -29,6 +29,7 @@ export default function ProductDetails({ product, initialVariant, onClose, varia
   const [quantity, setQuantity] = useState(1);
 
   const variant = product.variants.find((item) => item.id === variantId) ?? product.variants[0];
+  const [firstImage] = useState(variant.image);
   const hasOptions = product.variants.length > 1;
   const available = availableToAdd(product, variant.id);
   const soldOut = variant.stock <= 0;
@@ -61,9 +62,10 @@ export default function ProductDetails({ product, initialVariant, onClose, varia
               src={variant.image}
               alt={product.name}
               fill
-              preload={isPage}
+              loading={isPage ? 'eager' : undefined}
+              fetchPriority={isPage ? 'high' : undefined}
               sizes="(min-width: 992px) 540px, 100vw"
-              className={styles.image}
+              className={`${styles.image} ${variant.image === firstImage ? '' : styles.imageSwap}`}
             />
             {product.badge && product.inStock && (
               <Badge bg="" className={styles.badge}>

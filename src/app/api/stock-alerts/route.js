@@ -8,7 +8,10 @@ import { stockAlertInput } from '@/server/validation';
  * Body: { productId, variantKey, email, locale }. A confirmation email goes out after the response.
  */
 export const POST = withApi(async ({ request }) => {
-  const result = await createStockAlert(await parseBody(request, stockAlertInput));
+  const { website, ...input } = await parseBody(request, stockAlertInput);
+  // The hidden honeypot field is only ever filled in by bots: answer as usual, save and send nothing.
+  if (website) return created({ ok: true });
+  const result = await createStockAlert(input);
   if (!result.ok && result.reason === 'in-stock') throw conflict('This size is back in stock.', 'in-stock');
   if (!result.ok) throw notFound('Product not found.');
   if (result.created) {
@@ -16,4 +19,4 @@ export const POST = withApi(async ({ request }) => {
     after(() => sendStockAlertConfirmation(result.alertId, { origin }));
   }
   return created({ ok: true });
-});
+}, { rateLimit: { name: 'stock-alert', limit: 10, window: 3600 } });

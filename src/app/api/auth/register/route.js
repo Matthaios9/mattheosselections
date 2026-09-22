@@ -14,4 +14,4 @@ export const POST = withApi(async ({ request }) => {
   }
   await startSession(result.user);
   return created({ user: toPublicUser(result.user) });
-});
+}, { rateLimit: { name: 'register', limit: 5, window: 3600 } });

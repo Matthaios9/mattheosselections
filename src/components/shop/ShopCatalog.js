@@ -1,11 +1,13 @@
 'use client';
 
 import { useState } from 'react';
+import Link from 'next/link';
 import Button from 'react-bootstrap/Button';
 import Container from 'react-bootstrap/Container';
 import Spinner from 'react-bootstrap/Spinner';
 import { PiHandbagSimple, PiMagnifyingGlass, PiX } from 'react-icons/pi';
 import ProductSort from './ProductSort';
+import ButtonLink from '@/components/common/ButtonLink';
 import ProductGrid from '@/components/product/ProductGrid';
 import { storeConfig } from '@/config/site';
 import { DEFAULT_SORT, filtersFromParams, filtersToParams, sortFromParams } from '@/constants/shop';
@@ -20,18 +22,17 @@ const PAGE_SIZE = storeConfig.shopPageSize;
 
 /**
  * The shop: category tabs (All Products by default), sorting and "load more" — kept simple for a
- * small collection. Results are filtered and paginated on the server (GET /api/products); the URL
- * (?category=&sort=, plus ?q= from the header search) is the source of truth, so views are shareable.
+ * small collection. Results are filtered and paginated on the server (GET /api/products).
+ * Each tab is a link to its own page — /shop, or a category page such as /shop/ra-honung, which
+ * passes its `category` — and the URL (?sort=, plus ?q= from the header search) holds the rest.
  * `initial` is the first page rendered on the server for the same URL.
  */
-export default function ShopCatalog({ initial }) {
-  const { t, locale } = useI18n();
+export default function ShopCatalog({ initial, category = null }) {
+  const { t, locale, href } = useI18n();
   const { categories } = useCatalog();
   const [params, setParams] = useUrlParams();
 
-  const parsed = filtersFromParams(params);
-  // Links to a category that is no longer visible fall back to "all".
-  const filters = categories.some((category) => category.id === parsed.category) ? parsed : { ...parsed, category: 'all' };
+  const filters = { query: filtersFromParams(params).query, category: category?.id ?? 'all' };
   const sort = sortFromParams(params);
   const request = { locale, ...filtersToParams(filters, sort), pageSize: PAGE_SIZE };
   const requestKey = JSON.stringify(request);
@@ -47,8 +48,8 @@ export default function ShopCatalog({ initial }) {
   const total = result?.total ?? 0;
   const filtered = filters.category !== 'all' || Boolean(filters.query);
 
-  // Replace (not push): switching tabs doesn't pile up in the browser history.
-  const updateFilters = (patch) => setParams(filtersToParams({ ...filters, ...patch }, sort), { replace: true });
+  // Replace (not push): changing the sort or clearing the search doesn't pile up in the browser history.
+  const clearSearch = () => setParams({ q: '' }, { replace: true });
   const updateSort = (value) => setParams({ sort: value === DEFAULT_SORT ? '' : value }, { replace: true });
 
   const loadMore = async () => {
@@ -63,7 +64,9 @@ export default function ShopCatalog({ initial }) {
     }
   };
 
-  const tabs = [{ id: 'all', name: t('shop.filters.allCategories') }, ...categories];
+  const tabs = [{ id: 'all', slug: '', name: t('shop.filters.allCategories') }, ...categories];
+  // Switching tabs keeps the chosen sort order.
+  const tabHref = (tab) => `${href(tab.slug ? `/shop/${tab.slug}` : '/shop')}${sort === DEFAULT_SORT ? '' : `?sort=${sort}`}`;
 
   return (
     <section className={styles.shop}>
@@ -71,18 +74,18 @@ export default function ShopCatalog({ initial }) {
         <div className={styles.toolbar}>
           {categories.length > 0 && (
             <nav className={styles.tabs} aria-label={t('shop.toolbar.categories')}>
-              {tabs.map((category) => {
-                const active = filters.category === category.id;
+              {tabs.map((tab) => {
+                const active = filters.category === tab.id;
                 return (
-                  <button
-                    key={category.id}
-                    type="button"
+                  <Link
+                    key={tab.id}
+                    href={tabHref(tab)}
+                    scroll={false}
                     className={`${styles.tab} ${active ? styles.tabActive : ''}`}
-                    onClick={() => updateFilters({ category: category.id })}
-                    aria-pressed={active}
+                    aria-current={active ? 'page' : undefined}
                   >
-                    {category.name}
-                  </button>
+                    {tab.name}
+                  </Link>
                 );
               })}
             </nav>
@@ -94,7 +97,7 @@ export default function ShopCatalog({ initial }) {
           <button
             type="button"
             className={styles.searchChip}
-            onClick={() => updateFilters({ query: '' })}
+            onClick={clearSearch}
             aria-label={`${t('shop.filters.clearSearch')}: ${filters.query}`}
           >
             <PiMagnifyingGlass aria-hidden="true" />
@@ -119,13 +122,19 @@ export default function ShopCatalog({ initial }) {
               </span>
               <h3 className={styles.emptyTitle}>{t('shop.empty.title')}</h3>
               <p className={styles.emptyText}>{t('shop.empty.text')}</p>
-              <Button variant="ms-dark" className="btn-block-mobile" onClick={() => updateFilters({ query: '', category: 'all' })}>
-                {t('shop.empty.cta')}
-              </Button>
+              {category ? (
+                <ButtonLink href={href('/shop')} variant="ms-dark" className="btn-block-mobile">
+                  {t('shop.empty.cta')}
+                </ButtonLink>
+              ) : (
+                <Button variant="ms-dark" className="btn-block-mobile" onClick={clearSearch}>
+                  {t('shop.empty.cta')}
+                </Button>
+              )}
             </div>
           ) : (
             <>
-              <ProductGrid products={shown} preloadCount={4} />
+              <ProductGrid products={shown} />
               {shown.length < total && (
                 <div className={styles.pagination}>
                   <Button variant="ms-outline" size="lg" onClick={loadMore} disabled={loadingMore}>

@@ -29,6 +29,9 @@ const sv = {
       title: 'Allmänna villkor',
       description: 'Försäljningsvillkor för Mattheos Selections: beställningar, moms, frakt, betalning, returer och klagomål.',
     },
+    category: {
+      description: 'Handla {category} hos Mattheos Selections: grekisk råhonung och naturprodukter från små familjeproducenter.',
+    },
     notFound: { title: 'Sidan hittades inte' },
   },
 
@@ -200,8 +203,8 @@ const sv = {
     subtotal: 'Delsumma',
     shippingNote: 'Priserna inkluderar moms. Frakt beräknas i kassan.',
     checkout: 'Till kassan',
-    freeShippingRemaining: 'Du är {amount} från fri frakt',
-    freeShippingUnlocked: 'Du har fått fri frakt!',
+    freeShippingRemaining: 'Du är {amount} från fri frakt inom Sverige',
+    freeShippingUnlocked: 'Du har fått fri frakt inom Sverige!',
     addedTitle: 'Tillagd i varukorgen',
     limitTitle: 'Lagergränsen nådd',
     limitReached: 'Du har redan alla tillgängliga exemplar i varukorgen.',

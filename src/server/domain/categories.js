@@ -3,12 +3,14 @@ import { connectToDatabase } from '@/server/db';
 import { destroyImages } from '@/server/cloudinary';
 import { Category, Product } from '@/server/models';
 import { isObjectId, plainLocalized, toId, toIso } from '@/server/utils';
+import { categorySlug } from '@/utils/slug';
 
 /** Admin category management. The storefront reads categories through storefront.js. */
 
 export function serializeCategory(doc, productCount = 0) {
   return {
     id: toId(doc._id),
+    slug: categorySlug(doc),
     name: plainLocalized(doc.name),
     description: plainLocalized(doc.description),
     image: doc.image?.url ? { url: doc.image.url, publicId: doc.image.publicId ?? '', alt: doc.image.alt ?? '' } : null,
@@ -41,7 +43,9 @@ export async function updateCategory(id, input) {
   await connectToDatabase();
   const existing = await Category.findById(id).lean();
   if (!existing) return null;
-  const doc = await Category.findByIdAndUpdate(id, input, { returnDocument: 'after', runValidators: true }).lean();
+  // An emptied slug field keeps the page address the category has now, rather than one from a new name.
+  const slug = input.slug || categorySlug(existing);
+  const doc = await Category.findByIdAndUpdate(id, { ...input, slug }, { returnDocument: 'after', runValidators: true }).lean();
   if (existing.image?.publicId && existing.image.publicId !== input.image?.publicId) {
     await destroyImages([existing.image.publicId]);
   }

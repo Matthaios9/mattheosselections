@@ -15,7 +15,7 @@ export const cartItemId = (productId, variantId) => `${productId}:${variantId}`;
 /**
  * Store-level cart on top of react-use-cart (persisted in localStorage).
  *
- * - Cart lines store ids + a snapshot (price, name, stock when added). Live names,
+ * - Cart lines store ids + a snapshot (price, name, stock when added). Live prices, names,
  *   images and stock for the products in the cart are loaded from the products API,
  *   so the cart re-translates on language change and never allows more units than
  *   a size has in stock. Until the live data arrives the snapshot is used.
@@ -47,9 +47,13 @@ function CartStateProvider({ children }) {
     ? cart.items.map((item) => {
         const product = liveById.get(item.productId);
         const variant = product?.variants.find((entry) => entry.id === item.variantId);
+        // The live price: a price changed in the admin since the item was added shows (and is charged) as it is now.
+        const price = variant?.price ?? item.price;
         return {
           ...item,
           product,
+          price,
+          itemTotal: price * item.quantity,
           name: product?.name ?? item.name,
           variantLabel: variant?.label ?? item.variantLabel,
           // The saved image only stands in until live data arrives. A product that no longer exists
@@ -100,7 +104,7 @@ function CartStateProvider({ children }) {
     items,
     isEmpty: items.length === 0,
     totalItems: hydrated ? cart.totalItems : 0,
-    subtotal: hydrated ? cart.cartTotal : 0,
+    subtotal: items.reduce((sum, item) => sum + item.itemTotal, 0),
     hasStockIssues: items.some((item) => item.quantity > item.maxQuantity),
     quantityInCart,
     availableToAdd,

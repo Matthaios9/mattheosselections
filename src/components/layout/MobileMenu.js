@@ -59,7 +59,7 @@ export default function MobileMenu() {
             {categories.map((category) => (
               <Link
                 key={category.id}
-                href={`${href('/shop')}?category=${category.id}`}
+                href={href(`/shop/${category.slug}`)}
                 className={styles.chip}
                 onClick={closeMenu}
               >

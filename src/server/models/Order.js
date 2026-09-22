@@ -78,6 +78,8 @@ const orderSchema = new mongoose.Schema(
     adminNote: { type: String, default: '' },
     // true while this order's items are deducted from product stock (orders placed before stock tracking stay false)
     stockReserved: { type: Boolean, default: false },
+    // Kustom orders: when taking the items out of stock started; null once done (see finalizeCheckout).
+    finalizingSince: { type: Date, default: null },
     history: { type: [historySchema], default: [] },
   },
   { timestamps: true }

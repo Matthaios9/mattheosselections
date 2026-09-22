@@ -28,13 +28,14 @@ const emptyLocalized = () => Object.fromEntries(locales.map((locale) => [locale.
 function toForm(category, nextOrder) {
   return category
     ? {
+        slug: category.slug,
         name: category.name,
         description: category.description,
         image: category.image,
         sortOrder: category.sortOrder,
         active: category.active,
       }
-    : { name: emptyLocalized(), description: emptyLocalized(), image: null, sortOrder: nextOrder, active: true };
+    : { slug: '', name: emptyLocalized(), description: emptyLocalized(), image: null, sortOrder: nextOrder, active: true };
 }
 
 function CategoryModal({ category, nextOrder, show, onHide, onSaved }) {
@@ -111,6 +112,20 @@ function CategoryModal({ category, nextOrder, show, onHide, onSaved }) {
               />
               <Form.Control.Feedback type="invalid">{errors.sortOrder}</Form.Control.Feedback>
               <Form.Text>Lower numbers are shown first.</Form.Text>
+            </Form.Group>
+            <Form.Group controlId="category-slug">
+              <Form.Label>URL slug</Form.Label>
+              <Form.Control
+                value={form.slug}
+                onChange={(event) => setForm((current) => ({ ...current, slug: event.target.value }))}
+                placeholder="Generated from the Swedish name"
+                isInvalid={Boolean(errors.slug)}
+              />
+              <Form.Control.Feedback type="invalid">{errors.slug}</Form.Control.Feedback>
+              <Form.Text>
+                The category page address: /sv/shop/<strong>{form.slug || 'slug'}</strong>. Changing it breaks links to the old
+                address.
+              </Form.Text>
             </Form.Group>
             <div>
               <Form.Label>Image</Form.Label>

@@ -27,7 +27,8 @@ export default function PageHero({
           src={image}
           alt={imageAlt}
           fill
-          preload
+          loading="eager"
+          fetchPriority="high"
           quality={85}
           sizes="100vw"
           className={styles.image}

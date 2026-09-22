@@ -1,13 +1,14 @@
 import { notFound } from 'next/navigation';
 import Container from 'react-bootstrap/Container';
 import Breadcrumbs from '@/components/common/Breadcrumbs';
+import JsonLd from '@/components/common/JsonLd';
 import SectionHeading from '@/components/common/SectionHeading';
 import ProductDetails from '@/components/product/ProductDetails';
 import ProductGrid from '@/components/product/ProductGrid';
 import { siteConfig, storeConfig } from '@/config/site';
 import { localizePath } from '@/i18n/config';
 import { getDictionary } from '@/i18n/dictionaries';
-import { pageMetadata } from '@/i18n/metadata';
+import { absoluteUrl, breadcrumbJsonLd, pageMetadata, shareImage } from '@/i18n/metadata';
 import { getProductSlugs, getRelatedProducts, getStoreProduct } from '@/server/domain/storefront';
 import styles from './page.module.css';
 
@@ -27,8 +28,6 @@ function summary(text, max = 160) {
   return `${clean.slice(0, clean.lastIndexOf(' ', max - 1))}…`;
 }
 
-const absolute = (url) => (url.startsWith('http') ? url : `${siteConfig.url}${url}`);
-
 export async function generateMetadata({ params }) {
   const { lang, slug } = await params;
   const { dict } = await getDictionary(lang);
@@ -40,16 +39,21 @@ export async function generateMetadata({ params }) {
     path: `/product/${product.slug}`,
     title: product.name,
     description: summary(product.description) || dict.meta.shop.description,
-    image: absolute(product.image),
+    image: shareImage(product.image, product.name),
     available: product.locales,
   });
 }
 
-/** schema.org Product + BreadcrumbList, so search results can show price and availability. */
-function structuredData(product, breadcrumbs, url) {
+/**
+ * schema.org Product with one Offer per size, so search results can show price and availability.
+ * Products have no SKU in the admin yet, so the product slug — unique and stable — stands in for it.
+ */
+function productJsonLd(product, url) {
+  const sku = product.sku || product.slug;
   const offers = product.variants.map((variant) => ({
     '@type': 'Offer',
     name: variant.label,
+    sku: product.variants.length > 1 ? `${sku}-${variant.id}` : sku,
     url,
     price: variant.price.toFixed(2),
     priceCurrency: storeConfig.currency,
@@ -62,30 +66,18 @@ function structuredData(product, breadcrumbs, url) {
     availability: variant.stock > 0 ? 'https://schema.org/InStock' : 'https://schema.org/OutOfStock',
     itemCondition: 'https://schema.org/NewCondition',
   }));
-  return [
-    {
-      '@context': 'https://schema.org',
-      '@type': 'Product',
-      name: product.name,
-      description: product.description || undefined,
-      image: [...new Set([product.image, ...product.variants.map((variant) => variant.image)])].map(absolute),
-      sku: product.sku || undefined,
-      category: product.categoryName || undefined,
-      brand: { '@type': 'Brand', name: siteConfig.name },
-      url,
-      offers,
-    },
-    {
-      '@context': 'https://schema.org',
-      '@type': 'BreadcrumbList',
-      itemListElement: breadcrumbs.map((item, index) => ({
-        '@type': 'ListItem',
-        position: index + 1,
-        name: item.label,
-        item: item.href ? absolute(item.href) : url,
-      })),
-    },
-  ];
+  return {
+    '@context': 'https://schema.org',
+    '@type': 'Product',
+    name: product.name,
+    description: product.description || undefined,
+    image: [...new Set([product.image, ...product.variants.map((variant) => variant.image)])].map(absoluteUrl),
+    sku,
+    category: product.categoryName || undefined,
+    brand: { '@type': 'Brand', name: siteConfig.name },
+    url,
+    offers,
+  };
 }
 
 export default async function ProductPage({ params }) {
@@ -98,11 +90,11 @@ export default async function ProductPage({ params }) {
   const breadcrumbs = [
     { label: dict.nav.home, href: localizePath('/', lang) },
     { label: dict.nav.shop, href: shop },
-    ...(product.category ? [{ label: product.categoryName, href: `${shop}?category=${product.category}` }] : []),
+    ...(product.categorySlug ? [{ label: product.categoryName, href: localizePath(`/shop/${product.categorySlug}`, lang) }] : []),
     { label: product.name },
   ];
   const related = await getRelatedProducts(product, lang).catch(() => []);
-  const json = JSON.stringify(structuredData(product, breadcrumbs, absolute(localizePath(`/product/${product.slug}`, lang))));
+  const path = localizePath(`/product/${product.slug}`, lang);
 
   return (
     <>
@@ -122,8 +114,7 @@ export default async function ProductPage({ params }) {
         </section>
       )}
 
-      {/* "<" is escaped so product text can never close the script tag. */}
-      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: json.replace(/</g, '\\u003c') }} />
+      <JsonLd data={[productJsonLd(product, absoluteUrl(path)), breadcrumbJsonLd(breadcrumbs, path)]} />
     </>
   );
 }

@@ -32,11 +32,16 @@ export async function countAdmins() {
   return User.countDocuments({ role: 'admin' });
 }
 
+// A hash of a random password: checked when the email is unknown, so every failed login takes equally long
+// and the response time doesn't reveal which emails have an account.
+const UNKNOWN_USER_HASH = '$2b$12$Q81B0JndLzNjA.RlGv.aZuPgKIiHH99oCslm.A6rO6ckz5/XFU/z6';
+
 /** Verify credentials. Returns the user document (without hash) or a reason. */
 export async function authenticate(email, password) {
   await connectToDatabase();
   const user = await User.findOne({ email: email.toLowerCase() }).select('+passwordHash');
-  if (!user || !(await verifyPassword(password, user.passwordHash))) return { ok: false, reason: 'invalid' };
+  const valid = await verifyPassword(password, user?.passwordHash ?? UNKNOWN_USER_HASH);
+  if (!user || !valid) return { ok: false, reason: 'invalid' };
   if (user.status !== 'active') return { ok: false, reason: 'disabled' };
   user.lastLoginAt = new Date();
   await user.save();

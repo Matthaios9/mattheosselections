@@ -19,6 +19,7 @@ npm run dev               # http://localhost:3000 (storefront) · /admin (admin 
 | `npm run build` / `start` | Production build / server                  |
 | `npm run lint`         | ESLint (Next.js + React Compiler rules)       |
 | `npm run create-admin` | Create an admin account from the command line |
+| `npm run seo:audit`    | SEO and migration audit of a running site (see below) |
 
 Environment variables are documented in [`.env.example`](.env.example) (MongoDB, JWT secret, Cloudinary, Kustom Checkout,
 Google sign-in and SMTP email).
@@ -136,9 +137,29 @@ browsers that support them (Apple Pay: Safari on Apple devices). The checkout li
 
 ## Shop categories
 
-The shop filters by category only, with **All Products** as the default view. The category tabs come from the
-categories managed under Admin → Categories (active ones, in their sort order); assign each product to one in the
-product form.
+The shop filters by category only, with **All Products** (`/sv/shop`) as the default view. Every category has its own
+indexable page — `/{lang}/shop/{slug}`, e.g. `/sv/shop/presentforpackningar` — with its name as the heading and its
+description as the intro and meta description. The category tabs, menus, footer and product breadcrumbs link to these
+pages. The categories come from Admin → Categories (active ones, in their sort order); the URL slug is generated from
+the Swedish name unless one is entered there. Assign each product to a category in the product form.
+
+## SEO and the WordPress migration
+
+- **Canonical host:** `siteConfig.url` (`https://www.mattheosselections.com`). Every canonical, hreflang, sitemap,
+  robots.txt, Open Graph and JSON-LD URL is built from it; Vercel's domain settings redirect the other hosts to it.
+- **Old WordPress/WooCommerce URLs** (Swedish at the root, English under `/en/`) are answered by `src/proxy.js` from
+  the rules in `src/config/redirects.js`: one 301 to the closest equivalent page, or 410 Gone when there is none.
+- **Audit:** `npm run seo:audit` crawls a running site like a search engine and writes CSV reports to
+  `docs/migration-qa/results/` — every old URL in `docs/migration-qa/legacy-urls.csv`, internal links, titles,
+  descriptions, H1s, canonicals, hreflang return links, the sitemap and the structured data.
+
+  ```bash
+  npm run build && npx next start -p 3100
+  npm run seo:audit -- --base http://localhost:3100 --out docs/migration-qa/results/local
+  npm run seo:audit -- --base https://www.mattheosselections.com --hosts --out docs/migration-qa/results/production
+  ```
+
+  The production run needs an IP the Vercel firewall does not challenge. The QA write-up is `docs/migration-qa/README.md`.
 
 ## Order emails
 

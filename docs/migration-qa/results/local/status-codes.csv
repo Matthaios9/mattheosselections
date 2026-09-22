@@ -1,0 +1,18 @@
+path,what,expected,status,redirect,robots
+/en/this-page-does-not-exist,random page,404,404,,noindex
+/this-page-does-not-exist,random page without language,404,404,,noindex
+/sv/product/finns-inte,nonexistent product,404,404,,noindex
+/sv/shop/finns-inte,nonexistent category,404,404,,noindex
+/de/shop,unsupported language,404,404,,noindex
+/wp-admin/admin-ajax.php,WordPress admin,410,410,,noindex
+/wp-content/uploads/2024/05/honung.jpg,WordPress upload,410,410,,noindex
+/wp-json/wc/v3/products,WordPress REST API,410,410,,noindex
+/feed,feed,410,410,,noindex
+/xmlrpc.php,XML-RPC,410,410,,noindex
+/robots.txt,robots.txt,200,200,,
+/sitemap.xml,sitemap,200,200,,
+/,"home, no cookie, no Accept-Language (crawler)",307 → /en,307,/en,"Vary: Accept-Language, Cookie"
+/,"home, Accept-Language: sv-SE",307 → /sv,307,/sv,"Vary: Accept-Language, Cookie"
+/,"home, Accept-Language: el",307 → /el,307,/el,"Vary: Accept-Language, Cookie"
+/,"home, Accept-Language: de (unsupported)",307 → /en,307,/en,"Vary: Accept-Language, Cookie"
+/,"home, cookie NEXT_LOCALE=sv",307 → /sv,307,/sv,"Vary: Accept-Language, Cookie"

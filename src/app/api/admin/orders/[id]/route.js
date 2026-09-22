@@ -1,7 +1,7 @@
 import { after } from 'next/server';
 import { z } from 'zod';
 import { sendOrderStatusEmail } from '@/server/domain/order-emails';
-import { getOrder, updateOrderFields, updateOrderStatus } from '@/server/domain/orders';
+import { getOrder, updateOrderFields, updateOrderStatus, updatePaymentStatus } from '@/server/domain/orders';
 import { sendBackInStockEmails } from '@/server/domain/stock-alerts';
 import { conflict, notFound, parseBody, requestOrigin, revalidateStorefront, withApi } from '@/server/http';
 import { adminNoteInput, orderStatusInput, paymentStatusInput } from '@/server/validation';
@@ -58,8 +58,15 @@ export const PATCH = withApi(
       return result.order;
     }
 
-    const fields = 'paymentStatus' in body ? { paymentStatus: body.paymentStatus } : { adminNote: body.adminNote };
-    const order = await updateOrderFields(params.id, fields);
+    if ('paymentStatus' in body) {
+      const result = await updatePaymentStatus(params.id, body.paymentStatus);
+      if (!result.ok && result.reason === 'kustom') {
+        throw conflict('Kustom payments follow the order status: shipping captures the payment, cancelling releases or refunds it.', 'kustom-payment');
+      }
+      if (!result.ok) throw missing();
+      return result.order;
+    }
+    const order = await updateOrderFields(params.id, { adminNote: body.adminNote });
     if (!order) throw missing();
     return order;
   },

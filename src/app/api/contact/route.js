@@ -17,4 +17,4 @@ export const POST = withApi(async ({ request }) => {
     after(() => sendAdminContactNotice(input, { origin }));
   }
   return created({ ok: true });
-});
+}, { rateLimit: { name: 'contact', limit: 5, window: 600 } });

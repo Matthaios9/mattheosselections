@@ -22,7 +22,7 @@ export default function CartLine({ item, onQuantityChange, onRemove, compact = f
               <p className={styles.variant}>{item.variantLabel}</p>
             )}
           </div>
-          <span className={styles.total}>{price(item.itemTotal ?? item.price * item.quantity)}</span>
+          <span className={styles.total}>{price(item.itemTotal)}</span>
         </div>
         {!compact && item.quantity > item.maxQuantity && (
           <p className={styles.warning}>

@@ -12,7 +12,8 @@ import { isKustomConfigured } from '@/server/kustom';
  */
 export const POST = withApi(async ({ query }) => {
   if (!isKustomConfigured()) throw unavailable('Kustom is not configured.');
-  if (!query.kustom_order_id) return { ok: false };
+  // Kustom order ids are UUIDs; anything else is not worth a call to Kustom.
+  if (!/^[A-Za-z0-9-]{8,64}$/.test(query.kustom_order_id ?? '')) return { ok: false };
 
   const result = await handleKustomPush(query.kustom_order_id);
   // The customer never reached the confirmation page: this is where their order email (and the shop's notice) comes from.

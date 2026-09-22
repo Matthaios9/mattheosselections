@@ -101,7 +101,8 @@ export function PaymentStatusCard({ order, onUpdated }) {
         <Form.Select
           id="payment-status"
           value={order.paymentStatus}
-          disabled={pending}
+          // Kustom payments follow the order status (shipping captures, cancelling releases or refunds).
+          disabled={pending || order.paymentMethod === 'kustom'}
           onChange={(event) =>
             run(() => updatePaymentStatus(order.id, event.target.value), {
               success: 'Payment status updated',

@@ -6,6 +6,7 @@ import { isDatabaseConfigured } from '@/server/db';
 import { duplicateKeyField } from '@/server/utils';
 import { fromSearchParams } from '@/utils/url';
 import { ApiError, badRequest, forbidden, unauthorized, unavailable, validationError } from './errors';
+import { enforceRateLimit } from './rate-limit';
 
 const SAFE_METHODS = new Set(['GET', 'HEAD', 'OPTIONS']);
 const NO_STORE = { 'Cache-Control': 'no-store' };
@@ -66,14 +67,16 @@ function errorResponse(error) {
  *   export const GET = withApi(async ({ query, params, user }) => data, { auth: 'admin' });
  *
  * - `auth`: 'public' | 'user' | 'admin' (checked against the database on every request)
+ * - `rateLimit`: `{ name, limit, window }` — at most `limit` requests per IP per `window` seconds (429 above)
  * - the handler receives `{ request, params, query, user }` and returns plain data (→ 200 JSON)
  *   or a Response (e.g. `created(data)`); thrown ApiErrors become JSON error responses.
  */
-export function withApi(handler, { auth = 'public', requireDatabase = true } = {}) {
+export function withApi(handler, { auth = 'public', requireDatabase = true, rateLimit } = {}) {
   return async function route(request, context) {
     try {
       assertSameOrigin(request);
       if (requireDatabase && !isDatabaseConfigured()) throw unavailable('The database is not configured.');
+      if (rateLimit && isDatabaseConfigured()) await enforceRateLimit(request, rateLimit);
       const user = await authenticate(request, auth);
       const params = (await context?.params) ?? {};
       const query = fromSearchParams(request.nextUrl.searchParams);

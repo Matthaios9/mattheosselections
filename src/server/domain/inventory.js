@@ -113,20 +113,26 @@ export async function releaseStock(lines) {
  */
 export async function reserveStock(lines) {
   const taken = [];
-  for (const line of lines) {
-    for (const move of stockMoves(line)) {
-      if (!(await Product.exists({ _id: move.product }))) continue;
-      const result = await Product.updateOne(
-        { _id: move.product, variants: { $elemMatch: { key: move.variantKey, stock: { $gte: move.quantity } } } },
-        { $inc: { 'variants.$.stock': -move.quantity } }
-      );
-      if (result.modifiedCount !== 1) {
-        await returnMoves(taken);
-        await afterStockChange(taken);
-        return { ok: false, failed: line };
+  try {
+    for (const line of lines) {
+      for (const move of stockMoves(line)) {
+        if (!(await Product.exists({ _id: move.product }))) continue;
+        const result = await Product.updateOne(
+          { _id: move.product, variants: { $elemMatch: { key: move.variantKey, stock: { $gte: move.quantity } } } },
+          { $inc: { 'variants.$.stock': -move.quantity } }
+        );
+        if (result.modifiedCount !== 1) {
+          await returnMoves(taken);
+          await afterStockChange(taken);
+          return { ok: false, failed: line };
+        }
+        taken.push(move);
       }
-      taken.push(move);
     }
+  } catch (error) {
+    // A database error part-way: put back what was taken, so that a retry starts from the full stock.
+    await returnMoves(taken);
+    throw error;
   }
   await countSold(lines, 1);
   await afterStockChange(taken);

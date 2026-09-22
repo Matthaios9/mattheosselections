@@ -11,4 +11,4 @@ export const POST = withApi(async ({ request }) => {
   if (!result.ok) throw unauthorized('Invalid email or password.', 'invalid');
   await startSession(result.user, { remember });
   return { user: toPublicUser(result.user) };
-});
+}, { rateLimit: { name: 'login', limit: 10, window: 600 } });

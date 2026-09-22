@@ -32,7 +32,7 @@ export default function PromoBanner({ copy, product, href, locale }) {
             </ul>
             <div className={styles.actions}>
               <ButtonLink
-                href={product.category ? `${href('/shop')}?category=${product.category}` : href('/shop')}
+                href={product.categorySlug ? href(`/shop/${product.categorySlug}`) : href('/shop')}
                 variant="ms-honey"
                 size="lg"
               >

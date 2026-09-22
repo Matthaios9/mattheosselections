@@ -148,6 +148,10 @@ export default function CheckoutModal() {
       show={checkoutOpen}
       onHide={busy ? undefined : closeCheckout}
       onExited={handleExited}
+      // During payment only the close button closes the dialog: a stray tap outside it or Esc while the
+      // customer is in Swish or BankID would otherwise throw away the payment in progress.
+      backdrop={status === 'payment' ? 'static' : true}
+      keyboard={status !== 'payment'}
       centered
       scrollable
       size={status === 'details' || status === 'opening' || status === 'payment' ? 'lg' : undefined}

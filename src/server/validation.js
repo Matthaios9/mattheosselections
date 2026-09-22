@@ -10,6 +10,8 @@ import { slugify } from '@/utils/slug';
 /** Request schemas for the API routes (zod). Field errors reach the UI as `{ 'name.en': 'message' }`. */
 
 const text = (max = 5000) => z.string().trim().max(max).default('');
+// The storefront language a request comes from; anything else counts as English.
+const storeLocale = z.enum(['en', 'sv', 'el']).catch('en');
 
 const localized = ({ required = false, max = 5000 } = {}) =>
   z.object({
@@ -48,14 +50,20 @@ export const productInput = z
     variants: z
       .array(
         z.object({
+          // Kustom order lines are referenced "<product id>:<key>", at most 64 characters.
           key: z
             .string()
             .trim()
             .min(1)
-            .max(40)
+            .max(39)
             .regex(/^[a-z0-9-]+$/i, 'Letters, numbers and hyphens only'),
           label: localized({ required: true, max: 60 }),
-          price: z.coerce.number({ message: 'Enter a price' }).min(0, 'Price cannot be negative').max(1_000_000),
+          // Whole öre: Kustom is charged in öre, so a third decimal would make the amounts disagree.
+          price: z.coerce
+            .number({ message: 'Enter a price' })
+            .min(0, 'Price cannot be negative')
+            .max(1_000_000)
+            .refine((value) => Math.abs(value * 100 - Math.round(value * 100)) < 1e-6, 'At most two decimals'),
           stock: z.coerce
             .number({ message: 'Enter a quantity' })
             .int('Whole numbers only')
@@ -131,6 +139,7 @@ export const productFlagsInput = z
 
 export const categoryInput = z
   .object({
+    slug: text(80).transform(slugify),
     name: localized({ required: true, max: 80 }),
     description: localized({ max: 240 }),
     image: imageInput.nullable().default(null),
@@ -192,7 +201,7 @@ export const checkoutInput = z
     company: text(200),
     country: z.enum(SHIPPING_COUNTRIES).default('SE'),
     note: text(1000),
-    locale: z.string().max(5).default('en'),
+    locale: storeLocale,
     returnPath: z.string().max(200).default(''),
   })
   .refine((input) => input.customerType === 'private' || input.company, {
@@ -215,7 +224,6 @@ export const kustomValidationInput = z
 export const uploadSignatureInput = z.object({ target: z.enum(UPLOAD_TARGETS) });
 
 const emailAddress = z.string().trim().toLowerCase().max(254).pipe(z.email('Enter a valid email address'));
-const storeLocale = z.enum(['en', 'sv', 'el']).catch('en');
 // Hidden form field that people never see: bots fill it in, and their submissions are dropped.
 const honeypot = z.string().max(500).default('');
 
@@ -226,6 +234,7 @@ export const stockAlertInput = z
     variantKey: z.string().trim().min(1).max(40),
     email: emailAddress,
     locale: storeLocale,
+    website: honeypot,
   })
   .strip();
 

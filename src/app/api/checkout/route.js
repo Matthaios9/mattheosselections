@@ -36,4 +36,4 @@ export const POST = withApi(async ({ request }) => {
     throw conflict('Some items are no longer available.', 'items-unavailable', { details: { problems: result.problems } });
   }
   return { orderId: result.orderId, snippet: result.snippet };
-});
+}, { rateLimit: { name: 'checkout', limit: 20, window: 600 } });

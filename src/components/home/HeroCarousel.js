@@ -29,7 +29,8 @@ export default function HeroCarousel({ alt, slideLabel }) {
               src={slide.src}
               alt={`${alt} — ${interpolate(slideLabel, { index: i + 1, total })}`}
               fill
-              preload={i === 0}
+              loading={i === 0 ? 'eager' : 'lazy'}
+              fetchPriority={i === 0 ? 'high' : undefined}
               quality={85}
               sizes="(min-width: 992px) 38vw, 86vw"
               className={styles.archImage}

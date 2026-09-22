@@ -44,6 +44,10 @@
 
 .image {
   object-fit: cover;
+}
+
+/* Only a size change fades in: the first image paints at once, so it counts as the page's main content (LCP). */
+.imageSwap {
   animation: fade 0.5s var(--ms-ease) both;
 }
 

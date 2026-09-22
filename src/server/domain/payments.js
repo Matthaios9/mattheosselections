@@ -160,10 +160,22 @@ async function confirmAtKustom(kustomOrderId, orderNumber) {
     .forEach((result) => console.error(`[kustom] ${orderNumber}:`, result.reason?.message));
 }
 
+// Longer than any request can run: an order still unfinished after this was left behind by a stopped server.
+const FINALIZE_LEASE_MS = 15 * 60 * 1000;
+
+/**
+ * Turn a completed Kustom checkout into an order: create it, take its items out of stock (or cancel it when
+ * they sold out meanwhile) and acknowledge it at Kustom. Called by the confirmation page and Kustom's push,
+ * in any order and any number of times; `created` is true only for the call that finished the order, which
+ * then sends the emails. An order whose finishing step was interrupted is finished by the next call.
+ */
 export async function finalizeCheckout(kustomOrderId) {
   await connectToDatabase();
   const existing = await Order.findOne({ kustomOrderId }).lean();
-  if (existing) return { ok: true, order: serializeOrder(existing) };
+  if (existing) {
+    const stalled = await claimStalledOrder(kustomOrderId);
+    return stalled ? completeOrder(stalled, kustomOrderId) : { ok: true, order: serializeOrder(existing) };
+  }
 
   const kustomOrder = await getCheckoutOrder(kustomOrderId);
   if (kustomOrder.status !== 'checkout_complete') return { ok: false, reason: 'incomplete' };
@@ -175,9 +187,9 @@ export async function finalizeCheckout(kustomOrderId) {
     console.error(`[kustom] No pending checkout for completed order ${kustomOrderId}`);
     return { ok: false, reason: 'not-found' };
   }
-  if (kustomOrder.order_amount !== toMinorUnits(checkout.order.total)) {
-    console.warn(`[kustom] Amount mismatch for ${kustomOrderId}: ${kustomOrder.order_amount} vs ${checkout.order.total} kr`);
-  }
+  // Kustom charges what our own order lines said, so this should never differ; if it does, the admin sees it on the order.
+  const mismatch = kustomOrder.order_amount !== toMinorUnits(checkout.order.total);
+  if (mismatch) console.warn(`[kustom] Amount mismatch for ${kustomOrderId}: ${kustomOrder.order_amount} vs ${checkout.order.total} kr`);
 
   const { company, ...orderFields } = checkout.order;
   const organization = kustomOrder.customer?.type === 'organization';
@@ -206,7 +218,13 @@ export async function finalizeCheckout(kustomOrderId) {
       paymentStatus: 'authorized',
       paymentMethod: 'kustom',
       kustomOrderId,
-      history: [{ status: 'pending', note: 'Order placed · paid with Kustom Checkout', by: billing.email ?? '' }],
+      finalizingSince: new Date(),
+      history: [
+        { status: 'pending', note: 'Order placed · paid with Kustom Checkout', by: billing.email ?? '' },
+        ...(mismatch
+          ? [{ status: 'pending', note: `Check before shipping: Kustom reserved ${kustomOrder.order_amount / 100} kr, the order totals ${checkout.order.total} kr.`, by: 'system' }]
+          : []),
+      ],
     });
   } catch (error) {
     if (error.code !== 11000) throw error;
@@ -214,7 +232,20 @@ export async function finalizeCheckout(kustomOrderId) {
     const created = await Order.findOne({ kustomOrderId }).lean();
     return created ? { ok: true, order: serializeOrder(created) } : { ok: false, reason: 'not-found' };
   }
+  return completeOrder(order, kustomOrderId);
+}
 
+/** Claim an order whose finishing step stopped part-way, so that exactly one request resumes it. */
+function claimStalledOrder(kustomOrderId) {
+  return Order.findOneAndUpdate(
+    { kustomOrderId, status: 'pending', stockReserved: false, finalizingSince: { $lt: new Date(Date.now() - FINALIZE_LEASE_MS) } },
+    { $set: { finalizingSince: new Date() } },
+    { returnDocument: 'after' }
+  );
+}
+
+/** Take a new order's items out of stock — or cancel it if they sold out meanwhile — and confirm it at Kustom. */
+async function completeOrder(order, kustomOrderId) {
   const reservation = await reserveStock(order.items.map(stockLine));
   if (reservation.ok) {
     order.stockReserved = true;
@@ -232,9 +263,10 @@ export async function finalizeCheckout(kustomOrderId) {
     order.status = 'cancelled';
     order.history.push({ status: 'cancelled', note, by: 'system' });
   }
+  order.finalizingSince = null;
   await order.save();
   await confirmAtKustom(kustomOrderId, order.number);
-  await Checkout.deleteOne({ _id: checkout._id });
+  await Checkout.deleteMany({ kustomOrderId });
   return { ok: true, created: true, order: serializeOrder(order.toObject()) };
 }
 

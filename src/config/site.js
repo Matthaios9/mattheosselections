@@ -1,12 +1,11 @@
-/**
- * Business details shown across the site. Values marked "placeholder" are not
- * published on the current WordPress site and should be confirmed with the client.
- */
+/** Business details shown across the site (the privacy policy and terms repeat them in their own text). */
 export const siteConfig = {
   name: 'Mattheos Selections',
   legalName: 'Pasver AB',
   orgNumber: '559053-2486',
-  url: 'https://mattheosselections.com',
+  // The one canonical host. Every absolute URL (canonical, hreflang, sitemap, robots.txt, Open Graph,
+  // JSON-LD, emails) is built from it. Vercel's domain settings redirect mattheosselections.com here (308).
+  url: 'https://www.mattheosselections.com',
   // Customers are helped by email only — no phone line.
   email: 'info@mattheosselections.com',
   // Office and postal address. Not open to visitors: the shop is online only.
@@ -31,8 +30,6 @@ export const storeConfig = {
   currencySymbol: 'kr',
   // Product prices also show an approximate euro price: kr ÷ this (see formatEuro in src/utils/format.js).
   sekPerEuro: 10,
-  shippingFee: 69,
-  freeShippingThreshold: 799,
   shipping: {
     domestic: { fee: 69, freeOver: 799 },
     // Approximates the site's €25 / free over €179 European rates — confirm with the client.

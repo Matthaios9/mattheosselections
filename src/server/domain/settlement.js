@@ -24,6 +24,13 @@ export async function settleKustomPayment(order, nextStatus) {
 
   const ships = ['shipped', 'delivered'].includes(nextStatus);
   const cancels = nextStatus === 'cancelled';
+  // A reservation that was released (or a payment refunded) can't be captured any more: shipping or
+  // reopening such an order would send goods nobody pays for.
+  if (!cancels && !['authorized', 'paid'].includes(order.paymentStatus) && (ships || order.status === 'cancelled')) {
+    throw new PaymentUpdateError(
+      `This order's Kustom payment is ${order.paymentStatus}, so the customer can't be charged for it. Ask them to place a new order.`
+    );
+  }
   const action =
     ships && order.paymentStatus === 'authorized'
       ? 'capture'

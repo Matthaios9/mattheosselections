@@ -26,7 +26,7 @@ export default function MegaMenu({ onNavigate }) {
           <ul className={styles.list}>
             {categories.map((category) => (
               <li key={category.id}>
-                <Link href={`${href('/shop')}?category=${category.id}`} className={styles.link} onClick={onNavigate}>
+                <Link href={href(`/shop/${category.slug}`)} className={styles.link} onClick={onNavigate}>
                   <span>{category.name}</span>
                   <span className={styles.count}>{category.count}</span>
                 </Link>
@@ -39,7 +39,7 @@ export default function MegaMenu({ onNavigate }) {
         </div>
 
         {tiles.map((category) => (
-          <Link key={category.id} href={`${href('/shop')}?category=${category.id}`} className={styles.tile} onClick={onNavigate}>
+          <Link key={category.id} href={href(`/shop/${category.slug}`)} className={styles.tile} onClick={onNavigate}>
             <Image src={category.image} alt="" fill sizes="280px" className={styles.tileImage} />
             <span className={styles.tileOverlay} aria-hidden="true" />
             <span className={styles.tileText}>

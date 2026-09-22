@@ -1,3 +1,4 @@
+import { permanentRedirect } from 'next/navigation';
 import { PiPackage, PiSealCheck, PiTruck } from 'react-icons/pi';
 import PageHero from '@/components/common/PageHero';
 import ShopCatalog from '@/components/shop/ShopCatalog';
@@ -13,19 +14,16 @@ const PERK_ICONS = [PiTruck, PiPackage, PiSealCheck];
 export async function generateMetadata({ params }) {
   const { lang } = await params;
   const { dict } = await getDictionary(lang);
-  // Filtered and searched views all point at the plain shop page as canonical.
+  // Sorted and searched views all point at the plain shop page as canonical; categories have their own pages.
   return pageMetadata({ dict, locale: lang, path: '/shop', title: dict.meta.shop.title, description: dict.meta.shop.description });
 }
 
 const EMPTY_RESULT = { items: [], total: 0, page: 1, pageSize: 0, pages: 1 };
 
-/** First page of results for the requested filters, rendered on the server (SEO, no loading flash). */
+/** First page of results for the search and sort in the URL, rendered on the server (SEO, no loading flash). */
 async function loadFirstPage(locale, searchParams) {
   try {
-    const categories = await getStoreCategories(locale);
-    const parsed = filtersFromParams(searchParams);
-    // Same rule as the client: an unknown category shows everything.
-    const filters = categories.some((category) => category.id === parsed.category) ? parsed : { ...parsed, category: 'all' };
+    const filters = { ...filtersFromParams(searchParams), category: 'all' };
     const query = filtersToParams(filters, sortFromParams(searchParams));
     return await searchStoreProducts(storeQueryToOptions({ ...query, locale }));
   } catch (error) {
@@ -38,6 +36,16 @@ export default async function ShopPage({ params, searchParams }) {
   const [{ lang }, query] = await Promise.all([params, searchParams]);
   const { dict } = await getDictionary(lang);
   const flat = Object.fromEntries(Object.entries(query).map(([key, value]) => [key, Array.isArray(value) ? value[0] : value]));
+  // Links from before categories had their own pages (/shop?category=<id>) → that category's page.
+  if (flat.category) {
+    const categories = await getStoreCategories(lang);
+    const category = categories.find((item) => item.id === flat.category);
+    if (category) {
+      const { category: _id, ...rest } = flat;
+      const search = new URLSearchParams(rest).toString();
+      permanentRedirect(`${localizePath(`/shop/${category.slug}`, lang)}${search ? `?${search}` : ''}`);
+    }
+  }
   const initial = await loadFirstPage(lang, flat);
 
   return (

@@ -6,3 +6,4 @@ export { Order, Counter, nextOrderNumber, ORDER_STATUSES, PAYMENT_STATUSES } fro
 export { StockAlert, STOCK_ALERT_STATUSES } from './StockAlert.js';
 export { NewsletterSubscriber } from './NewsletterSubscriber.js';
 export { ContactMessage, CONTACT_MESSAGE_STATUSES } from './ContactMessage.js';
+export { RateLimit } from './RateLimit.js';

@@ -33,7 +33,7 @@ export default function CategoryShowcase({ copy, viewAllLabel, categories, href 
               <CategoryCard
                 category={category}
                 featured={index === 0}
-                href={`${href('/shop')}?category=${category.id}`}
+                href={href(`/shop/${category.slug}`)}
                 countLabel={interpolate(category.count === 1 ? copy.countOne : copy.count, { count: category.count })}
                 cta={copy.cta}
               />

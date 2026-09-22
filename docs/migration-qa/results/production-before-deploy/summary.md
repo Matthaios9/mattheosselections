@@ -1,0 +1,496 @@
+# SEO audit — https://www.mattheosselections.com
+
+Run 2026-09-22T08:07:59.322Z · canonical host https://www.mattheosselections.com
+
+| Check | Result |
+| --- | --- |
+| URLs crawled from /en, /sv, /el | 90 |
+| HTML pages · indexable | 90 · 0 |
+| Internal links · not answering 200 directly | 90 · 0 |
+| Sitemap URLs · with problems | 75 · 75 |
+| Product URLs in the sitemap (en / sv / el) · visible products in the catalogue | 19 / 19 / 19 (all on the non-www host) · 19 |
+| Pages with structured data · with problems | 0 · 0 |
+| Legacy URLs checked · OK | 107 · 5 |
+| Status-code probes · as expected | 17 · 9 |
+| Host variants · reaching https://www.mattheosselections.com with 200 | 12 · 9 |
+
+## Problems (447)
+
+### pages
+
+- https://www.mattheosselections.com/en: canonical not on https://www.mattheosselections.com
+- https://www.mattheosselections.com/en: canonical → 308
+- https://www.mattheosselections.com/sv: canonical not on https://www.mattheosselections.com
+- https://www.mattheosselections.com/sv: canonical → 308
+- https://www.mattheosselections.com/el: canonical not on https://www.mattheosselections.com
+- https://www.mattheosselections.com/el: canonical → 308
+- https://www.mattheosselections.com/en/about: canonical not on https://www.mattheosselections.com
+- https://www.mattheosselections.com/en/about: canonical → 308
+- https://www.mattheosselections.com/en/shop?category=6aad53a64bba984e6580dabb: canonical not on https://www.mattheosselections.com
+- https://www.mattheosselections.com/en/shop?category=6aad53a64bba984e6580dabb: canonical → 308
+- https://www.mattheosselections.com/en/shop?category=6aad542a4bba984e6580dabf: canonical not on https://www.mattheosselections.com
+- https://www.mattheosselections.com/en/shop?category=6aad542a4bba984e6580dabf: canonical → 308
+- https://www.mattheosselections.com/en/contact: canonical not on https://www.mattheosselections.com
+- https://www.mattheosselections.com/en/contact: canonical → 308
+- https://www.mattheosselections.com/en/shop?category=6aad54174bba984e6580dabe: canonical not on https://www.mattheosselections.com
+- https://www.mattheosselections.com/en/shop?category=6aad54174bba984e6580dabe: canonical → 308
+- https://www.mattheosselections.com/en/product/jordgubbstrad-honung: canonical not on https://www.mattheosselections.com
+- https://www.mattheosselections.com/en/product/jordgubbstrad-honung: canonical → 308
+- https://www.mattheosselections.com/en/shop?category=6aad53cc4bba984e6580dabc: canonical not on https://www.mattheosselections.com
+- https://www.mattheosselections.com/en/shop?category=6aad53cc4bba984e6580dabc: canonical → 308
+- https://www.mattheosselections.com/en/product/propolis: canonical not on https://www.mattheosselections.com
+- https://www.mattheosselections.com/en/product/propolis: canonical → 308
+- https://www.mattheosselections.com/en/product/naturbox-honung-och-propolis-mattheos-selections: canonical not on https://www.mattheosselections.com
+- https://www.mattheosselections.com/en/product/naturbox-honung-och-propolis-mattheos-selections: canonical → 308
+- https://www.mattheosselections.com/en/product/honung-med-gurkmeja-och-ingefara: canonical not on https://www.mattheosselections.com
+- https://www.mattheosselections.com/en/product/honung-med-gurkmeja-och-ingefara: canonical → 308
+- https://www.mattheosselections.com/en/product/honung-med-guld: canonical not on https://www.mattheosselections.com
+- https://www.mattheosselections.com/en/product/honung-med-guld: canonical → 308
+- https://www.mattheosselections.com/en/shop?category=6aad53de4bba984e6580dabd: canonical not on https://www.mattheosselections.com
+- https://www.mattheosselections.com/en/shop?category=6aad53de4bba984e6580dabd: canonical → 308
+- https://www.mattheosselections.com/en/product/jungfru-olivolja-extra-virgin-olive-oil: canonical not on https://www.mattheosselections.com
+- https://www.mattheosselections.com/en/product/jungfru-olivolja-extra-virgin-olive-oil: canonical → 308
+- https://www.mattheosselections.com/en/product/naturbox-ek-timjan-tallhonung: canonical not on https://www.mattheosselections.com
+- https://www.mattheosselections.com/en/product/naturbox-ek-timjan-tallhonung: canonical → 308
+- https://www.mattheosselections.com/en/shop: canonical not on https://www.mattheosselections.com
+- https://www.mattheosselections.com/en/shop: canonical → 308
+- https://www.mattheosselections.com/en/product/bivaxkram: canonical not on https://www.mattheosselections.com
+- https://www.mattheosselections.com/en/product/bivaxkram: canonical → 308
+- https://www.mattheosselections.com/en/privacy-policy: canonical not on https://www.mattheosselections.com
+- https://www.mattheosselections.com/en/privacy-policy: canonical → 308
+- https://www.mattheosselections.com/sv/about: canonical not on https://www.mattheosselections.com
+- https://www.mattheosselections.com/sv/about: canonical → 308
+- https://www.mattheosselections.com/sv/shop?category=6aad53a64bba984e6580dabb: canonical not on https://www.mattheosselections.com
+- https://www.mattheosselections.com/sv/shop?category=6aad53a64bba984e6580dabb: canonical → 308
+- https://www.mattheosselections.com/en/terms-and-conditions: canonical not on https://www.mattheosselections.com
+- https://www.mattheosselections.com/en/terms-and-conditions: canonical → 308
+- https://www.mattheosselections.com/sv/shop: canonical not on https://www.mattheosselections.com
+- https://www.mattheosselections.com/sv/shop: canonical → 308
+- https://www.mattheosselections.com/sv/shop?category=6aad53cc4bba984e6580dabc: canonical not on https://www.mattheosselections.com
+- https://www.mattheosselections.com/sv/shop?category=6aad53cc4bba984e6580dabc: canonical → 308
+- https://www.mattheosselections.com/sv/shop?category=6aad542a4bba984e6580dabf: canonical not on https://www.mattheosselections.com
+- https://www.mattheosselections.com/sv/shop?category=6aad542a4bba984e6580dabf: canonical → 308
+- https://www.mattheosselections.com/sv/shop?category=6aad53de4bba984e6580dabd: canonical not on https://www.mattheosselections.com
+- https://www.mattheosselections.com/sv/shop?category=6aad53de4bba984e6580dabd: canonical → 308
+- https://www.mattheosselections.com/sv/shop?category=6aad54174bba984e6580dabe: canonical not on https://www.mattheosselections.com
+- https://www.mattheosselections.com/sv/shop?category=6aad54174bba984e6580dabe: canonical → 308
+- https://www.mattheosselections.com/sv/contact: canonical not on https://www.mattheosselections.com
+- https://www.mattheosselections.com/sv/contact: canonical → 308
+- https://www.mattheosselections.com/sv/product/jordgubbstrad-honung: canonical not on https://www.mattheosselections.com
+- https://www.mattheosselections.com/sv/product/jordgubbstrad-honung: canonical → 308
+- https://www.mattheosselections.com/sv/product/naturbox-honung-och-propolis-mattheos-selections: canonical not on https://www.mattheosselections.com
+- https://www.mattheosselections.com/sv/product/naturbox-honung-och-propolis-mattheos-selections: canonical → 308
+- https://www.mattheosselections.com/sv/product/naturbox-ek-timjan-tallhonung: canonical not on https://www.mattheosselections.com
+- https://www.mattheosselections.com/sv/product/naturbox-ek-timjan-tallhonung: canonical → 308
+- https://www.mattheosselections.com/sv/product/honung-med-gurkmeja-och-ingefara: canonical not on https://www.mattheosselections.com
+- https://www.mattheosselections.com/sv/product/honung-med-gurkmeja-och-ingefara: canonical → 308
+- https://www.mattheosselections.com/sv/product/propolis: canonical not on https://www.mattheosselections.com
+- https://www.mattheosselections.com/sv/product/propolis: canonical → 308
+- https://www.mattheosselections.com/sv/product/bivaxkram: canonical not on https://www.mattheosselections.com
+- https://www.mattheosselections.com/sv/product/bivaxkram: canonical → 308
+- https://www.mattheosselections.com/sv/product/jungfru-olivolja-extra-virgin-olive-oil: canonical not on https://www.mattheosselections.com
+- https://www.mattheosselections.com/sv/product/jungfru-olivolja-extra-virgin-olive-oil: canonical → 308
+- https://www.mattheosselections.com/sv/product/honung-med-guld: canonical not on https://www.mattheosselections.com
+- https://www.mattheosselections.com/sv/product/honung-med-guld: canonical → 308
+- https://www.mattheosselections.com/sv/terms-and-conditions: canonical not on https://www.mattheosselections.com
+- https://www.mattheosselections.com/sv/terms-and-conditions: canonical → 308
+- https://www.mattheosselections.com/el/about: canonical not on https://www.mattheosselections.com
+- https://www.mattheosselections.com/el/about: canonical → 308
+- https://www.mattheosselections.com/el/shop: canonical not on https://www.mattheosselections.com
+- https://www.mattheosselections.com/el/shop: canonical → 308
+- https://www.mattheosselections.com/el/shop?category=6aad53cc4bba984e6580dabc: canonical not on https://www.mattheosselections.com
+- https://www.mattheosselections.com/el/shop?category=6aad53cc4bba984e6580dabc: canonical → 308
+- https://www.mattheosselections.com/el/shop?category=6aad53a64bba984e6580dabb: canonical not on https://www.mattheosselections.com
+- https://www.mattheosselections.com/el/shop?category=6aad53a64bba984e6580dabb: canonical → 308
+- https://www.mattheosselections.com/sv/privacy-policy: canonical not on https://www.mattheosselections.com
+- https://www.mattheosselections.com/sv/privacy-policy: canonical → 308
+- https://www.mattheosselections.com/el/shop?category=6aad53de4bba984e6580dabd: canonical not on https://www.mattheosselections.com
+- https://www.mattheosselections.com/el/shop?category=6aad53de4bba984e6580dabd: canonical → 308
+- https://www.mattheosselections.com/el/product/propolis: canonical not on https://www.mattheosselections.com
+- https://www.mattheosselections.com/el/product/propolis: canonical → 308
+- https://www.mattheosselections.com/el/shop?category=6aad54174bba984e6580dabe: canonical not on https://www.mattheosselections.com
+- https://www.mattheosselections.com/el/shop?category=6aad54174bba984e6580dabe: canonical → 308
+- https://www.mattheosselections.com/el/shop?category=6aad542a4bba984e6580dabf: canonical not on https://www.mattheosselections.com
+- https://www.mattheosselections.com/el/shop?category=6aad542a4bba984e6580dabf: canonical → 308
+- https://www.mattheosselections.com/el/contact: canonical not on https://www.mattheosselections.com
+- https://www.mattheosselections.com/el/contact: canonical → 308
+- https://www.mattheosselections.com/el/product/jordgubbstrad-honung: canonical not on https://www.mattheosselections.com
+- https://www.mattheosselections.com/el/product/jordgubbstrad-honung: canonical → 308
+- https://www.mattheosselections.com/el/product/naturbox-honung-och-propolis-mattheos-selections: canonical not on https://www.mattheosselections.com
+- https://www.mattheosselections.com/el/product/naturbox-honung-och-propolis-mattheos-selections: canonical → 308
+- https://www.mattheosselections.com/el/product/honung-med-guld: canonical not on https://www.mattheosselections.com
+- https://www.mattheosselections.com/el/product/honung-med-guld: canonical → 308
+- https://www.mattheosselections.com/el/product/honung-med-gurkmeja-och-ingefara: canonical not on https://www.mattheosselections.com
+- https://www.mattheosselections.com/el/product/honung-med-gurkmeja-och-ingefara: canonical → 308
+- https://www.mattheosselections.com/el/product/naturbox-ek-timjan-tallhonung: canonical not on https://www.mattheosselections.com
+- https://www.mattheosselections.com/el/product/naturbox-ek-timjan-tallhonung: canonical → 308
+- https://www.mattheosselections.com/el/terms-and-conditions: canonical not on https://www.mattheosselections.com
+- https://www.mattheosselections.com/el/terms-and-conditions: canonical → 308
+- https://www.mattheosselections.com/el/product/jungfru-olivolja-extra-virgin-olive-oil: canonical not on https://www.mattheosselections.com
+- https://www.mattheosselections.com/el/product/jungfru-olivolja-extra-virgin-olive-oil: canonical → 308
+- https://www.mattheosselections.com/el/product/bivaxkram: canonical not on https://www.mattheosselections.com
+- https://www.mattheosselections.com/el/product/bivaxkram: canonical → 308
+- https://www.mattheosselections.com/el/privacy-policy: canonical not on https://www.mattheosselections.com
+- https://www.mattheosselections.com/el/privacy-policy: canonical → 308
+- https://www.mattheosselections.com/en/product/timjanhonung: canonical not on https://www.mattheosselections.com
+- https://www.mattheosselections.com/en/product/timjanhonung: canonical → 308
+- https://www.mattheosselections.com/en/product/oreganohonung: canonical not on https://www.mattheosselections.com
+- https://www.mattheosselections.com/en/product/oreganohonung: canonical → 308
+- https://www.mattheosselections.com/en/product/ekhonung: canonical not on https://www.mattheosselections.com
+- https://www.mattheosselections.com/en/product/ekhonung: canonical → 308
+- https://www.mattheosselections.com/en/product/blomster-orthonung: canonical not on https://www.mattheosselections.com
+- https://www.mattheosselections.com/en/product/blomster-orthonung: canonical → 308
+- https://www.mattheosselections.com/en/product/naturbox-hela-upplevelsen: canonical not on https://www.mattheosselections.com
+- https://www.mattheosselections.com/en/product/naturbox-hela-upplevelsen: canonical → 308
+- https://www.mattheosselections.com/en/product/tallhonung: canonical not on https://www.mattheosselections.com
+- https://www.mattheosselections.com/en/product/tallhonung: canonical → 308
+- https://www.mattheosselections.com/en/product/adelgrannshonung: canonical not on https://www.mattheosselections.com
+- https://www.mattheosselections.com/en/product/adelgrannshonung: canonical → 308
+- https://www.mattheosselections.com/en/product/naturbox-superfoodblandning: canonical not on https://www.mattheosselections.com
+- https://www.mattheosselections.com/en/product/naturbox-superfoodblandning: canonical → 308
+- https://www.mattheosselections.com/en/product/naturbox-kraftfull-honungsblandning: canonical not on https://www.mattheosselections.com
+- https://www.mattheosselections.com/en/product/naturbox-kraftfull-honungsblandning: canonical → 308
+- https://www.mattheosselections.com/en/product/natuthos-omalisk-honangstrin: canonical not on https://www.mattheosselections.com
+- https://www.mattheosselections.com/en/product/natuthos-omalisk-honangstrin: canonical → 308
+- https://www.mattheosselections.com/sv/product/tallhonung: canonical not on https://www.mattheosselections.com
+- https://www.mattheosselections.com/sv/product/tallhonung: canonical → 308
+- https://www.mattheosselections.com/sv/product/ekhonung: canonical not on https://www.mattheosselections.com
+- https://www.mattheosselections.com/sv/product/ekhonung: canonical → 308
+- https://www.mattheosselections.com/en/product/akesis-honey-with-hazelnut: canonical not on https://www.mattheosselections.com
+- https://www.mattheosselections.com/en/product/akesis-honey-with-hazelnut: canonical → 308
+- https://www.mattheosselections.com/sv/product/oreganohonung: canonical not on https://www.mattheosselections.com
+- https://www.mattheosselections.com/sv/product/oreganohonung: canonical → 308
+- https://www.mattheosselections.com/sv/product/timjanhonung: canonical not on https://www.mattheosselections.com
+- https://www.mattheosselections.com/sv/product/timjanhonung: canonical → 308
+- https://www.mattheosselections.com/sv/product/adelgrannshonung: canonical not on https://www.mattheosselections.com
+- https://www.mattheosselections.com/sv/product/adelgrannshonung: canonical → 308
+- https://www.mattheosselections.com/sv/product/naturbox-kraftfull-honungsblandning: canonical not on https://www.mattheosselections.com
+- https://www.mattheosselections.com/sv/product/naturbox-kraftfull-honungsblandning: canonical → 308
+- https://www.mattheosselections.com/sv/product/blomster-orthonung: canonical not on https://www.mattheosselections.com
+- https://www.mattheosselections.com/sv/product/blomster-orthonung: canonical → 308
+- https://www.mattheosselections.com/sv/product/natuthos-omalisk-honangstrin: canonical not on https://www.mattheosselections.com
+- https://www.mattheosselections.com/sv/product/natuthos-omalisk-honangstrin: canonical → 308
+- https://www.mattheosselections.com/sv/product/naturbox-superfoodblandning: canonical not on https://www.mattheosselections.com
+- https://www.mattheosselections.com/sv/product/naturbox-superfoodblandning: canonical → 308
+- https://www.mattheosselections.com/sv/product/akesis-honey-with-hazelnut: canonical not on https://www.mattheosselections.com
+- https://www.mattheosselections.com/sv/product/akesis-honey-with-hazelnut: canonical → 308
+- https://www.mattheosselections.com/el/product/oreganohonung: canonical not on https://www.mattheosselections.com
+- https://www.mattheosselections.com/el/product/oreganohonung: canonical → 308
+- https://www.mattheosselections.com/el/product/tallhonung: canonical not on https://www.mattheosselections.com
+- https://www.mattheosselections.com/el/product/tallhonung: canonical → 308
+- https://www.mattheosselections.com/sv/product/naturbox-hela-upplevelsen: canonical not on https://www.mattheosselections.com
+- https://www.mattheosselections.com/sv/product/naturbox-hela-upplevelsen: canonical → 308
+- https://www.mattheosselections.com/el/product/ekhonung: canonical not on https://www.mattheosselections.com
+- https://www.mattheosselections.com/el/product/ekhonung: canonical → 308
+- https://www.mattheosselections.com/el/product/adelgrannshonung: canonical not on https://www.mattheosselections.com
+- https://www.mattheosselections.com/el/product/adelgrannshonung: canonical → 308
+- https://www.mattheosselections.com/el/product/timjanhonung: canonical not on https://www.mattheosselections.com
+- https://www.mattheosselections.com/el/product/timjanhonung: canonical → 308
+- https://www.mattheosselections.com/el/product/naturbox-superfoodblandning: canonical not on https://www.mattheosselections.com
+- https://www.mattheosselections.com/el/product/naturbox-superfoodblandning: canonical → 308
+- https://www.mattheosselections.com/el/product/blomster-orthonung: canonical not on https://www.mattheosselections.com
+- https://www.mattheosselections.com/el/product/blomster-orthonung: canonical → 308
+- https://www.mattheosselections.com/el/product/naturbox-hela-upplevelsen: canonical not on https://www.mattheosselections.com
+- https://www.mattheosselections.com/el/product/naturbox-hela-upplevelsen: canonical → 308
+- https://www.mattheosselections.com/el/product/naturbox-kraftfull-honungsblandning: canonical not on https://www.mattheosselections.com
+- https://www.mattheosselections.com/el/product/naturbox-kraftfull-honungsblandning: canonical → 308
+- https://www.mattheosselections.com/el/product/natuthos-omalisk-honangstrin: canonical not on https://www.mattheosselections.com
+- https://www.mattheosselections.com/el/product/natuthos-omalisk-honangstrin: canonical → 308
+- https://www.mattheosselections.com/el/product/akesis-honey-with-hazelnut: canonical not on https://www.mattheosselections.com
+- https://www.mattheosselections.com/el/product/akesis-honey-with-hazelnut: canonical → 308
+
+### sitemap
+
+- https://mattheosselections.com/en: not on https://www.mattheosselections.com
+- https://mattheosselections.com/en: redirects (308)
+- https://mattheosselections.com/sv: not on https://www.mattheosselections.com
+- https://mattheosselections.com/sv: redirects (308)
+- https://mattheosselections.com/el: not on https://www.mattheosselections.com
+- https://mattheosselections.com/el: redirects (308)
+- https://mattheosselections.com/en/shop: not on https://www.mattheosselections.com
+- https://mattheosselections.com/en/shop: redirects (308)
+- https://mattheosselections.com/sv/shop: not on https://www.mattheosselections.com
+- https://mattheosselections.com/sv/shop: redirects (308)
+- https://mattheosselections.com/el/shop: not on https://www.mattheosselections.com
+- https://mattheosselections.com/el/shop: redirects (308)
+- https://mattheosselections.com/en/about: not on https://www.mattheosselections.com
+- https://mattheosselections.com/en/about: redirects (308)
+- https://mattheosselections.com/sv/about: not on https://www.mattheosselections.com
+- https://mattheosselections.com/sv/about: redirects (308)
+- https://mattheosselections.com/el/about: not on https://www.mattheosselections.com
+- https://mattheosselections.com/el/about: redirects (308)
+- https://mattheosselections.com/en/contact: not on https://www.mattheosselections.com
+- https://mattheosselections.com/en/contact: redirects (308)
+- https://mattheosselections.com/sv/contact: not on https://www.mattheosselections.com
+- https://mattheosselections.com/sv/contact: redirects (308)
+- https://mattheosselections.com/el/contact: not on https://www.mattheosselections.com
+- https://mattheosselections.com/el/contact: redirects (308)
+- https://mattheosselections.com/en/terms-and-conditions: not on https://www.mattheosselections.com
+- https://mattheosselections.com/en/terms-and-conditions: redirects (308)
+- https://mattheosselections.com/sv/terms-and-conditions: not on https://www.mattheosselections.com
+- https://mattheosselections.com/sv/terms-and-conditions: redirects (308)
+- https://mattheosselections.com/el/terms-and-conditions: not on https://www.mattheosselections.com
+- https://mattheosselections.com/el/terms-and-conditions: redirects (308)
+- https://mattheosselections.com/en/privacy-policy: not on https://www.mattheosselections.com
+- https://mattheosselections.com/en/privacy-policy: redirects (308)
+- https://mattheosselections.com/sv/privacy-policy: not on https://www.mattheosselections.com
+- https://mattheosselections.com/sv/privacy-policy: redirects (308)
+- https://mattheosselections.com/el/privacy-policy: not on https://www.mattheosselections.com
+- https://mattheosselections.com/el/privacy-policy: redirects (308)
+- https://mattheosselections.com/en/product/blomster-orthonung: not on https://www.mattheosselections.com
+- https://mattheosselections.com/en/product/blomster-orthonung: redirects (308)
+- https://mattheosselections.com/sv/product/blomster-orthonung: not on https://www.mattheosselections.com
+- https://mattheosselections.com/sv/product/blomster-orthonung: redirects (308)
+- https://mattheosselections.com/el/product/blomster-orthonung: not on https://www.mattheosselections.com
+- https://mattheosselections.com/el/product/blomster-orthonung: redirects (308)
+- https://mattheosselections.com/en/product/timjanhonung: not on https://www.mattheosselections.com
+- https://mattheosselections.com/en/product/timjanhonung: redirects (308)
+- https://mattheosselections.com/sv/product/timjanhonung: not on https://www.mattheosselections.com
+- https://mattheosselections.com/sv/product/timjanhonung: redirects (308)
+- https://mattheosselections.com/el/product/timjanhonung: not on https://www.mattheosselections.com
+- https://mattheosselections.com/el/product/timjanhonung: redirects (308)
+- https://mattheosselections.com/en/product/adelgrannshonung: not on https://www.mattheosselections.com
+- https://mattheosselections.com/en/product/adelgrannshonung: redirects (308)
+- https://mattheosselections.com/sv/product/adelgrannshonung: not on https://www.mattheosselections.com
+- https://mattheosselections.com/sv/product/adelgrannshonung: redirects (308)
+- https://mattheosselections.com/el/product/adelgrannshonung: not on https://www.mattheosselections.com
+- https://mattheosselections.com/el/product/adelgrannshonung: redirects (308)
+- https://mattheosselections.com/en/product/ekhonung: not on https://www.mattheosselections.com
+- https://mattheosselections.com/en/product/ekhonung: redirects (308)
+- https://mattheosselections.com/sv/product/ekhonung: not on https://www.mattheosselections.com
+- https://mattheosselections.com/sv/product/ekhonung: redirects (308)
+- https://mattheosselections.com/el/product/ekhonung: not on https://www.mattheosselections.com
+- https://mattheosselections.com/el/product/ekhonung: redirects (308)
+- https://mattheosselections.com/en/product/tallhonung: not on https://www.mattheosselections.com
+- https://mattheosselections.com/en/product/tallhonung: redirects (308)
+- https://mattheosselections.com/sv/product/tallhonung: not on https://www.mattheosselections.com
+- https://mattheosselections.com/sv/product/tallhonung: redirects (308)
+- https://mattheosselections.com/el/product/tallhonung: not on https://www.mattheosselections.com
+- https://mattheosselections.com/el/product/tallhonung: redirects (308)
+- https://mattheosselections.com/en/product/oreganohonung: not on https://www.mattheosselections.com
+- https://mattheosselections.com/en/product/oreganohonung: redirects (308)
+- https://mattheosselections.com/sv/product/oreganohonung: not on https://www.mattheosselections.com
+- https://mattheosselections.com/sv/product/oreganohonung: redirects (308)
+- https://mattheosselections.com/el/product/oreganohonung: not on https://www.mattheosselections.com
+- https://mattheosselections.com/el/product/oreganohonung: redirects (308)
+- https://mattheosselections.com/en/product/bivaxkram: not on https://www.mattheosselections.com
+- https://mattheosselections.com/en/product/bivaxkram: redirects (308)
+- https://mattheosselections.com/sv/product/bivaxkram: not on https://www.mattheosselections.com
+- https://mattheosselections.com/sv/product/bivaxkram: redirects (308)
+- https://mattheosselections.com/el/product/bivaxkram: not on https://www.mattheosselections.com
+- https://mattheosselections.com/el/product/bivaxkram: redirects (308)
+- https://mattheosselections.com/en/product/akesis-honey-with-hazelnut: not on https://www.mattheosselections.com
+- https://mattheosselections.com/en/product/akesis-honey-with-hazelnut: redirects (308)
+- https://mattheosselections.com/sv/product/akesis-honey-with-hazelnut: not on https://www.mattheosselections.com
+- https://mattheosselections.com/sv/product/akesis-honey-with-hazelnut: redirects (308)
+- https://mattheosselections.com/el/product/akesis-honey-with-hazelnut: not on https://www.mattheosselections.com
+- https://mattheosselections.com/el/product/akesis-honey-with-hazelnut: redirects (308)
+- https://mattheosselections.com/en/product/honung-med-guld: not on https://www.mattheosselections.com
+- https://mattheosselections.com/en/product/honung-med-guld: redirects (308)
+- https://mattheosselections.com/sv/product/honung-med-guld: not on https://www.mattheosselections.com
+- https://mattheosselections.com/sv/product/honung-med-guld: redirects (308)
+- https://mattheosselections.com/el/product/honung-med-guld: not on https://www.mattheosselections.com
+- https://mattheosselections.com/el/product/honung-med-guld: redirects (308)
+- https://mattheosselections.com/en/product/jungfru-olivolja-extra-virgin-olive-oil: not on https://www.mattheosselections.com
+- https://mattheosselections.com/en/product/jungfru-olivolja-extra-virgin-olive-oil: redirects (308)
+- https://mattheosselections.com/sv/product/jungfru-olivolja-extra-virgin-olive-oil: not on https://www.mattheosselections.com
+- https://mattheosselections.com/sv/product/jungfru-olivolja-extra-virgin-olive-oil: redirects (308)
+- https://mattheosselections.com/el/product/jungfru-olivolja-extra-virgin-olive-oil: not on https://www.mattheosselections.com
+- https://mattheosselections.com/el/product/jungfru-olivolja-extra-virgin-olive-oil: redirects (308)
+- https://mattheosselections.com/en/product/naturbox-ek-timjan-tallhonung: not on https://www.mattheosselections.com
+- https://mattheosselections.com/en/product/naturbox-ek-timjan-tallhonung: redirects (308)
+- https://mattheosselections.com/sv/product/naturbox-ek-timjan-tallhonung: not on https://www.mattheosselections.com
+- https://mattheosselections.com/sv/product/naturbox-ek-timjan-tallhonung: redirects (308)
+- https://mattheosselections.com/el/product/naturbox-ek-timjan-tallhonung: not on https://www.mattheosselections.com
+- https://mattheosselections.com/el/product/naturbox-ek-timjan-tallhonung: redirects (308)
+- https://mattheosselections.com/en/product/jordgubbstrad-honung: not on https://www.mattheosselections.com
+- https://mattheosselections.com/en/product/jordgubbstrad-honung: redirects (308)
+- https://mattheosselections.com/sv/product/jordgubbstrad-honung: not on https://www.mattheosselections.com
+- https://mattheosselections.com/sv/product/jordgubbstrad-honung: redirects (308)
+- https://mattheosselections.com/el/product/jordgubbstrad-honung: not on https://www.mattheosselections.com
+- https://mattheosselections.com/el/product/jordgubbstrad-honung: redirects (308)
+- https://mattheosselections.com/en/product/honung-med-gurkmeja-och-ingefara: not on https://www.mattheosselections.com
+- https://mattheosselections.com/en/product/honung-med-gurkmeja-och-ingefara: redirects (308)
+- https://mattheosselections.com/sv/product/honung-med-gurkmeja-och-ingefara: not on https://www.mattheosselections.com
+- https://mattheosselections.com/sv/product/honung-med-gurkmeja-och-ingefara: redirects (308)
+- https://mattheosselections.com/el/product/honung-med-gurkmeja-och-ingefara: not on https://www.mattheosselections.com
+- https://mattheosselections.com/el/product/honung-med-gurkmeja-och-ingefara: redirects (308)
+- https://mattheosselections.com/en/product/propolis: not on https://www.mattheosselections.com
+- https://mattheosselections.com/en/product/propolis: redirects (308)
+- https://mattheosselections.com/sv/product/propolis: not on https://www.mattheosselections.com
+- https://mattheosselections.com/sv/product/propolis: redirects (308)
+- https://mattheosselections.com/el/product/propolis: not on https://www.mattheosselections.com
+- https://mattheosselections.com/el/product/propolis: redirects (308)
+- https://mattheosselections.com/en/product/naturbox-hela-upplevelsen: not on https://www.mattheosselections.com
+- https://mattheosselections.com/en/product/naturbox-hela-upplevelsen: redirects (308)
+- https://mattheosselections.com/sv/product/naturbox-hela-upplevelsen: not on https://www.mattheosselections.com
+- https://mattheosselections.com/sv/product/naturbox-hela-upplevelsen: redirects (308)
+- https://mattheosselections.com/el/product/naturbox-hela-upplevelsen: not on https://www.mattheosselections.com
+- https://mattheosselections.com/el/product/naturbox-hela-upplevelsen: redirects (308)
+- https://mattheosselections.com/en/product/natuthos-omalisk-honangstrin: not on https://www.mattheosselections.com
+- https://mattheosselections.com/en/product/natuthos-omalisk-honangstrin: redirects (308)
+- https://mattheosselections.com/sv/product/natuthos-omalisk-honangstrin: not on https://www.mattheosselections.com
+- https://mattheosselections.com/sv/product/natuthos-omalisk-honangstrin: redirects (308)
+- https://mattheosselections.com/el/product/natuthos-omalisk-honangstrin: not on https://www.mattheosselections.com
+- https://mattheosselections.com/el/product/natuthos-omalisk-honangstrin: redirects (308)
+- https://mattheosselections.com/en/product/naturbox-superfoodblandning: not on https://www.mattheosselections.com
+- https://mattheosselections.com/en/product/naturbox-superfoodblandning: redirects (308)
+- https://mattheosselections.com/sv/product/naturbox-superfoodblandning: not on https://www.mattheosselections.com
+- https://mattheosselections.com/sv/product/naturbox-superfoodblandning: redirects (308)
+- https://mattheosselections.com/el/product/naturbox-superfoodblandning: not on https://www.mattheosselections.com
+- https://mattheosselections.com/el/product/naturbox-superfoodblandning: redirects (308)
+- https://mattheosselections.com/en/product/naturbox-kraftfull-honungsblandning: not on https://www.mattheosselections.com
+- https://mattheosselections.com/en/product/naturbox-kraftfull-honungsblandning: redirects (308)
+- https://mattheosselections.com/sv/product/naturbox-kraftfull-honungsblandning: not on https://www.mattheosselections.com
+- https://mattheosselections.com/sv/product/naturbox-kraftfull-honungsblandning: redirects (308)
+- https://mattheosselections.com/el/product/naturbox-kraftfull-honungsblandning: not on https://www.mattheosselections.com
+- https://mattheosselections.com/el/product/naturbox-kraftfull-honungsblandning: redirects (308)
+- https://mattheosselections.com/en/product/naturbox-honung-och-propolis-mattheos-selections: not on https://www.mattheosselections.com
+- https://mattheosselections.com/en/product/naturbox-honung-och-propolis-mattheos-selections: redirects (308)
+- https://mattheosselections.com/sv/product/naturbox-honung-och-propolis-mattheos-selections: not on https://www.mattheosselections.com
+- https://mattheosselections.com/sv/product/naturbox-honung-och-propolis-mattheos-selections: redirects (308)
+- https://mattheosselections.com/el/product/naturbox-honung-och-propolis-mattheos-selections: not on https://www.mattheosselections.com
+- https://mattheosselections.com/el/product/naturbox-honung-och-propolis-mattheos-selections: redirects (308)
+- 0 en product URLs, but the catalogue has 19 visible products
+- 0 sv product URLs, but the catalogue has 19 visible products
+- 0 el product URLs, but the catalogue has 19 visible products
+
+### legacy
+
+- /product/adelgrannshonung/: PROBLEM: lands on a page that is not indexable/canonical
+- /product/bivaxkram/: PROBLEM: lands on a page that is not indexable/canonical
+- /product/akesis-honey-with-hazelnut/: PROBLEM: lands on a page that is not indexable/canonical
+- /en/product/bivaxkram/: PROBLEM: lands on a page that is not indexable/canonical
+- /en/product/adelgrannshonung/: PROBLEM: lands on a page that is not indexable/canonical
+- /en/product/blomster-orthonung/: PROBLEM: lands on a page that is not indexable/canonical
+- /en/product/akesis-honey-with-hazelnut/: PROBLEM: lands on a page that is not indexable/canonical
+- /product/ekhonung/: PROBLEM: lands on a page that is not indexable/canonical
+- /en/product/ekhonung/: PROBLEM: lands on a page that is not indexable/canonical
+- /product/honung-med-guld/: PROBLEM: lands on a page that is not indexable/canonical
+- /product/blomster-orthonung/: PROBLEM: lands on a page that is not indexable/canonical
+- /en/product/honung-med-guld/: PROBLEM: lands on a page that is not indexable/canonical
+- /product/honung-med-gurkmeja-och-ingefara/: PROBLEM: lands on a page that is not indexable/canonical
+- /en/product/honung-med-gurkmeja-och-ingefara/: PROBLEM: lands on a page that is not indexable/canonical
+- /en/product/jordgubbstrad-honung/: PROBLEM: lands on a page that is not indexable/canonical
+- /product/jungfru-olivolja-extra-virgin-olive-oil/: PROBLEM: lands on a page that is not indexable/canonical
+- /en/product/jungfru-olivolja-extra-virgin-olive-oil/: PROBLEM: lands on a page that is not indexable/canonical
+- /product/naturbox-ek-timjan-tallhonung/: PROBLEM: lands on a page that is not indexable/canonical
+- /en/product/naturbox-ek-timjan-tallhonung/: PROBLEM: lands on a page that is not indexable/canonical
+- /product/naturbox-hela-upplevelsen/: PROBLEM: lands on a page that is not indexable/canonical
+- /en/product/naturbox-hela-upplevelsen/: PROBLEM: lands on a page that is not indexable/canonical
+- /product/jordgubbstrad-honung/: PROBLEM: lands on a page that is not indexable/canonical
+- /product/naturbox-honung-och-propolis-mattheos-selections/: PROBLEM: lands on a page that is not indexable/canonical
+- /en/product/naturbox-honung-och-propolis-mattheos-selections/: PROBLEM: lands on a page that is not indexable/canonical
+- /product/naturbox-kraftfull-honungsblandning/: PROBLEM: lands on a page that is not indexable/canonical
+- /en/product/naturbox-kraftfull-honungsblandning/: PROBLEM: lands on a page that is not indexable/canonical
+- /product/naturbox-superfoodblandning/: PROBLEM: lands on a page that is not indexable/canonical
+- /en/product/naturbox-superfoodblandning/: PROBLEM: lands on a page that is not indexable/canonical
+- /en/product/natuthos-omalisk-honangstrin/: PROBLEM: lands on a page that is not indexable/canonical
+- /product/natuthos-omalisk-honangstrin/: PROBLEM: lands on a page that is not indexable/canonical
+- /en/product/oreganohonung/: PROBLEM: lands on a page that is not indexable/canonical
+- /product/oreganohonung/: PROBLEM: lands on a page that is not indexable/canonical
+- /product/propolis/: PROBLEM: lands on a page that is not indexable/canonical
+- /en/product/propolis/: PROBLEM: lands on a page that is not indexable/canonical
+- /product/tallhonung/: PROBLEM: lands on a page that is not indexable/canonical
+- /en/product/tallhonung/: PROBLEM: lands on a page that is not indexable/canonical
+- /product/timjanhonung/: PROBLEM: lands on a page that is not indexable/canonical
+- /en/product/timjanhonung/: PROBLEM: lands on a page that is not indexable/canonical
+- /product/adelgrannshonung/?v=7516fd43adaa: PROBLEM: lands on a page that is not indexable/canonical
+- /product/adelgrannshonung: PROBLEM: lands on a page that is not indexable/canonical
+- /product/akesis-honey-with-hazelnut/?v=7516fd43adaa: PROBLEM: lands on a page that is not indexable/canonical
+- /product/akesis-honey-with-hazelnut: PROBLEM: lands on a page that is not indexable/canonical
+- /product/bivaxkram/?v=7516fd43adaa: PROBLEM: lands on a page that is not indexable/canonical
+- /product/bivaxkram: PROBLEM: lands on a page that is not indexable/canonical
+- /en/product/ekhonung/?add-to-cart=2694: PROBLEM: lands on a page that is not indexable/canonical
+- /product/EKHONUNG/: PROBLEM: lands on a page that is not indexable/canonical
+- /en/: PROBLEM: lands on a page that is not indexable/canonical
+- /en/shop/: PROBLEM: lands on a page that is not indexable/canonical
+- /shop/: PROBLEM: lands on a page that is not indexable/canonical
+- /shop/?orderby=price: PROBLEM: lands on a page that is not indexable/canonical
+- /product/: PROBLEM: lands on a page that is not indexable/canonical
+- /cart/: PROBLEM: lands on a page that is not indexable/canonical
+- /checkout/: PROBLEM: lands on a page that is not indexable/canonical
+- /my-account/: PROBLEM: lands on a page that is not indexable/canonical
+- /en/my-account/: PROBLEM: lands on a page that is not indexable/canonical
+- /about-us/: PROBLEM: lands on a page that is not indexable/canonical
+- /en/about-us/: PROBLEM: lands on a page that is not indexable/canonical
+- /contact-us/: PROBLEM: lands on a page that is not indexable/canonical
+- /en/contact-us/: PROBLEM: lands on a page that is not indexable/canonical
+- /terms-and-conditions/: PROBLEM: lands on a page that is not indexable/canonical
+- /en/terms-and-conditions/: PROBLEM: lands on a page that is not indexable/canonical
+- /privacy-policy/: PROBLEM: lands on a page that is not indexable/canonical
+- /en/shop/page/2/: PROBLEM: redirects to a 404
+- /shop/page/2/: PROBLEM: 2 redirects in a row
+- /en/privacy-policy/: PROBLEM: lands on a page that is not indexable/canonical
+- /cookie-policy-eu/: PROBLEM: lands on a page that is not indexable/canonical
+- /sample-page/: PROBLEM: lands on a page that is not indexable/canonical
+- /test/: PROBLEM: lands on a page that is not indexable/canonical
+- /coming-soon/: PROBLEM: lands on a page that is not indexable/canonical
+- /blog/: PROBLEM: lands on a page that is not indexable/canonical
+- /my-account/lost-password/: PROBLEM: 2 redirects in a row
+- /checkout/order-received/123/?key=wc_order_abc: PROBLEM: 2 redirects in a row
+- /?s=honung: PROBLEM: lands on a page that is not indexable/canonical
+- /de-osynliga-hjaltarna-i-var-matforsorjning-binas-roll-i-livsmedelskedjan/: PROBLEM: lands on a page that is not indexable/canonical
+- /en/?s=honey: PROBLEM: lands on a page that is not indexable/canonical
+- /?post_type=product: PROBLEM: lands on a page that is not indexable/canonical
+- /hallbar-biodling-en-vag-till-att-skydda-bin-och-planeten/: PROBLEM: lands on a page that is not indexable/canonical
+- /honey-in-traditional-medicine-swedens-natural-healer/: PROBLEM: lands on a page that is not indexable/canonical
+- /pollineringens-betydelse-for-ekosystemet/: PROBLEM: lands on a page that is not indexable/canonical
+- /skillnader-mellan-olika-typer-av-honun/: PROBLEM: lands on a page that is not indexable/canonical
+- /halsofordelarna-med-honung-naturens-gyllene-medicin/: PROBLEM: lands on a page that is not indexable/canonical
+- /category/okategoriserad/: PROBLEM: lands on a page that is not indexable/canonical
+- /category/uncategorized/: PROBLEM: lands on a page that is not indexable/canonical
+- /tag/honung/: PROBLEM: lands on a page that is not indexable/canonical
+- /test-2/: PROBLEM: 2 redirects in a row
+- /author/admin/: PROBLEM: lands on a page that is not indexable/canonical
+- /product-category/presentforpackningar/: PROBLEM: lands on a page that is not indexable/canonical
+- /product-category/okategoriserad/: PROBLEM: lands on a page that is not indexable/canonical
+- /product-category/honung/page/2/: PROBLEM: lands on a page that is not indexable/canonical
+- /blog/page/2/: PROBLEM: 2 redirects in a row
+- /en/product-category/gift-sets/: PROBLEM: lands on a page that is not indexable/canonical
+- /wp-content/uploads/2025/01/ekhonung.jpg: CHECK: 404
+- /wp-includes/js/jquery/jquery.min.js: CHECK: 404
+- /wp-login.php: CHECK: 404
+- /xmlrpc.php: CHECK: 404
+- /product-tag/honung/: PROBLEM: 2 redirects in a row
+- /sitemap_index.xml: CHECK: 404
+- /product-sitemap.xml: CHECK: 404
+- /en/feed/: PROBLEM: redirects to a 404
+- /page-sitemap.xml: CHECK: 404
+- /product/ekhonung/feed/: PROBLEM: 2 redirects in a row
+- /wp-sitemap.xml: CHECK: 404
+
+### status codes
+
+- /this-page-does-not-exist (random page without language): HTTP 307, expected 404
+- /de/shop (unsupported language): HTTP 307, expected 404
+- /wp-admin/admin-ajax.php (WordPress admin): HTTP 404, expected 410
+- /xmlrpc.php (XML-RPC): HTTP 404, expected 410
+- /wp-content/uploads/2024/05/honung.jpg (WordPress upload): HTTP 404, expected 410
+
+### root
+
+- / with Accept-Language: el: 403 → , expected 307 → /el
+- / with Accept-Language: de (unsupported): 403 → , expected 307 → /en
+- / with cookie NEXT_LOCALE=sv: 403 → , expected 307 → /sv
+
+### robots.txt
+
+- Sitemap line is "https://mattheosselections.com/sitemap.xml", expected https://www.mattheosselections.com/sitemap.xml
+
+### hosts
+
+- http://mattheosselections.com/: 308 → https://mattheosselections.com/ ⟶ 308 → https://www.mattheosselections.com/ ⟶ 307 → https://www.mattheosselections.com/en ⟶ 200
+- http://mattheosselections.com/sv/shop: 308 → https://mattheosselections.com/sv/shop ⟶ 308 → https://www.mattheosselections.com/sv/shop ⟶ 200
+- http://mattheosselections.com/product/ekhonung/: 308 → https://mattheosselections.com/product/ekhonung/ ⟶ 308 → https://www.mattheosselections.com/product/ekhonung/ ⟶ 301 → https://www.mattheosselections.com/sv/product/ekhonung ⟶ 200
+
+## robots.txt
+
+```
+User-Agent: *
+Allow: /
+Disallow: /admin
+Disallow: /api/
+
+Sitemap: https://mattheosselections.com/sitemap.xml
+```

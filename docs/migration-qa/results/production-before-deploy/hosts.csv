@@ -1,0 +1,13 @@
+url,chain,final_url,final_status
+http://mattheosselections.com/,308 → https://mattheosselections.com/ ⟶ 308 → https://www.mattheosselections.com/ ⟶ 307 → https://www.mattheosselections.com/en ⟶ 200,https://www.mattheosselections.com/en,200
+https://mattheosselections.com/,308 → https://www.mattheosselections.com/ ⟶ 307 → https://www.mattheosselections.com/en ⟶ 200,https://www.mattheosselections.com/en,200
+http://www.mattheosselections.com/,308 → https://www.mattheosselections.com/ ⟶ 307 → https://www.mattheosselections.com/en ⟶ 200,https://www.mattheosselections.com/en,200
+https://www.mattheosselections.com/,307 → https://www.mattheosselections.com/en ⟶ 200,https://www.mattheosselections.com/en,200
+http://mattheosselections.com/sv/shop,308 → https://mattheosselections.com/sv/shop ⟶ 308 → https://www.mattheosselections.com/sv/shop ⟶ 200,https://www.mattheosselections.com/sv/shop,200
+https://mattheosselections.com/sv/shop,308 → https://www.mattheosselections.com/sv/shop ⟶ 200,https://www.mattheosselections.com/sv/shop,200
+http://www.mattheosselections.com/sv/shop,308 → https://www.mattheosselections.com/sv/shop ⟶ 200,https://www.mattheosselections.com/sv/shop,200
+https://www.mattheosselections.com/sv/shop,200,https://www.mattheosselections.com/sv/shop,200
+http://mattheosselections.com/product/ekhonung/,308 → https://mattheosselections.com/product/ekhonung/ ⟶ 308 → https://www.mattheosselections.com/product/ekhonung/ ⟶ 301 → https://www.mattheosselections.com/sv/product/ekhonung ⟶ 200,https://www.mattheosselections.com/sv/product/ekhonung,200
+https://mattheosselections.com/product/ekhonung/,308 → https://www.mattheosselections.com/product/ekhonung/ ⟶ 301 → https://www.mattheosselections.com/sv/product/ekhonung ⟶ 200,https://www.mattheosselections.com/sv/product/ekhonung,200
+http://www.mattheosselections.com/product/ekhonung/,308 → https://www.mattheosselections.com/product/ekhonung/ ⟶ 301 → https://www.mattheosselections.com/sv/product/ekhonung ⟶ 200,https://www.mattheosselections.com/sv/product/ekhonung,200
+https://www.mattheosselections.com/product/ekhonung/,301 → https://www.mattheosselections.com/sv/product/ekhonung ⟶ 200,https://www.mattheosselections.com/sv/product/ekhonung,200
