@@ -175,6 +175,7 @@ const sv = {
     viewDetails: 'Visa detaljer',
     inclVat: 'inkl. moms',
     approxEuro: 'Ca {amount}',
+    fromPrice: 'Från {price}',
     addToWishlist: 'Spara i önskelista',
     removeFromWishlist: 'Ta bort från önskelista',
     size: 'Storlek',

@@ -175,6 +175,7 @@ const el = {
     viewDetails: 'Λεπτομέρειες',
     inclVat: 'συμπ. ΦΠΑ',
     approxEuro: 'Περίπου {amount}',
+    fromPrice: 'Από {price}',
     addToWishlist: 'Αποθήκευση στα αγαπημένα',
     removeFromWishlist: 'Αφαίρεση από τα αγαπημένα',
     size: 'Μέγεθος',

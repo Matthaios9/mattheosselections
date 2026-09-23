@@ -175,6 +175,7 @@ const en = {
     viewDetails: 'View details',
     inclVat: 'incl. VAT',
     approxEuro: 'Approx. {amount}',
+    fromPrice: 'From {price}',
     addToWishlist: 'Save to wishlist',
     removeFromWishlist: 'Remove from wishlist',
     size: 'Size',

@@ -19,10 +19,17 @@ export default function ProductCard({ product, imageSizes, preload = false }) {
   const { t, price, euro, href } = useI18n();
   const { openQuickView } = useUI();
   const addToCart = useAddToCart();
-  const [variantId, setVariantId] = useState(product.defaultVariant);
+  // null until the customer picks a size; until then the card shows the default size's details.
+  const [variantId, setVariantId] = useState(null);
 
-  const variant = product.variants.find((item) => item.id === variantId) ?? product.variants[0];
+  const selectedId = variantId ?? product.defaultVariant;
+  const variant = product.variants.find((item) => item.id === selectedId) ?? product.variants[0];
   const hasOptions = product.variants.length > 1;
+  const prices = product.variants.map((item) => item.price);
+  const minPrice = Math.min(...prices);
+  // Sizes at different prices show "From <lowest>" until one is picked, then that size's exact price.
+  const showFromPrice = variantId === null && minPrice !== Math.max(...prices);
+  const displayPrice = showFromPrice ? minPrice : variant.price;
   const soldOut = variant.stock <= 0;
   const lowStock = !soldOut && variant.stock <= storeConfig.lowStockThreshold;
   const openDetails = () => openQuickView(product, variant.id);
@@ -101,8 +108,8 @@ export default function ProductCard({ product, imageSizes, preload = false }) {
 
         <div className={styles.footer}>
           <span className={styles.price}>
-            {price(variant.price)}
-            <span className={styles.euro}>{t('common.approxEuro', { amount: euro(variant.price) })}</span>
+            {showFromPrice ? t('common.fromPrice', { price: price(displayPrice) }) : price(displayPrice)}
+            <span className={styles.euro}>{t('common.approxEuro', { amount: euro(displayPrice) })}</span>
           </span>
           {soldOut ? (
             // Sold out: open the quick view, where the customer can ask to be notified when it is back.
