@@ -1,5 +1,8 @@
 const cloudName = process.env.CLOUDINARY_CLOUD_NAME;
 
+// The one canonical host, as in siteConfig.url (src/config/site.js).
+const CANONICAL_HOST = 'www.mattheosselections.com';
+
 /** Sent with every page and API response (Vercel adds Strict-Transport-Security itself). */
 const SECURITY_HEADERS = [
   // No other site may show these pages in a frame (clickjacking); the Kustom checkout frame is embedded by us, not in us.
@@ -36,7 +39,16 @@ const nextConfig = {
     ],
   },
   async headers() {
-    return [{ source: '/:path*', headers: SECURITY_HEADERS }];
+    return [
+      { source: '/:path*', headers: SECURITY_HEADERS },
+      // The same site answers on *.vercel.app deployment URLs; keep those copies out of search results
+      // so Google never weighs them against the real host (duplicate / "Google chose different canonical").
+      {
+        source: '/:path*',
+        missing: [{ type: 'host', value: CANONICAL_HOST }],
+        headers: [{ key: 'X-Robots-Tag', value: 'noindex, nofollow' }],
+      },
+    ];
   },
 };
 
