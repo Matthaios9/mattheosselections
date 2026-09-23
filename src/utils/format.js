@@ -7,12 +7,14 @@ import { storeConfig } from '@/config/site';
  */
 
 /**
- * Deterministic price formatting (e.g. "1,900 kr" / "1 900 kr" / "1.900 kr"; with `decimals: 2`
- * "10.19 kr" / "10,19 kr"). Intl output differs slightly between Node and browsers (narrow no-break
- * spaces), which would cause hydration mismatches, so grouping is done by hand.
+ * Deterministic price formatting (e.g. "1,900 kr" / "1 900 kr" / "1.900 kr"). Öre show only when
+ * there are any — a discounted total such as "314.10 kr" or "0.90 kr" — unless `decimals` is given
+ * ("10.19 kr" / "10,19 kr" with `decimals: 2`). Intl output differs slightly between Node and browsers
+ * (narrow no-break spaces), which would cause hydration mismatches, so grouping is done by hand.
  */
-export function formatPrice(amount, locale, { decimals = 0 } = {}) {
-  return `${formatNumber(amount, locale, decimals)} ${storeConfig.currencySymbol}`;
+export function formatPrice(amount, locale, { decimals } = {}) {
+  const hasOre = Math.round((Number(amount) || 0) * 100) % 100 !== 0;
+  return `${formatNumber(amount, locale, decimals ?? (hasOre ? 2 : 0))} ${storeConfig.currencySymbol}`;
 }
 
 /**
