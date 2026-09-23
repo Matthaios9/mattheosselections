@@ -2,6 +2,7 @@ import 'server-only';
 import { connectToDatabase } from '@/server/db';
 import { Order, Product } from '@/server/models';
 import { calculateShipping } from '@/utils/shipping';
+import { isTestProduct } from '@/utils/test-product';
 import { vatRateFor } from '@/utils/vat';
 import { releaseStock, reserveStock, stockMoves } from './inventory';
 import { PaymentUpdateError, settleKustomPayment } from './settlement';
@@ -130,7 +131,7 @@ export async function priceCart({ items, country, locale, discountRate = 0 }) {
       variantLabel: localized(variant.label),
       image: variant.image || product.images?.[0]?.url || '',
       price: variant.price,
-      vatRate: vatRateFor(product.standardVat),
+      vatRate: isTestProduct(product.name) ? 0 : vatRateFor(product.standardVat),
       quantity: item.quantity,
       lineTotal: variant.price * item.quantity,
       ...(contents.length && {
@@ -165,7 +166,9 @@ export async function priceCart({ items, country, locale, discountRate = 0 }) {
   const subtotal = lines.reduce((sum, line) => sum + line.lineTotal, 0);
   // Shipping is worked out on the full subtotal on purpose: a discount must never push an order
   // back below the free-shipping threshold and hand the customer a fee they didn't have before.
-  const shippingFee = calculateShipping(subtotal, country);
+  // An order of nothing but the test product ships free, so a real payment can be tried for its price alone.
+  const testOnly = wanted.every((item) => isTestProduct(byId.get(item.productId)?.name));
+  const shippingFee = calculateShipping(subtotal, country, { testOnly });
   // A discount comes off each line rather than off the sum, so every line keeps its own VAT rate and
   // the order lines sent to Kustom add up to exactly the total below, to the öre.
   for (const line of lines) line.discount = discountOn(line.lineTotal, discountRate);

@@ -62,6 +62,7 @@ function CartStateProvider({ children }) {
           image: variant?.image ?? (settled && !product ? null : item.image),
           // The live rate, falling back to the one saved when the item was added (see utils/vat.js).
           vatRate: product?.vatRate ?? item.vatRate ?? storeConfig.vatRate,
+          testProduct: product?.testProduct ?? item.testProduct ?? false,
           maxQuantity: product ? (variant?.stock ?? 0) : settled ? 0 : (item.stock ?? item.quantity),
         };
       })
@@ -93,6 +94,7 @@ function CartStateProvider({ children }) {
         image: variant.image,
         stock: variant.stock,
         vatRate: product.vatRate,
+        testProduct: product.testProduct,
       },
       units
     );

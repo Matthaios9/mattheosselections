@@ -64,7 +64,8 @@ export default function CheckoutModal() {
   const claiming = Boolean(offer?.canJoinToClaim && form.values.joinEmailList);
   const discount = offer?.eligible || claiming ? Math.round(cart.subtotal * (offer.percent / 100) * 100) / 100 : 0;
   const goods = cart.subtotal - discount;
-  const shipping = calculateShipping(cart.subtotal, form.values.country);
+  const testOnly = cart.items.length > 0 && cart.items.every((item) => item.testProduct);
+  const shipping = calculateShipping(cart.subtotal, form.values.country, { testOnly });
   const total = goods + shipping;
   // VAT per rate: honey and olive oil are food, beeswax and the like are not (see utils/vat.js).
   // The offer comes off every line by the same percentage, so each rate's share shrinks with it.

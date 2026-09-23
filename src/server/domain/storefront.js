@@ -11,6 +11,7 @@ import { isObjectId, pageParams, pageResult, toId, toIso } from '@/server/utils'
 import { pickLocalized } from '@/utils/localize';
 import { categorySlug } from '@/utils/slug';
 import { splitList } from '@/utils/url';
+import { isTestProduct } from '@/utils/test-product';
 import { vatRateFor } from '@/utils/vat';
 
 /**
@@ -72,6 +73,7 @@ function localizeProduct(doc, categoriesById, locale) {
   const preferred = variants.find((variant) => variant.id === doc.defaultVariant);
   // Pre-select the default size, or the first size that is still in stock.
   const selected = preferred?.stock > 0 ? preferred : (variants.find((variant) => variant.stock > 0) ?? preferred ?? variants[0]);
+  const testProduct = isTestProduct(doc.name);
 
   return {
     id: toId(doc._id),
@@ -81,7 +83,8 @@ function localizeProduct(doc, categoriesById, locale) {
     categorySlug: category ? categorySlug(category) : null,
     categoryName: category ? pickLocalized(category.name, locale) : '',
     price: doc.price,
-    vatRate: vatRateFor(doc.standardVat),
+    vatRate: testProduct ? 0 : vatRateFor(doc.standardVat),
+    testProduct,
     image,
     variants,
     defaultVariant: selected?.id ?? '',

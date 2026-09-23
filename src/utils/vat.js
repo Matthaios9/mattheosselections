@@ -19,7 +19,8 @@ export const vatRateFor = (standardVat) => (standardVat ? storeConfig.standardVa
 export function vatBreakdown(parts) {
   const byRate = new Map();
   for (const { amount, rate } of parts) {
-    if (!amount) continue;
+    // Nothing to show for an empty amount, or for the test product, which is sold without VAT.
+    if (!amount || rate === 0) continue;
     const key = rate ?? storeConfig.vatRate;
     // Each line's VAT is rounded on its own and the rounded figures are added up — the order Kustom
     // works in (total_tax_amount per order line). Adding first and rounding once would leave the VAT
