@@ -4,8 +4,8 @@
  * price ranges, sizes and stock; the shop itself only offers categories and sorting.
  */
 
-export const SORT_OPTIONS = ['featured', 'popularity', 'newest', 'price-asc', 'price-desc'];
-export const DEFAULT_SORT = 'featured';
+export const SORT_OPTIONS = ['popularity', 'featured', 'newest', 'price-asc', 'price-desc'];
+export const DEFAULT_SORT = 'popularity';
 
 export const PRICE_RANGES = [
   { id: 'under-150', max: 150 },

@@ -22,12 +22,23 @@ import { vatRateFor } from '@/utils/vat';
 const PLACEHOLDER_IMAGE = '/images/editorial/honeycomb-close.jpg';
 export const MAX_PAGE_SIZE = 48;
 
+// Every order lists available products first, sold-out ones last. "Best selling" and "Featured" then put
+// products with the Bestseller badge on top.
 const SORTS = {
-  featured: { inStock: -1, featured: -1, soldCount: -1, createdAt: -1, _id: 1 },
-  popularity: { inStock: -1, soldCount: -1, featured: -1, createdAt: -1, _id: 1 },
-  newest: { inStock: -1, createdAt: -1, _id: 1 },
-  'price-asc': { inStock: -1, price: 1, _id: 1 },
-  'price-desc': { inStock: -1, price: -1, _id: 1 },
+  featured: { available: -1, bestseller: -1, featured: -1, soldCount: -1, createdAt: -1, _id: 1 },
+  popularity: { available: -1, bestseller: -1, soldCount: -1, featured: -1, createdAt: -1, _id: 1 },
+  newest: { available: -1, createdAt: -1, _id: 1 },
+  'price-asc': { available: -1, price: 1, _id: 1 },
+  'price-desc': { available: -1, price: -1, _id: 1 },
+};
+
+// `available` is worked out from the sizes' stock, exactly as the card's "Sold out" badge is, rather
+// than the stored `inStock` flag, so a product shown as sold out can never sort among available ones.
+const SORT_FIELDS = {
+  $addFields: {
+    available: { $anyElementTrue: [{ $map: { input: { $ifNull: ['$variants', []] }, as: 'v', in: { $gt: ['$$v.stock', 0] } } }] },
+    bestseller: { $eq: ['$badge', 'bestseller'] },
+  },
 };
 
 const toObjectId = (id) => new mongoose.Types.ObjectId(String(id));
@@ -194,7 +205,7 @@ export async function searchStoreProducts({
   const sortSpec = SORTS[SORT_OPTIONS.includes(sort) ? sort : DEFAULT_SORT];
 
   const facetStages = {
-    results: [{ $match: matchAll(conditions) }, { $sort: sortSpec }, { $skip: paging.skip }, { $limit: paging.pageSize }],
+    results: [{ $match: matchAll(conditions) }, SORT_FIELDS, { $sort: sortSpec }, { $skip: paging.skip }, { $limit: paging.pageSize }],
     total: [{ $match: matchAll(conditions) }, { $count: 'count' }],
   };
   if (facets) {
