@@ -1,6 +1,6 @@
 'use client';
 
-import Image from 'next/image';
+import CloudinaryImage from '@/components/common/CloudinaryImage';
 import { PiTrash } from 'react-icons/pi';
 import QuantityStepper from '@/components/common/QuantityStepper';
 import { useI18n } from '@/i18n/I18nProvider';
@@ -12,7 +12,7 @@ export default function CartLine({ item, onQuantityChange, onRemove, compact = f
   return (
     <li className={`${styles.line} ${compact ? styles.compact : ''}`}>
       <div className={styles.thumb}>
-        {item.image && <Image src={item.image} alt="" fill sizes="96px" className={styles.image} />}
+        {item.image && <CloudinaryImage src={item.image} alt="" fill sizes="96px" className={styles.image} />}
       </div>
       <div className={styles.info}>
         <div className={styles.top}>

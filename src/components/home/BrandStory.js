@@ -17,7 +17,7 @@ export default function BrandStory({ copy, href }) {
                 src={PHOTOS.hivesChestnutGrove}
                 alt={copy.imageCaption}
                 fill
-                sizes="(min-width: 992px) 45vw, 100vw"
+                sizes="(min-width: 1400px) 600px, (min-width: 992px) 45vw, 100vw"
                 className="img-cover"
               />
             </div>

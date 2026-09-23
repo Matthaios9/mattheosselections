@@ -1,6 +1,6 @@
 'use client';
 
-import Image from 'next/image';
+import CloudinaryImage from '@/components/common/CloudinaryImage';
 import { PiPlus } from 'react-icons/pi';
 import { useUI } from '@/context/UIContext';
 import { useAddToCart } from '@/hooks/useAddToCart';
@@ -21,7 +21,7 @@ export default function HeroProductCard({ product, label }) {
         onClick={() => openQuickView(product)}
         aria-label={`${t('common.quickView')}: ${product.name}`}
       >
-        <Image src={product.image} alt="" fill sizes="72px" className="img-cover" />
+        <CloudinaryImage src={product.image} alt="" fill sizes="72px" className="img-cover" />
       </button>
       <div className={styles.productInfo}>
         <span className={styles.productLabel}>{label}</span>

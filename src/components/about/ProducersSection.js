@@ -31,7 +31,7 @@ export default function ProducersSection({ copy }) {
               src="/images/editorial/meteora-kalabaka.jpg"
               alt={copy.caption}
               fill
-              sizes="(min-width: 992px) 55vw, 100vw"
+              sizes="(min-width: 1400px) 730px, (min-width: 992px) 55vw, 100vw"
               className="img-cover"
             />
             <span className={styles.caption}>

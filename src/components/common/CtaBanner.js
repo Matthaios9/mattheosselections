@@ -11,7 +11,7 @@ export default function CtaBanner({ title, text, primary, secondary, image }) {
     <section className="section">
       <Container>
         <Reveal className={styles.banner}>
-          <Image src={image} alt="" fill sizes="100vw" className={styles.image} />
+          <Image src={image} alt="" fill sizes="(min-width: 1400px) 1320px, 100vw" className={styles.image} />
           <div className={styles.overlay} aria-hidden="true" />
           <div className={styles.content}>
             <h2 className={styles.title}>{title}</h2>

@@ -43,7 +43,7 @@ export default function Newsletter() {
     <section className="section">
       <Container>
         <Reveal className={styles.panel}>
-          <Image src="/images/editorial/honeycomb-warm.jpg" alt="" fill sizes="100vw" className={styles.texture} />
+          <Image src="/images/editorial/honeycomb-warm.jpg" alt="" fill sizes="(min-width: 1400px) 1320px, 100vw" className={styles.texture} />
           <div className={styles.shade} aria-hidden="true" />
           <div className={styles.inner}>
             <div className={styles.copy}>

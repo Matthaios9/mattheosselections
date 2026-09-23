@@ -1,4 +1,4 @@
-import Image from 'next/image';
+import CloudinaryImage from '@/components/common/CloudinaryImage';
 import Link from 'next/link';
 import { PiArrowUpRight } from 'react-icons/pi';
 import styles from './CategoryShowcase.module.css';
@@ -6,11 +6,11 @@ import styles from './CategoryShowcase.module.css';
 export default function CategoryCard({ category, href, countLabel, cta, featured = false }) {
   return (
     <Link href={href} className={`${styles.card} ${featured ? styles.featured : ''}`}>
-      <Image
+      <CloudinaryImage
         src={category.image}
         alt=""
         fill
-        sizes={featured ? '(min-width: 992px) 40vw, 100vw' : '(min-width: 992px) 28vw, 50vw'}
+        sizes={featured ? '(min-width: 1400px) 530px, (min-width: 992px) 40vw, 100vw' : '(min-width: 1400px) 370px, (min-width: 992px) 28vw, 50vw'}
         className={styles.image}
       />
       <span className={styles.overlay} aria-hidden="true" />

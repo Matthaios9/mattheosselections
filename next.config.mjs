@@ -18,6 +18,11 @@ const nextConfig = {
   images: {
     // Next 16 requires an explicit allowlist. 85 is used for large hero imagery.
     qualities: [75, 85],
+    // AVIF where the browser supports it (smaller than WebP), WebP otherwise.
+    formats: ['image/avif', 'image/webp'],
+    // Widest image generated: the default goes up to 3840px, far beyond what a full-width photo on a
+    // high-density laptop screen needs. Also caps the widths CloudinaryImage asks Cloudinary for.
+    deviceSizes: [640, 750, 828, 1080, 1200, 1920, 2560],
     // Optimized images may be cached by browsers for 31 days. The editorial photos in /public rarely change;
     // give a replaced photo a new file name so visitors get it at once.
     minimumCacheTTL: 2678400,

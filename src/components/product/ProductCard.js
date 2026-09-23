@@ -1,7 +1,7 @@
 'use client';
 
 import { useState } from 'react';
-import Image from 'next/image';
+import CloudinaryImage from '@/components/common/CloudinaryImage';
 import Link from 'next/link';
 import Badge from 'react-bootstrap/Badge';
 import Button from 'react-bootstrap/Button';
@@ -40,13 +40,13 @@ export default function ProductCard({ product, imageSizes, preload = false }) {
       <div className={styles.media}>
         {/* Same destination as the title link, so it is skipped by keyboard and screen readers. */}
         <Link href={pageHref} className={styles.imageLink} tabIndex={-1} aria-hidden="true">
-          <Image
+          <CloudinaryImage
             key={variant.image}
             src={variant.image}
             alt={product.name}
             fill
             preload={preload}
-            sizes={imageSizes ?? '(min-width: 1200px) 25vw, (min-width: 768px) 33vw, 50vw'}
+            sizes={imageSizes ?? '(min-width: 1400px) 310px, (min-width: 1200px) 25vw, (min-width: 768px) 33vw, 50vw'}
             className={styles.image}
           />
         </Link>

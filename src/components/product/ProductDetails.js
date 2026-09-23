@@ -1,7 +1,7 @@
 'use client';
 
 import { useState } from 'react';
-import Image from 'next/image';
+import CloudinaryImage from '@/components/common/CloudinaryImage';
 import Link from 'next/link';
 import Accordion from 'react-bootstrap/Accordion';
 import Badge from 'react-bootstrap/Badge';
@@ -57,7 +57,7 @@ export default function ProductDetails({ product, initialVariant, onClose, varia
       <div className={styles.gallery}>
         <div className={styles.galleryInner}>
           <div className={styles.mainImage}>
-            <Image
+            <CloudinaryImage
               key={variant.image}
               src={variant.image}
               alt={product.name}
@@ -83,7 +83,7 @@ export default function ProductDetails({ product, initialVariant, onClose, varia
                   onClick={() => setVariantId(item.id)}
                   aria-label={`${product.name} ${item.label}`}
                 >
-                  <Image src={item.image} alt="" fill sizes="80px" className={styles.image} />
+                  <CloudinaryImage src={item.image} alt="" fill sizes="80px" className={styles.image} />
                 </button>
               ))}
             </div>

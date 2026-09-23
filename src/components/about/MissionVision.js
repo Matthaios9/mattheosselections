@@ -18,7 +18,7 @@ export default function MissionVision({ mission, vision }) {
             <CardBody {...cards[0]} />
           </Reveal>
           <Reveal className={styles.image} delay={100}>
-            <Image src="/images/editorial/olive-tree.jpg" alt="" fill sizes="(min-width: 992px) 30vw, 100vw" className="img-cover" />
+            <Image src="/images/editorial/olive-tree.jpg" alt="" fill sizes="(min-width: 1400px) 400px, (min-width: 992px) 30vw, 100vw" className="img-cover" />
           </Reveal>
           <Reveal className={`${styles.card} ${styles.second}`} delay={200}>
             <CardBody {...cards[1]} />

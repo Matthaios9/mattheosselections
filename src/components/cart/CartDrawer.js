@@ -1,6 +1,6 @@
 'use client';
 
-import Image from 'next/image';
+import CloudinaryImage from '@/components/common/CloudinaryImage';
 import Link from 'next/link';
 import Button from 'react-bootstrap/Button';
 import Offcanvas from 'react-bootstrap/Offcanvas';
@@ -87,7 +87,7 @@ export default function CartDrawer() {
                   return (
                     <div key={product.id} className={styles.upsellItem}>
                       <div className={styles.upsellThumb}>
-                        <Image src={variant.image} alt="" fill sizes="64px" className="img-cover" />
+                        <CloudinaryImage src={variant.image} alt="" fill sizes="64px" className="img-cover" />
                       </div>
                       <div className={styles.upsellInfo}>
                         <span className={styles.upsellName}>{product.name}</span>

@@ -1,7 +1,7 @@
 'use client';
 
 import { useRef, useState } from 'react';
-import Image from 'next/image';
+import CloudinaryImage from '@/components/common/CloudinaryImage';
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
 import Container from 'react-bootstrap/Container';
@@ -120,7 +120,7 @@ export default function SearchOverlay() {
                   <li key={product.id}>
                     <button type="button" className={styles.result} onClick={() => openProduct(product)}>
                       <span className={styles.thumb}>
-                        <Image src={product.image} alt="" fill sizes="80px" className="img-cover" />
+                        <CloudinaryImage src={product.image} alt="" fill sizes="80px" className="img-cover" />
                       </span>
                       <span className={styles.info}>
                         <span className={styles.category}>{product.categoryName}</span>

@@ -15,7 +15,7 @@ export default function StorySection({ copy }) {
                 src="/images/brand/founder.jpg"
                 alt={`${copy.signature} — ${copy.role}`}
                 fill
-                sizes="(min-width: 992px) 32vw, 80vw"
+                sizes="(min-width: 1400px) 425px, (min-width: 992px) 32vw, 80vw"
                 className="img-cover"
               />
             </div>

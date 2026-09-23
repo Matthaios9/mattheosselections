@@ -24,7 +24,7 @@ export default function Testimonials({ className = 'bg-sand' }) {
         <div className={styles.grid}>
           <Reveal className={styles.visual}>
             <div className={styles.image}>
-              <CloudinaryImage src={PHOTOS.beekeepersHillside} alt="" fill sizes="(min-width: 992px) 30vw, 80vw" className="img-cover" />
+              <CloudinaryImage src={PHOTOS.beekeepersHillside} alt="" fill sizes="(min-width: 1400px) 400px, (min-width: 992px) 30vw, 80vw" className="img-cover" />
             </div>
             <span className={styles.quoteBadge} aria-hidden="true">
               <PiQuotes />

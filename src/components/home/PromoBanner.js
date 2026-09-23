@@ -1,4 +1,3 @@
-import Image from 'next/image';
 import Container from 'react-bootstrap/Container';
 import { PiArrowRight, PiGift, PiSealCheck } from 'react-icons/pi';
 import ButtonLink from '@/components/common/ButtonLink';
@@ -48,12 +47,12 @@ export default function PromoBanner({ copy, product, href, locale }) {
               src={PHOTOS.hiveWildComb}
               alt=""
               fill
-              sizes="(min-width: 992px) 50vw, 100vw"
+              sizes="(min-width: 1400px) 660px, (min-width: 992px) 50vw, 100vw"
               className={styles.backdrop}
             />
             <figure className={styles.product}>
               <span className={styles.productImage}>
-                <Image src={product.image} alt={product.name} fill sizes="(min-width: 992px) 300px, 60vw" className="img-cover" />
+                <CloudinaryImage src={product.image} alt={product.name} fill sizes="(min-width: 992px) 300px, 60vw" className="img-cover" />
               </span>
               <figcaption className={styles.caption}>
                 <span>{product.name}</span>

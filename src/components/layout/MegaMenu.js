@@ -1,6 +1,6 @@
 'use client';
 
-import Image from 'next/image';
+import CloudinaryImage from '@/components/common/CloudinaryImage';
 import Link from 'next/link';
 import Container from 'react-bootstrap/Container';
 import { PiArrowRight } from 'react-icons/pi';
@@ -40,7 +40,7 @@ export default function MegaMenu({ onNavigate }) {
 
         {tiles.map((category) => (
           <Link key={category.id} href={href(`/shop/${category.slug}`)} className={styles.tile} onClick={onNavigate}>
-            <Image src={category.image} alt="" fill sizes="280px" className={styles.tileImage} />
+            <CloudinaryImage src={category.image} alt="" fill sizes="280px" className={styles.tileImage} />
             <span className={styles.tileOverlay} aria-hidden="true" />
             <span className={styles.tileText}>
               <span className={styles.tileName}>{category.name}</span>
@@ -53,7 +53,7 @@ export default function MegaMenu({ onNavigate }) {
           <Link href={href(`/product/${pick.slug}`)} className={styles.pick} onClick={onNavigate}>
             <p className={styles.heading}>{t('nav.editorsPick')}</p>
             <span className={styles.pickImage}>
-              <Image src={pick.image} alt="" fill sizes="220px" className="img-cover" />
+              <CloudinaryImage src={pick.image} alt="" fill sizes="220px" className="img-cover" />
             </span>
             <span className={styles.pickName}>{pick.name}</span>
             <span className={styles.pickPrice}>{price(pick.price)}</span>

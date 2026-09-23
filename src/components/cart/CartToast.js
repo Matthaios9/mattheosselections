@@ -1,6 +1,6 @@
 'use client';
 
-import Image from 'next/image';
+import CloudinaryImage from '@/components/common/CloudinaryImage';
 import Toast from 'react-bootstrap/Toast';
 import ToastContainer from 'react-bootstrap/ToastContainer';
 import { PiCheckCircleFill, PiWarningCircleFill, PiX } from 'react-icons/pi';
@@ -19,7 +19,7 @@ export default function CartToast() {
         {toast && (
           <div className={styles.inner}>
             <div className={styles.thumb}>
-              <Image src={toast.variant.image} alt="" fill sizes="64px" className="img-cover" />
+              <CloudinaryImage src={toast.variant.image} alt="" fill sizes="64px" className="img-cover" />
             </div>
             <div className={styles.info}>
               {toast.limit ? (

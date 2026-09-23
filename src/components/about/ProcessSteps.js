@@ -15,12 +15,12 @@ export default function ProcessSteps({ copy }) {
                 src={PHOTOS.beekeepersSmoker}
                 alt=""
                 fill
-                sizes="(min-width: 992px) 30vw, 100vw"
+                sizes="(min-width: 1400px) 400px, (min-width: 992px) 30vw, 100vw"
                 className="img-cover"
               />
             </Reveal>
             <Reveal className={styles.imageSmall} delay={150}>
-              <CloudinaryImage src={PHOTOS.hiveWildComb} alt="" fill sizes="(min-width: 992px) 16vw, 45vw" className="img-cover" />
+              <CloudinaryImage src={PHOTOS.hiveWildComb} alt="" fill sizes="(min-width: 1400px) 215px, (min-width: 992px) 16vw, 45vw" className="img-cover" />
             </Reveal>
           </div>
 

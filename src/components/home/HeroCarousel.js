@@ -32,7 +32,7 @@ export default function HeroCarousel({ alt, slideLabel }) {
               loading={i === 0 ? 'eager' : 'lazy'}
               fetchPriority={i === 0 ? 'high' : undefined}
               quality={85}
-              sizes="(min-width: 992px) 38vw, 86vw"
+              sizes="(min-width: 992px) 470px, (min-width: 576px) 420px, 84vw"
               className={styles.archImage}
               style={{ objectPosition: slide.position }}
             />
