@@ -44,6 +44,7 @@ url,type,source
 "/product/bivaxkram/?v=7516fd43adaa","product + WooCommerce ?v= parameter","WooCommerce cache-busting parameter"
 "/product/bivaxkram","product without trailing slash","trailing-slash variant"
 "/en/product/ekhonung/?add-to-cart=2694","product + add-to-cart parameter","WooCommerce add-to-cart link"
+"/en?berqwp_request_cache&v=efad7abb323e&add-to-cart=179","home + BerqWP cache parameters","Search Console: duplicate without user-selected canonical"
 "/product/EKHONUNG/","product, uppercase slug","case variant"
 "/","home (Swedish)","WordPress/WooCommerce route"
 "/en/","home (English)","WordPress/WooCommerce route"

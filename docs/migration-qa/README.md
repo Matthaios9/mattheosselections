@@ -372,7 +372,7 @@ and what is still open.
 - **Changed:**
   - WooCommerce parameters are removed with a 301, and on an old URL in the same 301 as the path redirect: `v`,
     `add-to-cart`, `variation_id`, `orderby`, `paged`, `product-page`, `post_type`, `wc-ajax`, `replytocom`, `amp`,
-    `attribute_*`, `filter_*` and `query_type_*`.
+    `attribute_*`, `filter_*`, `query_type_*` and the BerqWP cache plugin's `berqwp_*`.
   - Campaign parameters (`utm_*`, `gclid`, `fbclid`, `msclkid`) are kept, so attribution survives.
   - Any other parameter leaves the page's canonical unchanged.
 - **Verified:**
@@ -383,6 +383,7 @@ and what is still open.
   | `/en/product/ekhonung?v=1&utm_source=newsletter` | 301 → `/en/product/ekhonung?utm_source=newsletter` |
   | `/en/product/ekhonung/?add-to-cart=2694` | 301 → `/en/product/ekhonung` |
   | `/shop/?orderby=price` | 301 → `/sv/shop` |
+  | `/en?berqwp_request_cache&v=efad7abb323e&add-to-cart=179` | 301 → `/en` |
 
   Each ends in 200 with a self-canonical.
 

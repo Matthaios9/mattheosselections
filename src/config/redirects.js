@@ -67,7 +67,8 @@ const OLD_SITEMAP = /^\/(sitemap_index|wp-sitemap[\w-]*|[\w-]+-sitemap\d*)\.xml$
 
 /** WooCommerce query parameters that mean nothing on the new site; stripped with a 301. */
 const OBSOLETE_PARAMS = ['v', 'add-to-cart', 'variation_id', 'orderby', 'paged', 'product-page', 'post_type', 'wc-ajax', 'replytocom', 'amp'];
-const OBSOLETE_PARAM_PREFIXES = ['attribute_', 'filter_', 'query_type_'];
+// berqwp_: the old site's BerqWP cache plugin (?berqwp_request_cache&v=…), whose URLs Google still crawls.
+const OBSOLETE_PARAM_PREFIXES = ['attribute_', 'filter_', 'query_type_', 'berqwp_'];
 
 /** True for a query parameter the new site doesn't use (?v=…, ?add-to-cart=…, ?attribute_pa_size=…). */
 export const isObsoleteParam = (key) => OBSOLETE_PARAMS.includes(key) || OBSOLETE_PARAM_PREFIXES.some((prefix) => key.startsWith(prefix));
