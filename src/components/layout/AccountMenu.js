@@ -33,7 +33,7 @@ export default function AccountMenu({ className = '' }) {
           <>
             <div className={styles.head}>
               <span className={styles.avatarLg}>{initialLetter}</span>
-              <div>
+              <div className={styles.headText}>
                 <p className={styles.title}>{t('account.greeting', { name: user.name })}</p>
                 <p className={styles.text}>{t('account.memberText', { email: user.email })}</p>
               </div>

@@ -176,6 +176,22 @@
   --bs-btn-padding-y: 0.85rem;
 }
 
+/* Quick view on phones: stepper and heart share a row, the add button takes the full width below. */
+@media (max-width: 575.98px) {
+  .modal .actions {
+    flex-wrap: wrap;
+  }
+
+  .modal .addButton {
+    order: 1;
+    flex-basis: 100%;
+  }
+
+  .modal .actions > :last-child {
+    margin-inline-start: auto;
+  }
+}
+
 .stock {
   display: flex;
   align-items: center;

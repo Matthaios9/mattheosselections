@@ -84,24 +84,22 @@ export default function SignupForm({ onSwitch, onSuccess }) {
         error={errorText('email')}
       />
 
-      <div className={styles.twoCol}>
-        <PasswordField
-          id="signup-password"
-          label={t('auth.fields.password')}
-          placeholder={t('auth.placeholders.password')}
-          autoComplete="new-password"
-          {...form.field('password')}
-          error={errorText('password')}
-        />
-        <PasswordField
-          id="signup-confirm"
-          label={t('auth.fields.confirmPassword')}
-          placeholder={t('auth.placeholders.confirmPassword')}
-          autoComplete="new-password"
-          {...form.field('confirmPassword')}
-          error={errorText('confirmPassword')}
-        />
-      </div>
+      <PasswordField
+        id="signup-password"
+        label={t('auth.fields.password')}
+        placeholder={t('auth.placeholders.password')}
+        autoComplete="new-password"
+        {...form.field('password')}
+        error={errorText('password')}
+      />
+      <PasswordField
+        id="signup-confirm"
+        label={t('auth.fields.confirmPassword')}
+        placeholder={t('auth.placeholders.confirmPassword')}
+        autoComplete="new-password"
+        {...form.field('confirmPassword')}
+        error={errorText('confirmPassword')}
+      />
 
       <Button type="submit" variant="ms-dark" size="lg" className="w-100" disabled={submitting}>
         {submitting && <Spinner animation="border" size="sm" aria-hidden="true" />}

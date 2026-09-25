@@ -53,7 +53,7 @@ export default function ProductDetails({ product, initialVariant, onClose, varia
   };
 
   return (
-    <div className={`${styles.layout} ${isPage ? styles.page : ''}`}>
+    <div className={`${styles.layout} ${isPage ? styles.page : styles.modal}`}>
       <div className={styles.gallery}>
         <div className={styles.galleryInner}>
           <div className={styles.mainImage}>

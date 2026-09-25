@@ -215,17 +215,6 @@
   color: var(--ms-ink);
 }
 
-.twoCol {
-  display: grid;
-  gap: 1.1rem;
-}
-
-@media (min-width: 576px) {
-  .twoCol {
-    grid-template-columns: 1fr 1fr;
-  }
-}
-
 .textLink {
   padding: 0;
   border: 0;

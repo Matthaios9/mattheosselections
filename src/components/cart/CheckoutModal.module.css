@@ -157,6 +157,13 @@
   border-top: 1px solid var(--ms-line);
 }
 
+@media (max-width: 575.98px) {
+  .footer .submit {
+    --bs-btn-padding-x: 1rem;
+    --bs-btn-font-size: 0.875rem;
+  }
+}
+
 .paymentNote {
   display: flex;
   align-items: center;

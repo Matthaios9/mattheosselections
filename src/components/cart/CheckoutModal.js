@@ -390,7 +390,7 @@ export default function CheckoutModal() {
             <p className={styles.paymentNote}>
               <PiLockSimple aria-hidden="true" /> {t('checkout.paymentNote')}
             </p>
-            <Button type="submit" variant="ms-dark" size="lg" className="w-100" disabled={busy || cart.isEmpty}>
+            <Button type="submit" variant="ms-dark" size="lg" className={`w-100 ${styles.submit}`} disabled={busy || cart.isEmpty}>
               {status === 'opening' ? (
                 <>
                   <Spinner animation="border" size="sm" aria-hidden="true" />
