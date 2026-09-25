@@ -187,6 +187,15 @@ export const resetPasswordInput = z.object({
   password,
 }).strip();
 
+/** The signed-in customer's own details (Account → Profile). */
+export const profileInput = z.object({ name: z.string().trim().min(1, 'Name is required').max(120) }).strip();
+
+/** Account → Password: the current password proves it is really them, not someone at an unlocked screen. */
+export const changePasswordInput = z.object({
+  currentPassword: z.string().min(1, 'Enter your current password').max(200),
+  newPassword: password,
+}).strip();
+
 
 export const userRoleInput = z.object({ role: z.enum(USER_ROLES) });
 export const userStatusInput = z.object({ status: z.enum(USER_STATUSES) });

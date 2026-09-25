@@ -1,9 +1,10 @@
 'use client';
 
 import { useState } from 'react';
+import Link from 'next/link';
 import Button from 'react-bootstrap/Button';
 import Dropdown from 'react-bootstrap/Dropdown';
-import { PiSignOut, PiUser } from 'react-icons/pi';
+import { PiPackage, PiSignOut, PiUser, PiUserGear } from 'react-icons/pi';
 import DropdownToggleButton from '@/components/common/DropdownToggleButton';
 import { useAuth } from '@/context/AuthContext';
 import { useUI } from '@/context/UIContext';
@@ -12,7 +13,7 @@ import { initial } from '@/utils/format';
 import styles from './AccountMenu.module.css';
 
 export default function AccountMenu({ className = '' }) {
-  const { t } = useI18n();
+  const { t, href } = useI18n();
   const { user, logout } = useAuth();
   const { openAuth } = useUI();
   const [show, setShow] = useState(false);
@@ -38,6 +39,18 @@ export default function AccountMenu({ className = '' }) {
                 <p className={styles.text}>{t('account.memberText', { email: user.email })}</p>
               </div>
             </div>
+            <Dropdown.Divider />
+            <Dropdown.Item as={Link} href={href('/account')} onClick={() => setShow(false)} className={styles.item}>
+              <PiUserGear aria-hidden="true" /> {t('account.myAccount')}
+            </Dropdown.Item>
+            <Dropdown.Item
+              as={Link}
+              href={`${href('/account')}?tab=orders`}
+              onClick={() => setShow(false)}
+              className={styles.item}
+            >
+              <PiPackage aria-hidden="true" /> {t('account.myOrders')}
+            </Dropdown.Item>
             <Dropdown.Divider />
             <Dropdown.Item as="button" onClick={logout} className={styles.item}>
               <PiSignOut aria-hidden="true" /> {t('account.logout')}

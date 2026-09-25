@@ -207,6 +207,12 @@ export async function getOrder(id) {
   return doc ? serializeOrder(doc) : null;
 }
 
+/** What a customer may see of their own order: no admin notes, payment references or who changed what. */
+export function toCustomerOrder(order) {
+  const { adminNote, kustomOrderId, user, history, ...visible } = order;
+  return { ...visible, history: history.map(({ status, at }) => ({ status, at })) };
+}
+
 export async function listOrdersForUser(userId, limit = 50) {
   if (!isObjectId(userId)) return [];
   await connectToDatabase();

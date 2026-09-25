@@ -114,6 +114,23 @@ export async function updateUser(id, fields) {
   return doc ? serializeUser(doc) : null;
 }
 
+/**
+ * A signed-in customer changing their own password. The current one must match.
+ * Returns { ok: true } or { ok: false, reason: 'not-found' | 'wrong-password' }.
+ */
+export async function changePassword(userId, currentPassword, newPassword) {
+  if (!isObjectId(userId)) return { ok: false, reason: 'not-found' };
+  await connectToDatabase();
+  const user = await User.findById(userId).select('+passwordHash');
+  if (!user) return { ok: false, reason: 'not-found' };
+  if (!user.passwordHash || !(await verifyPassword(currentPassword, user.passwordHash))) {
+    return { ok: false, reason: 'wrong-password' };
+  }
+  user.passwordHash = await hashPassword(newPassword);
+  await user.save();
+  return { ok: true };
+}
+
 export async function deleteUser(id) {
   if (!isObjectId(id)) return false;
   await connectToDatabase();
