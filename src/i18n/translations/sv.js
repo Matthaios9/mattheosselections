@@ -222,6 +222,7 @@ const sv = {
       success: 'Tack! Vi mejlar {email} så snart den finns i lager igen.',
       errors: {
         email: 'Ange en giltig e-postadress.',
+        emailDomain: 'Den här e-postadressen kan inte ta emot e-post. Kontrollera att den är rättstavad.',
         inStock: 'Goda nyheter – storleken finns i lager igen. Ladda om sidan för att beställa.',
         unavailable: 'Vi kunde inte spara din bevakning just nu. Försök igen.',
       },
@@ -436,6 +437,7 @@ const sv = {
     error: 'Ange en giltig e-postadress.',
     failed: 'Vi kunde inte registrera dig just nu. Försök igen.',
     alreadySubscribed: 'Den här e-postadressen prenumererar redan på vårt nyhetsbrev.',
+    emailDomain: 'Den här e-postadressen kan inte ta emot e-post. Kontrollera att den är rättstavad.',
     privacy: 'Ingen spam. Avsluta när du vill.',
   },
 

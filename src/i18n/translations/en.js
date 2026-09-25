@@ -222,6 +222,7 @@ const en = {
       success: 'Thank you! We will email {email} as soon as it is back in stock.',
       errors: {
         email: 'Please enter a valid email address.',
+        emailDomain: "This email address can't receive email. Please check it for typos.",
         inStock: 'Good news — this size is back in stock. Please refresh the page to order it.',
         unavailable: 'We could not save your request right now. Please try again.',
       },
@@ -436,6 +437,7 @@ const en = {
     error: 'Please enter a valid email address.',
     failed: 'We could not sign you up right now. Please try again.',
     alreadySubscribed: 'This email is already subscribed to our newsletter.',
+    emailDomain: "This email address can't receive email. Please check it for typos.",
     privacy: 'No spam. Unsubscribe at any time.',
   },
 

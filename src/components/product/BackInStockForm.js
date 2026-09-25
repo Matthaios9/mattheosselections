@@ -13,7 +13,7 @@ import { getErrorCode } from '@/utils/errors';
 import { isEmail } from '@/utils/validation';
 import styles from './BackInStockForm.module.css';
 
-const ERRORS = { 'in-stock': 'inStock', validation: 'email' };
+const ERRORS = { 'in-stock': 'inStock', validation: 'email', 'email-domain': 'emailDomain' };
 
 /** "Notify me when available" for one sold-out size — the customer gets one email when it is back. */
 export default function BackInStockForm({ product, variant }) {

@@ -16,11 +16,17 @@ import { subscribeNewsletter } from '@/services/submission';
 import { isEmail } from '@/utils/validation';
 import styles from './Newsletter.module.css';
 
+const FEEDBACK = {
+  failed: 'newsletter.failed',
+  duplicate: 'newsletter.alreadySubscribed',
+  domain: 'newsletter.emailDomain',
+};
+
 export default function Newsletter() {
   const { t, locale } = useI18n();
   const [email, setEmail] = useState('');
   const [website, setWebsite] = useState('');
-  const [status, setStatus] = useState('idle'); // idle | invalid | sending | success | duplicate | failed
+  const [status, setStatus] = useState('idle'); // idle | invalid | sending | success | duplicate | domain | failed
 
   /** Saved in the admin under Submissions → Newsletter. */
   const handleSubmit = async (event) => {
@@ -35,7 +41,7 @@ export default function Newsletter() {
       setStatus('success');
       setEmail('');
     } catch (error) {
-      setStatus(error.code === 'already-subscribed' ? 'duplicate' : 'failed');
+      setStatus({ 'already-subscribed': 'duplicate', 'email-domain': 'domain' }[error.code] ?? 'failed');
     }
   };
 
@@ -77,7 +83,7 @@ export default function Newsletter() {
                       }}
                       placeholder={t('newsletter.placeholder')}
                       autoComplete="email"
-                      isInvalid={['invalid', 'duplicate', 'failed'].includes(status)}
+                      isInvalid={['invalid', 'duplicate', 'domain', 'failed'].includes(status)}
                       className={styles.input}
                     />
                     <Button type="submit" variant="ms-honey" className={styles.submit} disabled={status === 'sending'}>
@@ -85,13 +91,7 @@ export default function Newsletter() {
                       <PiPaperPlaneTilt className="btn-icon flip-rtl" aria-hidden="true" />
                     </Button>
                     <Form.Control.Feedback type="invalid" className={styles.error}>
-                      {t(
-                        status === 'failed'
-                          ? 'newsletter.failed'
-                          : status === 'duplicate'
-                            ? 'newsletter.alreadySubscribed'
-                            : 'newsletter.error'
-                      )}
+                      {t(FEEDBACK[status] ?? 'newsletter.error')}
                     </Form.Control.Feedback>
                   </InputGroup>
                   <Honeypot value={website} onChange={setWebsite} />

@@ -1,6 +1,7 @@
 import { after } from 'next/server';
 import { createStockAlert, sendStockAlertConfirmation } from '@/server/domain/stock-alerts';
-import { conflict, created, notFound, parseBody, requestOrigin, withApi } from '@/server/http';
+import { canReceiveEmail } from '@/server/email-domain';
+import { badRequest, conflict, created, notFound, parseBody, requestOrigin, withApi } from '@/server/http';
 import { stockAlertInput } from '@/server/validation';
 
 /**
@@ -11,6 +12,7 @@ export const POST = withApi(async ({ request }) => {
   const { website, ...input } = await parseBody(request, stockAlertInput);
   // The hidden honeypot field is only ever filled in by bots: answer as usual, save and send nothing.
   if (website) return created({ ok: true });
+  if (!(await canReceiveEmail(input.email))) throw badRequest('This email domain cannot receive email.', 'email-domain');
   const result = await createStockAlert(input);
   if (!result.ok && result.reason === 'in-stock') throw conflict('This size is back in stock.', 'in-stock');
   if (!result.ok) throw notFound('Product not found.');
