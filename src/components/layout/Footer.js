@@ -66,7 +66,7 @@ export default function Footer({ locale, dict, categories }) {
               </div>
             ))}
 
-            <div>
+            <div className={styles.contactColumn}>
               <p className={styles.heading}>{f.contactTitle}</p>
               <ul className={`${styles.links} ${styles.contact}`}>
                 <li>
@@ -101,13 +101,15 @@ export default function Footer({ locale, dict, categories }) {
 
         <div className={styles.bottom}>
           <div className={styles.legal}>
-            <span>{interpolate(f.copyright, { year: new Date().getFullYear() })}</span>
+            <span className={styles.legalText}>{interpolate(f.copyright, { year: new Date().getFullYear() })}</span>
             <span className={styles.dot} aria-hidden="true" />
-            <span>{f.legal}</span>
+            <span className={styles.legalText}>{f.legal}</span>
             <span className={styles.dot} aria-hidden="true" />
-            <Link href={href(siteConfig.termsPath)}>{f.terms}</Link>
-            <span className={styles.dot} aria-hidden="true" />
-            <Link href={href(siteConfig.privacyPath)}>{f.privacy}</Link>
+            <span className={styles.legalLinks}>
+              <Link href={href(siteConfig.termsPath)}>{f.terms}</Link>
+              <span className={styles.dot} aria-hidden="true" />
+              <Link href={href(siteConfig.privacyPath)}>{f.privacy}</Link>
+            </span>
           </div>
           <div className={styles.bottomEnd}>
             <span className={styles.secure}>
