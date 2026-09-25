@@ -106,6 +106,7 @@ const en = {
       emailTaken: 'An account with this email already exists.',
       unavailable: 'Accounts are temporarily unavailable. Please try again.',
       tooMany: 'Too many attempts. Please wait a few minutes and try again.',
+      noAccount: 'No account uses this email address.',
     },
     login: {
       title: 'Welcome back',

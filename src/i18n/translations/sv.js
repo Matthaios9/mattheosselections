@@ -106,6 +106,7 @@ const sv = {
       emailTaken: 'Det finns redan ett konto med den här e-postadressen.',
       unavailable: 'Kontotjänsten är tillfälligt otillgänglig. Försök igen.',
       tooMany: 'För många försök. Vänta några minuter och försök igen.',
+      noAccount: 'Det finns inget konto med den här e-postadressen.',
     },
     login: {
       title: 'Välkommen tillbaka',

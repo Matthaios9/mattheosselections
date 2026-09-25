@@ -9,8 +9,7 @@ import { PasswordReset, User } from '@/server/models';
  *
  * The link carries a 256-bit random token; only its SHA-256 reaches the database, and the row
  * is deleted the moment it is used, so a link works exactly once and stops working after
- * TOKEN_TTL_MINUTES. Neither function tells the caller whether an email has an account —
- * that answer belongs to nobody but the mailbox owner.
+ * TOKEN_TTL_MINUTES.
  */
 
 export const TOKEN_TTL_MINUTES = 60;
@@ -18,13 +17,14 @@ export const TOKEN_TTL_MINUTES = 60;
 const hashToken = (token) => createHash('sha256').update(token).digest('hex');
 
 /**
- * Start a reset for `email`. Returns `{ user, token }` when a link should be sent, or
- * null when the address has no active account (the route answers the same either way).
+ * Start a reset for `email`. Returns `{ ok: true, user, token }` when a link should be sent,
+ * or `{ ok: false, reason: 'not-found' | 'disabled' }`.
  */
 export async function createPasswordReset(email) {
   await connectToDatabase();
   const user = await User.findOne({ email: email.toLowerCase() }).lean();
-  if (!user || user.status !== 'active') return null;
+  if (!user) return { ok: false, reason: 'not-found' };
+  if (user.status !== 'active') return { ok: false, reason: 'disabled' };
 
   const token = randomBytes(32).toString('base64url');
   // One live link per account: asking again makes the previous email useless.
@@ -34,7 +34,7 @@ export async function createPasswordReset(email) {
     user: user._id,
     expiresAt: new Date(Date.now() + TOKEN_TTL_MINUTES * 60_000),
   });
-  return { user, token };
+  return { ok: true, user, token };
 }
 
 /**

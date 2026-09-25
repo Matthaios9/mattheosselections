@@ -14,6 +14,8 @@ import { getErrorCode } from '@/utils/errors';
 import { email, required } from '@/utils/validation';
 import styles from './AuthModal.module.css';
 
+const SERVER_ERRORS = { 'rate-limited': 'auth.errors.tooMany', disabled: 'auth.errors.disabled' };
+
 export default function ForgotPasswordForm({ onSwitch }) {
   const { t, locale } = useI18n();
   const form = useFormState({ email: '' });
@@ -30,10 +32,11 @@ export default function ForgotPasswordForm({ onSwitch }) {
     setSubmitting(true);
     try {
       await requestPasswordReset({ email: address, locale });
-      // The API answers the same for an unknown address, so this message never confirms an account.
       setSentTo(address);
     } catch (error) {
-      setServerError(t(getErrorCode(error) === 'rate-limited' ? 'auth.errors.tooMany' : 'auth.errors.unavailable'));
+      const code = getErrorCode(error);
+      if (code === 'no-account') form.setErrors({ email: 'auth.errors.noAccount' });
+      else setServerError(t(SERVER_ERRORS[code] ?? 'auth.errors.unavailable'));
     } finally {
       setSubmitting(false);
     }
