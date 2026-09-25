@@ -100,6 +100,14 @@
   color: var(--ms-muted);
 }
 
+/* Phones: the label gets its own line so the chips start flush left beneath it. */
+@media (max-width: 575.98px) {
+  .popular > .label {
+    flex-basis: 100%;
+    margin-inline-end: 0;
+  }
+}
+
 .chip {
   padding: 0.45rem 1rem;
   border: 1px solid var(--ms-line-strong);
