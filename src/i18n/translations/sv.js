@@ -434,6 +434,7 @@ const sv = {
     success: 'Tack för din anmälan! Vi håller dig uppdaterad.',
     error: 'Ange en giltig e-postadress.',
     failed: 'Vi kunde inte registrera dig just nu. Försök igen.',
+    alreadySubscribed: 'Den här e-postadressen prenumererar redan på vårt nyhetsbrev.',
     privacy: 'Ingen spam. Avsluta när du vill.',
   },
 

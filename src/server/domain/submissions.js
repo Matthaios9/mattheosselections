@@ -5,14 +5,23 @@ import { duplicateKeyField, escapeRegex, isObjectId, pageParams, pageResult, toI
 
 /** Newsletter sign-ups and contact form messages from the storefront, and their admin views. */
 
-/** Signing up again with the same address keeps the original sign-up. */
+/**
+ * Signing up again with the same address keeps the original sign-up.
+ * Returns true when the address was added, false when it was already on the list.
+ */
 export async function subscribeToNewsletter({ email, locale }) {
   await connectToDatabase();
   try {
-    await NewsletterSubscriber.updateOne({ email }, { $setOnInsert: { email, locale } }, { upsert: true });
+    const { upsertedCount } = await NewsletterSubscriber.updateOne(
+      { email },
+      { $setOnInsert: { email, locale } },
+      { upsert: true }
+    );
+    return upsertedCount === 1;
   } catch (error) {
     // Two sign-ups racing each other: the other one already saved it.
     if (!duplicateKeyField(error)) throw error;
+    return false;
   }
 }
 

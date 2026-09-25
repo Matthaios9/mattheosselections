@@ -434,6 +434,7 @@ const en = {
     success: 'Thank you for signing up! We will keep you posted.',
     error: 'Please enter a valid email address.',
     failed: 'We could not sign you up right now. Please try again.',
+    alreadySubscribed: 'This email is already subscribed to our newsletter.',
     privacy: 'No spam. Unsubscribe at any time.',
   },
 
