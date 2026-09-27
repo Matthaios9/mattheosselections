@@ -12,6 +12,7 @@ import { useUI } from '@/context/UIContext';
 import { useApiQuery } from '@/hooks/useApiQuery';
 import { useI18n } from '@/i18n/I18nProvider';
 import { getStoreProducts } from '@/services/product';
+import { trackViewCart } from '@/utils/analytics';
 import styles from './CartDrawer.module.css';
 
 export default function CartDrawer() {
@@ -28,13 +29,18 @@ export default function CartDrawer() {
   const inCart = new Set(cart.items.map((item) => item.productId));
   const upsell = (suggestions.data?.items ?? []).filter((product) => !inCart.has(product.id)).slice(0, 2);
 
+  const handleShow = () => {
+    cart.refreshStock();
+    if (!cart.isEmpty) trackViewCart(cart.items, cart.subtotal);
+  };
+
   const countLabel = t(cart.totalItems === 1 ? 'cart.itemOne' : 'cart.itemOther', { count: cart.totalItems });
 
   return (
     <Offcanvas
       show={cartOpen}
       onHide={closeCart}
-      onShow={cart.refreshStock}
+      onShow={handleShow}
       placement="end"
       className={styles.drawer}
       aria-labelledby="cart-title"

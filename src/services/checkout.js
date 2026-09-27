@@ -19,7 +19,7 @@ export const getWelcomeOffer = async () => {
   return data;
 };
 
-/** After Kustom's confirmation redirect: create the order. → `{ orderNumber, soldOut }` */
+/** After Kustom's confirmation redirect: create the order. → `{ orderNumber, soldOut, order }` (order: amounts and lines, null when sold out) */
 export const confirmPayment = async (orderId) => {
   const { data } = await GetApiData('/checkout/confirm', 'POST', { orderId }, false);
   return data;

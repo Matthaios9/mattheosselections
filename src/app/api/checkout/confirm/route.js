@@ -26,5 +26,28 @@ export const POST = withApi(async ({ request }) => {
     after(() => sendOrderConfirmation(result.order, { origin }));
     after(() => sendAdminOrderNotice(result.order, { origin }));
   }
-  return { orderNumber: result.order.number, soldOut: result.order.status === 'cancelled' };
+  const { order } = result;
+  const soldOut = order.status === 'cancelled';
+  return {
+    orderNumber: order.number,
+    soldOut,
+    // Amounts and lines only (never the customer's details), for the Analytics purchase event.
+    order: soldOut
+      ? null
+      : {
+          number: order.number,
+          currency: order.currency,
+          total: order.total,
+          shippingFee: order.shippingFee,
+          discount: order.discount,
+          items: order.items.map(({ product, name, variantLabel, price, quantity, discount }) => ({
+            product,
+            name,
+            variantLabel,
+            price,
+            quantity,
+            discount,
+          })),
+        },
+  };
 });

@@ -18,6 +18,7 @@ import { storeConfig } from '@/config/site';
 import { useFormState } from '@/hooks/useFormState';
 import { useI18n } from '@/i18n/I18nProvider';
 import { confirmPayment, getWelcomeOffer, startCheckout } from '@/services/checkout';
+import { trackAddPaymentInfo, trackBeginCheckout, trackPurchase } from '@/utils/analytics';
 import { calculateShipping, SHIPPING_COUNTRIES } from '@/utils/shipping';
 import { includedVat, shippingByRate, vatBreakdown } from '@/utils/vat';
 import styles from './CheckoutModal.module.css';
@@ -76,6 +77,14 @@ export default function CheckoutModal() {
   const shippingVat = shippingByRate(shipping, goodsByRate);
   const busy = status === 'opening' || status === 'confirming';
 
+  // Opened from the cart, not on the way back from Kustom (which opens it straight into 'confirming' or 'failed').
+  const reportCheckout = useEffectEvent(() => {
+    if (status === 'details' && !cart.isEmpty) trackBeginCheckout(cart.items, cart.subtotal);
+  });
+  useEffect(() => {
+    if (checkoutOpen) reportCheckout();
+  }, [checkoutOpen]);
+
   const handlePaymentReturn = useEffectEvent(async (payment, orderId) => {
     openCheckout();
     if (payment === 'unavailable') {
@@ -91,6 +100,7 @@ export default function CheckoutModal() {
         setStatus('failed');
         return;
       }
+      if (result.order) trackPurchase(result.order);
       cart.emptyCart();
       setOutcome({ number: result.orderNumber });
       setStatus('confirmed');
@@ -154,6 +164,7 @@ export default function CheckoutModal() {
       });
       setSnippet(checkout.snippet);
       setStatus('payment');
+      trackAddPaymentInfo(cart.items, total, { discount });
     } catch (error) {
       setStatus('details');
       showCheckoutError(error);

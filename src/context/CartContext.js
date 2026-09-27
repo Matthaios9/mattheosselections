@@ -7,6 +7,7 @@ import { useApiQuery } from '@/hooks/useApiQuery';
 import { useHydrated } from '@/hooks/useHydrated';
 import { useI18n } from '@/i18n/I18nProvider';
 import { getStoreProductsByIds } from '@/services/product';
+import { trackAddToCart } from '@/utils/analytics';
 
 const CART_ID = 'mattheos';
 const CartContext = createContext(null);
@@ -98,6 +99,7 @@ function CartStateProvider({ children }) {
       },
       units
     );
+    trackAddToCart(product, variant, units);
     return units;
   }
 

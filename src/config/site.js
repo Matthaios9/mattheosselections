@@ -18,6 +18,10 @@ export const siteConfig = {
   termsPath: '/terms-and-conditions',
   // Privacy policy: linked in the footer, from the terms and from account sign-up.
   privacyPath: '/privacy-policy',
+  // Google Analytics 4 measurement id. Only production builds outside Vercel previews send data,
+  // so local development and preview deployments never show up in the reports.
+  analyticsId:
+    process.env.NODE_ENV === 'production' && process.env.VERCEL_ENV !== 'preview' ? 'G-DZDDRGWJ06' : null,
   socials: [
     { id: 'instagram', label: 'Instagram', href: 'https://www.instagram.com/mattheos_selections' },
     { id: 'facebook', label: 'Facebook', href: 'https://www.facebook.com/profile.php?id=61575561185894' },

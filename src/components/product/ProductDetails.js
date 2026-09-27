@@ -1,6 +1,6 @@
 'use client';
 
-import { useState } from 'react';
+import { useEffect, useEffectEvent, useState } from 'react';
 import CloudinaryImage from '@/components/common/CloudinaryImage';
 import Link from 'next/link';
 import Accordion from 'react-bootstrap/Accordion';
@@ -15,6 +15,7 @@ import { storeConfig } from '@/config/site';
 import { useStoreCart } from '@/context/CartContext';
 import { useAddToCart } from '@/hooks/useAddToCart';
 import { useI18n } from '@/i18n/I18nProvider';
+import { trackViewItem } from '@/utils/analytics';
 import styles from './ProductDetails.module.css';
 
 /**
@@ -40,6 +41,10 @@ export default function ProductDetails({ product, initialVariant, onClose, varia
   const Title = isPage ? 'h1' : 'h2';
 
   const inCart = quantityInCart(product.id, variant.id);
+
+  // Once per product shown (the size picked afterwards isn't a new view).
+  const reportView = useEffectEvent(() => trackViewItem(product, variant));
+  useEffect(() => reportView(), [product.id]);
 
   let stockMessage = t('product.inStock');
   if (soldOut) stockMessage = t('product.outOfStock');

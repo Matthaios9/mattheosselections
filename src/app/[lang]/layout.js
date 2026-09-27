@@ -4,6 +4,7 @@ import { sans, serif } from '../fonts';
 import AppProviders from '@/context/AppProviders';
 import Footer from '@/components/layout/Footer';
 import GlobalOverlays from '@/components/layout/GlobalOverlays';
+import GoogleAnalytics from '@/components/layout/GoogleAnalytics';
 import Header from '@/components/layout/Header';
 import { SHARE_IMAGE } from '@/config/photos';
 import { siteConfig } from '@/config/site';
@@ -59,6 +60,7 @@ export default async function LocaleLayout({ children, params }) {
         <noscript>
           <style>{'.reveal{opacity:1!important;transform:none!important}'}</style>
         </noscript>
+        <GoogleAnalytics id={siteConfig.analyticsId} />
       </head>
       <body>
         <I18nProvider locale={lang} dict={dict}>
