@@ -6,6 +6,7 @@ import { USER_ROLES, USER_STATUSES } from '@/server/models/User';
 import { UPLOAD_TARGETS } from '@/server/cloudinary';
 import { SHIPPING_COUNTRIES } from '@/utils/shipping';
 import { slugify } from '@/utils/slug';
+import { hasDigit } from '@/utils/validation';
 
 /** Request schemas for the API routes (zod). Field errors reach the UI as `{ 'name.en': 'message' }`. */
 
@@ -266,7 +267,12 @@ export const newsletterInput = z.object({ email: emailAddress, locale: storeLoca
 /** The contact form on the contact page. */
 export const contactMessageInput = z
   .object({
-    name: z.string().trim().min(1, 'This field is required').max(120),
+    name: z
+      .string()
+      .trim()
+      .min(1, 'This field is required')
+      .max(120)
+      .refine((value) => !hasDigit(value), 'Names cannot contain numbers'),
     email: emailAddress,
     subject: z.string().trim().min(1, 'This field is required').max(200),
     message: z.string().trim().min(10, 'Please write at least 10 characters').max(5000),

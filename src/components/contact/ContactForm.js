@@ -14,7 +14,7 @@ import { useFormState } from '@/hooks/useFormState';
 import { useI18n } from '@/i18n/I18nProvider';
 import { sendContactMessage } from '@/services/submission';
 import { firstName } from '@/utils/format';
-import { email, minLength, required } from '@/utils/validation';
+import { email, minLength, noDigits, required } from '@/utils/validation';
 import styles from './ContactForm.module.css';
 
 const EMPTY = { name: '', email: '', subject: '', message: '' };
@@ -30,7 +30,7 @@ export default function ContactForm() {
   const handleSubmit = async (event) => {
     event.preventDefault();
     const valid = form.validate({
-      name: [required('contact.form.errors.required')],
+      name: [required('contact.form.errors.required'), noDigits('contact.form.errors.name')],
       email: [required('contact.form.errors.required'), email('contact.form.errors.email')],
       subject: [required('contact.form.errors.required')],
       message: [required('contact.form.errors.required'), minLength(10, 'contact.form.errors.message')],

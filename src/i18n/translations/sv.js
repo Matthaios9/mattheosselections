@@ -715,6 +715,7 @@ const sv = {
         required: 'Detta fält är obligatoriskt.',
         email: 'Ange en giltig e-postadress.',
         message: 'Skriv minst 10 tecken.',
+        name: 'Namnet får inte innehålla siffror.',
         failed: 'Ditt meddelande kunde inte skickas just nu. Försök igen eller mejla oss på info@mattheosselections.com.',
       },
     },

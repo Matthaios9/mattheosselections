@@ -715,6 +715,7 @@ const en = {
         required: 'This field is required.',
         email: 'Please enter a valid email address.',
         message: 'Please write at least 10 characters.',
+        name: 'Names cannot contain numbers.',
         failed: 'Your message could not be sent right now. Please try again, or email us at info@mattheosselections.com.',
       },
     },
