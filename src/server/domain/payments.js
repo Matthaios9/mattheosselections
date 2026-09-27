@@ -12,6 +12,7 @@ import {
 import { Checkout, nextOrderNumber, Order } from '@/server/models';
 import { isObjectId } from '@/server/utils';
 import { SHIPPING_COUNTRIES } from '@/utils/shipping';
+import { shippingByRate } from '@/utils/vat';
 import { reserveStock } from './inventory';
 import { priceCart, serializeOrder, stockLine } from './orders';
 import { joinListForWelcomeOffer, markWelcomeDiscountUsed, WELCOME_DISCOUNT_RATE, welcomeOfferStatus } from './welcome-offer';
@@ -58,6 +59,24 @@ function orderLine({ type, reference, name, quantity, unitPrice, vatRate = store
   };
 }
 
+/** The shipping fee as Kustom order lines, one per VAT rate in the order (see shippingByRate). */
+function shippingLines(priced) {
+  const parts = shippingByRate(
+    priced.shippingFee,
+    priced.lines.map((line) => ({ amount: line.lineTotal - line.discount, rate: line.vatRate }))
+  );
+  return parts.map(({ rate, amount }) =>
+    orderLine({
+      type: 'shipping_fee',
+      reference: parts.length > 1 ? `shipping-${rate}` : 'shipping',
+      name: parts.length > 1 ? `Shipping (${rate}% VAT)` : 'Shipping',
+      quantity: 1,
+      unitPrice: amount,
+      vatRate: rate,
+    })
+  );
+}
+
 export async function startCheckout({ items, customerType, company, country, note, locale, returnPath, joinEmailList }, user, { origin }) {
   await connectToDatabase();
   // Ticking the box at checkout is the sign-up itself, and it only counts when there is an offer left
@@ -97,9 +116,8 @@ export async function startCheckout({ items, customerType, company, country, not
           : `${origin}/${locale}/shop?q=${encodeURIComponent(line.name)}`,
       })
     ),
-    ...(priced.shippingFee > 0
-      ? [orderLine({ type: 'shipping_fee', reference: 'shipping', name: 'Shipping', quantity: 1, unitPrice: priced.shippingFee })]
-      : []),
+    // Shipping takes the VAT of the goods it carries: one line per rate, split by the value at each rate.
+    ...shippingLines(priced),
   ];
   const back = `${origin}${returnPath}`;
 

@@ -11,8 +11,12 @@ import { useAdminSession } from '@/context/AdminSessionContext';
 import { useApiQuery } from '@/hooks/useApiQuery';
 import { getOrderById } from '@/services/order';
 import { countryName, formatDateTime, money, plural } from '@/utils/format';
-import { includedVat, vatBreakdown } from '@/utils/vat';
+import { includedVat, shippingByRate, vatBreakdown } from '@/utils/vat';
 import styles from './OrderDetail.module.css';
+
+/** What the goods came to at each VAT rate, after the discount; older orders fall back to the order's rate. */
+const goodsByRate = (order) =>
+  (order.items ?? []).map((item) => ({ amount: item.lineTotal - (item.discount ?? 0), rate: item.vatRate ?? order.vatRate }));
 
 /** One order: items, totals, timeline, customer, and the fulfilment / payment / note cards. */
 export default function OrderDetail({ id }) {
@@ -114,12 +118,7 @@ export default function OrderDetail({ id }) {
                     {order.vatRate != null && (
                       <>
                         {/* One row per rate the order mixes: food (honey, olive oil) and standard (beeswax…). */}
-                        {vatBreakdown(
-                          (order.items ?? []).map((item) => ({
-                            amount: item.lineTotal - (item.discount ?? 0),
-                            rate: item.vatRate ?? order.vatRate,
-                          }))
-                        ).map(({ rate, amount }) => (
+                        {vatBreakdown(goodsByRate(order)).map(({ rate, amount }) => (
                           <div key={rate} className={styles.vat}>
                             <dt>
                               VAT {rate}% ({rate === order.vatRate ? 'food' : 'other goods'}), included
@@ -127,12 +126,13 @@ export default function OrderDetail({ id }) {
                             <dd>{money(amount, { decimals: 2 })}</dd>
                           </div>
                         ))}
-                        {order.shippingFee > 0 && (
-                          <div className={styles.vat}>
-                            <dt>VAT {order.vatRate}% (shipping), included</dt>
-                            <dd>{money(includedVat(order.shippingFee, order.vatRate), { decimals: 2 })}</dd>
+                        {/* Shipping carries the VAT of the goods, split by their value at each rate. */}
+                        {shippingByRate(order.shippingFee, goodsByRate(order)).map(({ rate, amount }) => (
+                          <div key={rate} className={styles.vat}>
+                            <dt>VAT {rate}% (shipping), included</dt>
+                            <dd>{money(includedVat(amount, rate), { decimals: 2 })}</dd>
                           </div>
-                        )}
+                        ))}
                       </>
                     )}
                     <div className={styles.grand}>

@@ -19,7 +19,7 @@ import { useFormState } from '@/hooks/useFormState';
 import { useI18n } from '@/i18n/I18nProvider';
 import { confirmPayment, getWelcomeOffer, startCheckout } from '@/services/checkout';
 import { calculateShipping, SHIPPING_COUNTRIES } from '@/utils/shipping';
-import { includedVat, vatBreakdown } from '@/utils/vat';
+import { includedVat, shippingByRate, vatBreakdown } from '@/utils/vat';
 import styles from './CheckoutModal.module.css';
 
 /**
@@ -70,7 +70,10 @@ export default function CheckoutModal() {
   // VAT per rate: honey and olive oil are food, beeswax and the like are not (see utils/vat.js).
   // The offer comes off every line by the same percentage, so each rate's share shrinks with it.
   const afterOffer = (amount) => (cart.subtotal > 0 ? (amount * goods) / cart.subtotal : amount);
-  const goodsVat = vatBreakdown(cart.items.map((item) => ({ amount: afterOffer(item.itemTotal), rate: item.vatRate })));
+  const goodsByRate = cart.items.map((item) => ({ amount: afterOffer(item.itemTotal), rate: item.vatRate }));
+  const goodsVat = vatBreakdown(goodsByRate);
+  // Shipping carries the VAT of the goods, split by their value at each rate (see shippingByRate).
+  const shippingVat = shippingByRate(shipping, goodsByRate);
   const busy = status === 'opening' || status === 'confirming';
 
   const handlePaymentReturn = useEffectEvent(async (payment, orderId) => {
@@ -372,12 +375,12 @@ export default function CheckoutModal() {
                       <dd>{t('checkout.vatIncluded', { amount: price(amount, { decimals: 2 }) })}</dd>
                     </div>
                   ))}
-                  {shipping > 0 && (
-                    <div className={styles.vat}>
-                      <dt>{t('checkout.vatShipping', { rate: storeConfig.vatRate })}</dt>
-                      <dd>{t('checkout.vatIncluded', { amount: price(includedVat(shipping), { decimals: 2 }) })}</dd>
+                  {shippingVat.map(({ rate, amount }) => (
+                    <div key={rate} className={styles.vat}>
+                      <dt>{t('checkout.vatShipping', { rate })}</dt>
+                      <dd>{t('checkout.vatIncluded', { amount: price(includedVat(amount, rate), { decimals: 2 }) })}</dd>
                     </div>
-                  )}
+                  ))}
                   <div className={styles.grand}>
                     <dt>{t('checkout.total')}</dt>
                     <dd>{price(total)}</dd>
