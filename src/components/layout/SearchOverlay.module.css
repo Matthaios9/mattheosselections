@@ -106,6 +106,14 @@
     flex-basis: 100%;
     margin-inline-end: 0;
   }
+
+  .popular > .chip {
+    flex: 0 0 calc(50% - 0.25rem);
+    min-width: 0;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
 }
 
 .chip {
