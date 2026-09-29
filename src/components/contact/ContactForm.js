@@ -14,7 +14,17 @@ import { useFormState } from '@/hooks/useFormState';
 import { useI18n } from '@/i18n/I18nProvider';
 import { sendContactMessage } from '@/services/submission';
 import { firstName } from '@/utils/format';
-import { email, minLength, noDigits, required } from '@/utils/validation';
+import {
+  CONTACT_MESSAGE_MAX_LENGTH,
+  CONTACT_SUBJECT_MAX_LENGTH,
+  NAME_MAX_LENGTH,
+  email,
+  maxLength,
+  minLength,
+  noDigits,
+  personName,
+  required,
+} from '@/utils/validation';
 import styles from './ContactForm.module.css';
 
 const EMPTY = { name: '', email: '', subject: '', message: '' };
@@ -30,10 +40,19 @@ export default function ContactForm() {
   const handleSubmit = async (event) => {
     event.preventDefault();
     const valid = form.validate({
-      name: [required('contact.form.errors.required'), noDigits('contact.form.errors.name')],
+      name: [
+        required('contact.form.errors.required'),
+        maxLength(NAME_MAX_LENGTH, 'contact.form.errors.nameLength'),
+        noDigits('contact.form.errors.name'),
+        personName('contact.form.errors.nameCharacters'),
+      ],
       email: [required('contact.form.errors.required'), email('contact.form.errors.email')],
-      subject: [required('contact.form.errors.required')],
-      message: [required('contact.form.errors.required'), minLength(10, 'contact.form.errors.message')],
+      subject: [required('contact.form.errors.required'), maxLength(CONTACT_SUBJECT_MAX_LENGTH, 'contact.form.errors.tooLong')],
+      message: [
+        required('contact.form.errors.required'),
+        minLength(10, 'contact.form.errors.message'),
+        maxLength(CONTACT_MESSAGE_MAX_LENGTH, 'contact.form.errors.tooLong'),
+      ],
     });
     if (!valid) return;
 
@@ -55,7 +74,7 @@ export default function ContactForm() {
       placeholder={t(`contact.form.placeholders.${name}`)}
       {...form.field(name)}
       {...props}
-      error={form.errors[name] && t(form.errors[name])}
+      error={form.errors[name] && t(form.errors[name], { max: props.maxLength })}
     />
   );
 
@@ -87,16 +106,16 @@ export default function ContactForm() {
           )}
           <Row className="g-3">
             <Col md={6}>
-              {field('name', { autoComplete: 'name' })}
+              {field('name', { autoComplete: 'name', maxLength: NAME_MAX_LENGTH })}
             </Col>
             <Col md={6}>
-              {field('email', { type: 'email', autoComplete: 'email' })}
+              {field('email', { type: 'email', autoComplete: 'email', maxLength: 254 })}
             </Col>
             <Col xs={12}>
-              {field('subject')}
+              {field('subject', { maxLength: CONTACT_SUBJECT_MAX_LENGTH })}
             </Col>
             <Col xs={12}>
-              {field('message', { as: 'textarea', rows: 6, inputClassName: styles.textarea })}
+              {field('message', { as: 'textarea', rows: 6, inputClassName: styles.textarea, maxLength: CONTACT_MESSAGE_MAX_LENGTH })}
             </Col>
           </Row>
           <Honeypot value={website} onChange={setWebsite} />

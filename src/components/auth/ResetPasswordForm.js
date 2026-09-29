@@ -13,7 +13,7 @@ import { useUI } from '@/context/UIContext';
 import { useFormState } from '@/hooks/useFormState';
 import { useI18n } from '@/i18n/I18nProvider';
 import { firstName } from '@/utils/format';
-import { matches, minLength, required } from '@/utils/validation';
+import { matches, required, strongPassword } from '@/utils/validation';
 import styles from './AuthModal.module.css';
 
 /** API error code → translated message key. */
@@ -39,7 +39,7 @@ export default function ResetPasswordForm({ token }) {
     event.preventDefault();
     setServerError(null);
     const valid = form.validate({
-      password: [required('auth.errors.required'), minLength(8, 'auth.errors.passwordLength')],
+      password: [required('auth.errors.required'), strongPassword('auth.errors.passwordStrength')],
       confirmPassword: [required('auth.errors.required'), matches('password', 'auth.errors.passwordMatch')],
     });
     if (!valid || !token) {
@@ -99,6 +99,7 @@ export default function ResetPasswordForm({ token }) {
         label={t('auth.reset.newPassword')}
         placeholder={t('auth.placeholders.password')}
         autoComplete="new-password"
+        hint={t('auth.passwordHint')}
         {...form.field('password')}
         error={errorText('password')}
       />

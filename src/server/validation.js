@@ -6,7 +6,14 @@ import { USER_ROLES, USER_STATUSES } from '@/server/models/User';
 import { UPLOAD_TARGETS } from '@/server/cloudinary';
 import { SHIPPING_COUNTRIES } from '@/utils/shipping';
 import { slugify } from '@/utils/slug';
-import { hasDigit } from '@/utils/validation';
+import {
+  CONTACT_MESSAGE_MAX_LENGTH,
+  CONTACT_SUBJECT_MAX_LENGTH,
+  NAME_MAX_LENGTH,
+  hasDigit,
+  isPersonName,
+  isStrongPassword,
+} from '@/utils/validation';
 
 /** Request schemas for the API routes (zod). Field errors reach the UI as `{ 'name.en': 'message' }`. */
 
@@ -160,7 +167,13 @@ export const paymentStatusInput = z.object({ paymentStatus: z.enum(PAYMENT_STATU
 
 export const adminNoteInput = z.object({ adminNote: text(2000) });
 
-const password = z.string().min(8, 'Password must be at least 8 characters').max(200);
+const password = z
+  .string()
+  .max(200)
+  .refine(
+    isStrongPassword,
+    'Password must be at least 8 characters and include an uppercase letter, lowercase letter, number, and special character'
+  );
 
 /** The ID token (JWT) returned by the Sign in with Google button. */
 export const googleCredentialInput = z.object({ credential: z.string().min(20).max(5000) });
@@ -271,11 +284,12 @@ export const contactMessageInput = z
       .string()
       .trim()
       .min(1, 'This field is required')
-      .max(120)
-      .refine((value) => !hasDigit(value), 'Names cannot contain numbers'),
+      .max(NAME_MAX_LENGTH, `Names can be at most ${NAME_MAX_LENGTH} characters`)
+      .refine((value) => !hasDigit(value), 'Names cannot contain numbers')
+      .refine(isPersonName, 'Names can only contain letters, spaces, apostrophes, hyphens and dots'),
     email: emailAddress,
-    subject: z.string().trim().min(1, 'This field is required').max(200),
-    message: z.string().trim().min(10, 'Please write at least 10 characters').max(5000),
+    subject: z.string().trim().min(1, 'This field is required').max(CONTACT_SUBJECT_MAX_LENGTH),
+    message: z.string().trim().min(10, 'Please write at least 10 characters').max(CONTACT_MESSAGE_MAX_LENGTH),
     locale: storeLocale,
     website: honeypot,
   })

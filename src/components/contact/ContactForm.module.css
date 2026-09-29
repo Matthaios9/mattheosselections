@@ -41,6 +41,7 @@
 
 .success {
   display: flex;
+  overflow-wrap: anywhere;
   gap: 1rem;
   padding: 1.5rem;
   border-radius: var(--ms-radius);

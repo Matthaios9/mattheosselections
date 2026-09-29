@@ -6,7 +6,7 @@ import { PiEye, PiEyeSlash } from 'react-icons/pi';
 import { useI18n } from '@/i18n/I18nProvider';
 import styles from './AuthModal.module.css';
 
-export default function PasswordField({ id, label, value, onChange, error, placeholder, autoComplete, action }) {
+export default function PasswordField({ id, label, value, onChange, error, hint, placeholder, autoComplete, action }) {
   const { t } = useI18n();
   const [visible, setVisible] = useState(false);
 
@@ -35,6 +35,7 @@ export default function PasswordField({ id, label, value, onChange, error, place
         </button>
         <Form.Control.Feedback type="invalid">{error}</Form.Control.Feedback>
       </div>
+      {hint && !error && <Form.Text>{hint}</Form.Text>}
     </Form.Group>
   );
 }

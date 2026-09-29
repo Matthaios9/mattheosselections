@@ -15,7 +15,7 @@ import { useFormState } from '@/hooks/useFormState';
 import { useI18n } from '@/i18n/I18nProvider';
 import { interpolateParts } from '@/i18n/translate';
 import { firstName } from '@/utils/format';
-import { email, matches, minLength, required } from '@/utils/validation';
+import { email, matches, required, strongPassword } from '@/utils/validation';
 import styles from './AuthModal.module.css';
 
 export default function SignupForm({ onSwitch, onSuccess }) {
@@ -31,7 +31,7 @@ export default function SignupForm({ onSwitch, onSuccess }) {
     const valid = form.validate({
       name: [required('auth.errors.required')],
       email: [required('auth.errors.required'), email('auth.errors.email')],
-      password: [required('auth.errors.required'), minLength(8, 'auth.errors.passwordLength')],
+      password: [required('auth.errors.required'), strongPassword('auth.errors.passwordStrength')],
       confirmPassword: [required('auth.errors.required'), matches('password', 'auth.errors.passwordMatch')],
     });
     if (!valid) return;
@@ -89,6 +89,7 @@ export default function SignupForm({ onSwitch, onSuccess }) {
         label={t('auth.fields.password')}
         placeholder={t('auth.placeholders.password')}
         autoComplete="new-password"
+        hint={t('auth.passwordHint')}
         {...form.field('password')}
         error={errorText('password')}
       />

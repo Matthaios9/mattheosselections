@@ -10,7 +10,7 @@ import { useFormState } from '@/hooks/useFormState';
 import { useI18n } from '@/i18n/I18nProvider';
 import { changePassword } from '@/services/account';
 import { getErrorCode } from '@/utils/errors';
-import { matches, minLength, required } from '@/utils/validation';
+import { matches, required, strongPassword } from '@/utils/validation';
 import { accountErrorKey } from './errors';
 import styles from './Account.module.css';
 
@@ -32,7 +32,7 @@ export default function ChangePasswordForm() {
       currentPassword: [required('account.errors.required')],
       newPassword: [
         required('account.errors.required'),
-        minLength(8, 'account.errors.passwordLength'),
+        strongPassword('account.errors.passwordStrength'),
         differentFrom('currentPassword', 'account.password.same'),
       ],
       confirmPassword: [required('account.errors.required'), matches('newPassword', 'account.errors.passwordMatch')],
@@ -81,6 +81,7 @@ export default function ChangePasswordForm() {
         id="account-new-password"
         label={t('account.password.new')}
         autoComplete="new-password"
+        hint={t('auth.passwordHint')}
         {...form.field('newPassword')}
         error={errorText('newPassword')}
       />
