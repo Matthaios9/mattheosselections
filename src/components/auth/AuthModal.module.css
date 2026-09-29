@@ -26,13 +26,13 @@
 
 .layout {
   display: grid;
-  grid-template-columns: 1fr;
+  grid-template-columns: minmax(0, 1fr);
   min-height: 560px;
 }
 
 @media (min-width: 768px) {
   .layout {
-    grid-template-columns: 0.9fr 1.1fr;
+    grid-template-columns: minmax(0, 0.9fr) minmax(0, 1.1fr);
   }
 }
 
@@ -113,6 +113,7 @@
 .panel {
   display: flex;
   align-items: center;
+  min-width: 0;
   padding: 2.75rem 1.5rem 2rem;
 }
 
@@ -125,6 +126,7 @@
 .view,
 .success {
   width: 100%;
+  min-width: 0;
   animation: viewIn 0.45s var(--ms-ease-out) both;
 }
 
@@ -155,6 +157,8 @@
 .title {
   margin: 0;
   font-size: clamp(1.8rem, 3vw, 2.2rem);
+  max-width: 100%;
+  overflow-wrap: anywhere;
 }
 
 .subtitle {
