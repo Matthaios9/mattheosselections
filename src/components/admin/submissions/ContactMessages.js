@@ -52,7 +52,7 @@ function MessageDialog({ view, onClose, onChanged }) {
       {message && (
         <>
           <Modal.Header closeButton>
-            <Modal.Title as="h2" className="h4" id="contact-message-title">
+            <Modal.Title as="h2" className={`h4 ${styles.title}`} id="contact-message-title">
               {message.subject}
             </Modal.Title>
           </Modal.Header>
@@ -123,9 +123,9 @@ export default function ContactMessages({ params, setParams }) {
       key: 'from',
       header: 'From',
       render: (message) => (
-        <div>
-          <div className={styles.name}>{message.name}</div>
-          <a href={`mailto:${message.email}`} className="cell-muted">
+        <div className={styles.from}>
+          <div className={styles.name} title={message.name}>{message.name}</div>
+          <a href={`mailto:${message.email}`} className={`cell-muted ${styles.email}`} title={message.email}>
             {message.email}
           </a>
         </div>
@@ -136,7 +136,9 @@ export default function ContactMessages({ params, setParams }) {
       header: 'Message',
       render: (message) => (
         <button type="button" className={styles.messageButton} onClick={() => open(message)}>
-          <span className={`${styles.subject} ${message.status === 'new' ? styles.unread : ''}`}>{message.subject}</span>
+          <span className={`${styles.subject} ${message.status === 'new' ? styles.unread : ''}`} title={message.subject}>
+            {message.subject}
+          </span>
           <span className={styles.preview}>{message.message}</span>
         </button>
       ),
