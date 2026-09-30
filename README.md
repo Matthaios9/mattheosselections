@@ -1,4 +1,4 @@
-# Mattheos Selections 
+# Mattheos Selections  
 
 Storefront and admin panel for Mattheos Selections — Greek honey, olive oil and superfoods, sold from Stockholm. 
 Next.js 16 (App Router, JavaScript), React-Bootstrap, MongoDB (Mongoose), Cloudinary image uploads and Kustom Checkout payments. 
