@@ -167,9 +167,9 @@ export function UserRowActions({ user, onChanged, redirectAfterDelete }) {
           {isActive ? 'Disable account' : 'Enable account'}
         </RowAction>
         <RowActionDivider />
-        <RowAction as="button" icon={PiTrash} danger onClick={() => setConfirm(true)}>
+        {/* <RowAction as="button" icon={PiTrash} danger onClick={() => setConfirm(true)}>
           Delete user
-        </RowAction>
+        </RowAction> */}
       </RowActions>
       <ConfirmDialog
         show={confirm}
