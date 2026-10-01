@@ -6,15 +6,20 @@ import { storeConfig } from '@/config/site';
  * where prices, dates, countries and names are turned into display strings.
  */
 
+// Thousands in kr amounts are always grouped with a space ("1 900 kr"), as is standard in Swedish
+// e-commerce, whatever the site language. A no-break space keeps "1 900" from wrapping across lines.
+const KR_GROUP_SEPARATOR = '\u00A0';
+
 /**
- * Deterministic price formatting (e.g. "1,900 kr" / "1 900 kr" / "1.900 kr"). Öre show only when
+ * Deterministic price formatting (e.g. "1 900 kr" in every language). Öre show only when
  * there are any — a discounted total such as "314.10 kr" or "0.90 kr" — unless `decimals` is given
  * ("10.19 kr" / "10,19 kr" with `decimals: 2`). Intl output differs slightly between Node and browsers
  * (narrow no-break spaces), which would cause hydration mismatches, so grouping is done by hand.
  */
 export function formatPrice(amount, locale, { decimals } = {}) {
   const hasOre = Math.round((Number(amount) || 0) * 100) % 100 !== 0;
-  return `${formatNumber(amount, locale, decimals ?? (hasOre ? 2 : 0))} ${storeConfig.currencySymbol}`;
+  const number = formatNumber(amount, locale, decimals ?? (hasOre ? 2 : 0), KR_GROUP_SEPARATOR);
+  return `${number} ${storeConfig.currencySymbol}`;
 }
 
 /**
@@ -26,8 +31,8 @@ export function formatEuro(amountSek, locale) {
   return `€${formatNumber(euros, locale, Number.isInteger(euros) ? 0 : 2)}`;
 }
 
-function formatNumber(amount, locale, decimals) {
-  const { groupSeparator, decimalSeparator } = getLocaleConfig(locale);
+function formatNumber(amount, locale, decimals, groupSeparator = getLocaleConfig(locale).groupSeparator) {
+  const { decimalSeparator } = getLocaleConfig(locale);
   const factor = 10 ** decimals;
   const scaled = Math.round((Number(amount) || 0) * factor);
   const whole = String(Math.floor(Math.abs(scaled) / factor)).replace(/\B(?=(\d{3})+(?!\d))/g, groupSeparator);
