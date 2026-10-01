@@ -3,7 +3,7 @@
 Storefront and admin panel for Mattheos Selections — Greek honey, olive oil and superfoods, sold from Stockholm. 
 Next.js 16 (App Router, JavaScript), React-Bootstrap, MongoDB (Mongoose), Cloudinary image uploads and Kustom Checkout payments. 
 The storefront is available in English, Swedish and Greek. 
-## Getting started 
+## Getting started  
 ```bash
 npm install
 cp .env.example .env      # then fill in the values (incl. GOOGLE_CLIENT_ID)
