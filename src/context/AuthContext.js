@@ -4,6 +4,8 @@ import { createContext, useContext, useEffect, useState } from 'react';
 import * as accountService from '@/services/account';
 import * as authService from '@/services/auth';
 import { getErrorCode } from '@/utils/errors';
+import { useStoreCart } from './CartContext';
+import { useWishlist } from './WishlistContext';
 
 const AuthContext = createContext(null);
 
@@ -16,6 +18,8 @@ export function AuthProvider({ children }) {
   const [user, setUser] = useState(null);
   // False until /api/auth/me has answered, so pages can tell "not signed in" from "not known yet".
   const [ready, setReady] = useState(false);
+  const { emptyCart } = useStoreCart();
+  const wishlist = useWishlist();
 
   useEffect(() => {
     let active = true;
@@ -54,8 +58,11 @@ export function AuthProvider({ children }) {
     resetPassword: (values) => attempt(() => authService.resetPassword(values)),
     /** Account → Profile: save the name and show it everywhere at once. */
     updateProfile: (values) => attempt(() => accountService.updateProfile(values)),
+    /** Also forgets this browser's cart and wishlist, so the next person here starts clean. */
     logout: async () => {
       setUser(null);
+      emptyCart();
+      wishlist.clear();
       await authService.logout().catch(() => {});
     },
   };
