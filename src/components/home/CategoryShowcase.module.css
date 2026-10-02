@@ -105,6 +105,8 @@
   display: flex;
   flex-direction: column;
   gap: 0.2rem;
+  min-width: 0;
+  max-width: 100%;
   padding: clamp(1rem, 2.4vw, 1.75rem);
 }
 
@@ -120,6 +122,9 @@
   font-family: var(--ms-font-serif);
   font-size: clamp(1.45rem, 2.4vw, 2rem);
   line-height: 1.08;
+  /* Long single words (e.g. Swedish "Presentförpackningar") must wrap inside the card. */
+  overflow-wrap: break-word;
+  hyphens: auto;
 }
 
 .featured .name {
@@ -155,6 +160,10 @@
 }
 
 @media (max-width: 575.98px) {
+  .name {
+    font-size: clamp(1rem, 4.4vw, 1.25rem);
+  }
+
   .description {
     display: none;
   }
