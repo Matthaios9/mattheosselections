@@ -82,6 +82,9 @@ export const acknowledgeOrder = (orderId) => request('POST', `/ordermanagement/v
 export const setMerchantReferences = (orderId, references) =>
   request('PATCH', `/ordermanagement/v1/orders/${id(orderId)}/merchant-references`, references);
 
+/** → `{ status, order_amount, captured_amount, refunded_amount, remaining_authorized_amount, … }` (amounts in öre) */
+export const getOrder = (orderId) => request('GET', `/ordermanagement/v1/orders/${id(orderId)}`);
+
 /** Charge the customer (amount in öre). Done when the order ships. */
 export const captureOrder = (orderId, capturedAmount, description) =>
   request('POST', `/ordermanagement/v1/orders/${id(orderId)}/captures`, { captured_amount: capturedAmount, description });
