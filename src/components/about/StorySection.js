@@ -34,7 +34,7 @@ export default function StorySection({ copy }) {
               </p>
             ))}
             <blockquote className={styles.quote}>
-              <p>“{copy.quote}”</p>
+              <p>{copy.quote}</p>
               <footer>— {copy.signature}</footer>
             </blockquote>
           </Reveal>

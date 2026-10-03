@@ -151,7 +151,7 @@ export const categoryInput = z
   .object({
     slug: text(80).transform(slugify),
     name: localized({ required: true, max: 80 }),
-    description: localized({ max: 240 }),
+    description: localized(),
     image: imageInput.nullable().default(null),
     sortOrder: z.coerce.number().int().min(0).max(999).default(0),
     active: z.boolean().default(true),

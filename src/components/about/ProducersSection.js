@@ -13,7 +13,11 @@ export default function ProducersSection({ copy }) {
           <Reveal className={styles.copy}>
             <span className="eyebrow">{copy.eyebrow}</span>
             <h2 className="section-title">{copy.title}</h2>
-            <p className={styles.text}>{copy.text}</p>
+            {copy.paragraphs.map((paragraph) => (
+              <p key={paragraph.slice(0, 24)} className={styles.text}>
+                {paragraph}
+              </p>
+            ))}
             <ul className={styles.points}>
               {copy.points.map((point) => (
                 <li key={point}>

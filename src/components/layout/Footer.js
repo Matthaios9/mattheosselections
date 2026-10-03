@@ -24,7 +24,7 @@ export default function Footer({ locale, dict, categories }) {
     },
     {
       title: f.companyTitle,
-      links: NAV_LINKS.map((link) => ({ label: dict.nav[link.key], href: href(link.path) })),
+      links: NAV_LINKS.map((link) => ({ label: f.companyLinks?.[link.key] ?? dict.nav[link.key], href: href(link.path) })),
     },
     {
       title: f.supportTitle,
