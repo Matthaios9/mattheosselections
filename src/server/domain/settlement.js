@@ -1,7 +1,24 @@
 import 'server-only';
-import { cancelOrder, captureOrder, isKustomConfigured, refundOrder } from '@/server/kustom';
+import { cancelOrder, captureOrder, getOrder, isKustomConfigured, refundOrder } from '@/server/kustom';
 
 const toMinorUnits = (amount) => Math.round(amount * 100); // kr → öre
+
+/** The payment status Kustom actually has — it changes when someone captures, cancels or refunds in the Kustom Portal. */
+async function kustomPaymentStatus(kustomOrderId) {
+  const { status, captured_amount: captured = 0, refunded_amount: refunded = 0 } = await getOrder(kustomOrderId);
+  if (captured > 0) return refunded >= captured ? 'refunded' : 'paid';
+  if (['CANCELLED', 'EXPIRED', 'CLOSED'].includes(status)) return 'unpaid';
+  return 'authorized';
+}
+
+const pickAction = (paymentStatus, ships, cancels) =>
+  ships && paymentStatus === 'authorized'
+    ? 'capture'
+    : cancels && paymentStatus === 'authorized'
+      ? 'void'
+      : cancels && paymentStatus === 'paid'
+        ? 'refund'
+        : null;
 
 /** Raised when Kustom refuses a payment change; the order status is then left as it was. */
 export class PaymentUpdateError extends Error {
@@ -24,6 +41,24 @@ export async function settleKustomPayment(order, nextStatus) {
 
   const ships = ['shipped', 'delivered'].includes(nextStatus);
   const cancels = nextStatus === 'cancelled';
+
+  // Catch up with changes made in the Kustom Portal first, so we never capture, cancel or refund twice.
+  let syncNote = null;
+  if (pickAction(order.paymentStatus, ships, cancels)) {
+    if (!isKustomConfigured()) throw new PaymentUpdateError('Kustom is not configured, so the payment could not be updated.');
+    let actual;
+    try {
+      actual = await kustomPaymentStatus(order.kustomOrderId);
+    } catch (error) {
+      console.error(`[kustom] status check failed for ${order.number}:`, error.message);
+      throw new PaymentUpdateError(`Could not check the payment at Kustom. ${error.message}`);
+    }
+    if (actual !== order.paymentStatus) {
+      syncNote = `Payment was already ${actual} at Kustom`;
+      order.paymentStatus = actual;
+    }
+  }
+
   // A reservation that was released (or a payment refunded) can't be captured any more: shipping or
   // reopening such an order would send goods nobody pays for.
   if (!cancels && !['authorized', 'paid'].includes(order.paymentStatus) && (ships || order.status === 'cancelled')) {
@@ -31,16 +66,8 @@ export async function settleKustomPayment(order, nextStatus) {
       `This order's Kustom payment is ${order.paymentStatus}, so the customer can't be charged for it. Ask them to place a new order.`
     );
   }
-  const action =
-    ships && order.paymentStatus === 'authorized'
-      ? 'capture'
-      : cancels && order.paymentStatus === 'authorized'
-        ? 'void'
-        : cancels && order.paymentStatus === 'paid'
-          ? 'refund'
-          : null;
-  if (!action) return null;
-  if (!isKustomConfigured()) throw new PaymentUpdateError('Kustom is not configured, so the payment could not be updated.');
+  const action = pickAction(order.paymentStatus, ships, cancels);
+  if (!action) return syncNote;
 
   try {
     if (action === 'capture') {
@@ -55,7 +82,7 @@ export async function settleKustomPayment(order, nextStatus) {
     }
     await refundOrder(order.kustomOrderId, toMinorUnits(order.total), `Order ${order.number} cancelled`);
     order.paymentStatus = 'refunded';
-    return 'Payment refunded in full at Kustom';
+    return [syncNote, 'Payment refunded in full at Kustom'].filter(Boolean).join(' · ');
   } catch (error) {
     console.error(`[kustom] ${action} failed for ${order.number}:`, error.message);
     throw new PaymentUpdateError(`Could not ${action === 'void' ? 'cancel' : action} the payment at Kustom. ${error.message}`);
