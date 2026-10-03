@@ -756,9 +756,19 @@ p {
   transform: none;
 }
 
-/* Hero entrance — staggered, CSS-only so it runs before hydration */
+/* Hero entrance — staggered, CSS-only so it runs before hydration. It only slides: text that starts at
+   opacity 0 isn't counted as painted, which pushed the page's Largest Contentful Paint back by seconds. */
+@keyframes ms-rise {
+  from {
+    transform: translateY(14px);
+  }
+  to {
+    transform: none;
+  }
+}
+
 .enter {
-  animation: ms-fade-up 1s var(--ms-ease-out) both;
+  animation: ms-rise 0.8s var(--ms-ease-out) both;
   animation-delay: var(--enter-delay, 0ms);
 }
 

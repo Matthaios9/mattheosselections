@@ -32,7 +32,7 @@ export default function ProducersSection({ copy }) {
 
           <Reveal className={styles.visual} delay={120}>
             <CloudinaryImage
-              src="/images/editorial/meteora-kalabaka.jpg"
+              src="/images/editorial/meteora-thessaly.jpg"
               alt={copy.caption}
               fill
               sizes="(min-width: 1400px) 730px, (min-width: 992px) 55vw, 100vw"
