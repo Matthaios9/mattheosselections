@@ -45,8 +45,8 @@ const sv = {
 
   announcement: [
     'Fri frakt inom Sverige vid köp över 799 kr',
-    'Rå, ovärmd honung – direkt från små grekiska producenter',
-    'Vackert förpackade presentset, redo att ge bort',
+    'Rå och ovärmd honung, direkt från små grekiska producenter',
+    'Omsorgsfullt förpackade presentset, färdiga att ge bort',
   ],
 
   nav: {
@@ -407,14 +407,14 @@ const sv = {
       titleBefore: 'Naturen, i sin',
       titleAccent: 'finaste',
       titleAfter: 'form.',
-      intro: 'Med rötter i Grekland. Utvalt med omsorg.',
-      text: 'Vi söker upp enastående naturprodukter från små familjeproducenter som bevarar traditionella metoder och arbetar i harmoni med naturen.',
-      tagline: 'Äkta i sitt ursprung. Ren i sin karaktär. Så som naturen avsett.',
+      intro: 'Med rötter i Grekland. Noga utvalt.',
+      text: 'Vi väljer ut det bästa naturen har att erbjuda från små familjeproducenter som för traditionen vidare och arbetar i samklang med naturen.',
+      tagline: 'Äkta i sitt ursprung. Rent till sin karaktär. Precis som naturen avsett.',
       primaryCta: 'Upptäck kollektionen',
       secondaryCta: 'Vår historia',
       trust: ['100 % rå & ovärmd', 'Familjeproducenter i Grekland', 'Fri frakt över 799 kr'],
       cardLabel: 'Signaturburk',
-      badge: 'Råhonung · Direkt från Grekland · Äkta sedan dag ett ·',
+      badge: 'Råhonung · Direkt från Grekland · Äkta från första början ·',
       altitude: 'Skördad upp till',
       altitudeValue: '1 200 m',
       imageAlt: 'Våra producenter i Grekland',
@@ -422,16 +422,16 @@ const sv = {
     },
     categories: {
       eyebrow: 'Handla efter kategori',
-      title: 'Naturens finaste, noggrant utvalt',
-      text: 'Från sällsynta bergshonungar till kallpressad olivolja – varje produkt är vald för sin renhet, sitt ursprung och sin smak.',
+      title: 'Det finaste från naturen, noga utvalt',
+      text: 'Från sällsynt bergshonung till kallpressad olivolja – varje produkt är omsorgsfullt utvald för sin renhet, sitt ursprung och sin smak.',
       count: '{count} produkter',
       countOne: '{count} produkt',
       cta: 'Utforska',
     },
     featured: {
       eyebrow: 'Bästsäljare',
-      title: 'Våra mest älskade burkar',
-      text: 'Småskaliga favoriter som våra kunder återvänder till, säsong efter säsong.',
+      title: 'Våra mest uppskattade honungssorter',
+      text: 'Småskaliga favoriter med unik smak och karaktär, noggrant utvalda från grekiska producenter. Honungssorter som våra kunder gärna återkommer till, säsong efter säsong.',
       cta: 'Se alla produkter',
       tabs: {
         featured: 'Bästsäljare',
@@ -469,10 +469,11 @@ const sv = {
     },
     story: {
       eyebrow: 'Vår historia',
-      title: 'Att hitta det exceptionella i naturen',
+      title: 'En passion för det naturen gör bäst',
       paragraphs: [
-        'Jag heter Mattheos Tasios och har alltid haft en passion för naturliga produkter som förblir trogna sitt ursprung. Den passionen förde mig till slut tillbaka till Grekland, på jakt efter producenterna och traditionerna bakom de produkter jag alltid har värdesatt.',
-        'I dag arbetar vi direkt med små biodlarfamiljer som bedriver vandringsbiodling. De flyttar sina kupor med årstiderna och följer den naturliga blomningen av vild timjan, ek och gran över det grekiska landskapet.',
+        'Jag heter Mattheos Tasios och har länge haft en passion för naturliga produkter med tydligt ursprung, genuin karaktär och en historia bakom sig. Med mina rötter i Grekland växte en vilja fram att komma närmare människorna, platserna och traditionerna bakom de produkter jag själv uppskattar.',
+        'Det blev början på en resa genom det grekiska landskapet, på jakt efter små producenter som fortfarande arbetar med samma omsorg och respekt för naturen som generationerna före dem.',
+        'I dag samarbetar vi direkt med små biodlarfamiljer som bedriver traditionell vandringsbiodling. Under året flyttar de sina bikupor mellan olika delar av Grekland och följer naturens rytm och säsongernas blomning. Från vild timjan till ek och gran får varje honung sin egen smak, arom och karaktär från platsen den kommer ifrån.',
       ],
       signature: 'Mattheos Tasios',
       role: 'Grundare',
@@ -480,7 +481,7 @@ const sv = {
       stats: [
         { value: '{singleOrigin}', label: 'Honungar från enskilda regioner' },
         { value: '1 200 m', label: 'Högsta skördehöjd' },
-        { value: '0', label: 'Tillsatser, någonsin' },
+        { value: '0', label: 'Tillsatser. Alltid.' },
       ],
       imageCaption: 'Kupor i vandringsbiodling, södra Olympen',
     },
@@ -490,17 +491,17 @@ const sv = {
       text: 'Den största komplimangen är när någon kommer tillbaka för ännu en burk. Här är några ord från kunder som upptäckt något annorlunda i vår honung.',
       items: [
         {
-          quote: 'Granhonungen är något av det mest unika jag någonsin smakat. Jag hade aldrig upplevt honung som den förut. Den har blivit den jag alltid återvänder till.',
+          quote: '”Granhonungen är verkligen något utöver det vanliga. Jag hade aldrig smakat en honung med den här karaktären tidigare. Nu har den blivit en självklar favorit som jag alltid återkommer till.”',
           name: 'Sofia',
           location: 'Stockholm',
         },
         {
-          quote: 'Honungen är fantastisk. Jag har inte hittat något liknande i Sverige, och inte ens i Grekland är det den sortens honung man brukar hitta i mataffären.',
+          quote: '”Honungen är fantastisk. Jag har inte hittat något liknande här i Sverige, och inte ens i Grekland är det här en honung man vanligtvis hittar i mataffären. Den känns verkligen speciell.”',
           name: 'Malin',
           location: 'Uppsala',
         },
         {
-          quote: 'Timjanhonungen går inte att jämföra med något jag har hittat i svenska mataffärer. Vi är redan på vår tredje burk.',
+          quote: '”Timjanhonungen är verkligen något helt annat än den honung jag tidigare har köpt i svenska mataffärer. Smaken är fantastisk och vi är redan inne på vår tredje burk.”',
           name: 'David',
           location: 'Stockholm',
         },
@@ -510,9 +511,9 @@ const sv = {
 
   newsletter: {
     eyebrow: 'Välkomsterbjudande',
-    title: 'En liten present till dig',
-    offer: 'Få {percent}% rabatt på din första beställning.',
-    text: 'Anmäl dig för att få ditt välkomsterbjudande och nyheter då och då från Mattheos Selections. Det dras av på din första beställning i kassan.',
+    title: 'En liten gåva från oss',
+    offer: 'Få {percent} % rabatt på din första beställning.',
+    text: 'Anmäl dig till vårt nyhetsbrev och ta del av ditt välkomsterbjudande, inspiration och utvalda nyheter från Mattheos Selections. Din rabatt gäller på din första beställning och dras automatiskt av i kassan.',
     label: 'E-postadress',
     placeholder: 'Din e-postadress',
     submit: 'Registrera dig',
@@ -528,47 +529,47 @@ const sv = {
     hero: {
       eyebrow: 'Om oss',
       title: 'Med rötter i Grekland. Hemma i Sverige.',
-      text: 'Mattheos Selections för de rena, obearbetade smakerna från den grekiska naturen till skandinaviska bord – ärligt inköpta, noga utvalda och levererade med omsorg.',
+      text: 'Mattheos Selections tar det bästa från den grekiska naturen till svenska bord. Rena och genuina smaker, noggrant utvalda från små producenter och levererade med omsorg.',
     },
     story: {
       eyebrow: 'Vår historia',
-      title: 'Det började med en passion för riktig, naturlig mat',
+      title: 'Det började med en passion för det naturliga',
       paragraphs: [
-        'Jag heter Mattheos Tasios och har alltid haft en passion för naturliga produkter – sådana som ger äkta energi och välmående, inte bara sötma. Under min uppväxt var honung från de grekiska bergen en del av vardagen.',
-        'När jag bosatte mig i Stockholm hittade jag inget som smakade som hemma. Så jag sökte mig tillbaka till källan: små producenter i Grekland som arbetar som deras familjer alltid har gjort – tålmodigt, hållbart och utan genvägar.',
-        'Det som började med några burkar till vänner har vuxit till Mattheos Selections: en noga utvald kollektion av råhonung, kallpressad olivolja, supermat och naturlig hudvård som vi är stolta över att dela med dig.',
+        'Jag heter Mattheos Tasios och min uppskattning för rena, naturliga produkter började långt innan Mattheos Selections tog form. Under min uppväxt var honung från de grekiska bergen en självklar del av vardagen, med smaker och traditioner som följt med mig genom åren.',
+        'När jag senare bosatte mig i Stockholm saknade jag de smaker jag vuxit upp med. Det väckte en vilja att söka mig tillbaka till ursprunget och till de små producenter i Grekland som fortfarande arbetar med tålamod, kunskap och respekt för naturen.',
+        'Det som började med några burkar honung till vänner blev så småningom Mattheos Selections. I dag samlar vi noggrant utvalda produkter från Grekland, från råhonung och kallpressad olivolja till andra naturliga specialiteter. Produkter vi själva uppskattar och är stolta över att få dela med andra.',
       ],
-      quote: 'Äkta honung behöver inga tillsatser. Vårt jobb är helt enkelt att skydda det naturen redan har fulländat.',
+      quote: '“Äkta honung behöver inga tillsatser. Vår uppgift är helt enkelt att bevara det som naturen redan har skapat.”',
       signature: 'Mattheos Tasios',
       role: 'Grundare, Mattheos Selections',
     },
     mission: {
       title: 'Vårt uppdrag',
-      text: 'Att göra äkta, naturliga grekiska produkter lätta att njuta av i hela Skandinavien och Europa – och se till att de små producenterna bakom dem får skäligt betalt för sitt hantverk.',
+      text: 'Vårt uppdrag är att göra genuina, naturliga produkter från Grekland tillgängliga för fler i Skandinavien och resten av Europa. Samtidigt vill vi värna om de små producenterna bakom varje produkt genom långsiktiga samarbeten, rättvisa villkor och respekt för deras kunskap, hantverk och traditioner.',
     },
     vision: {
       title: 'Vår vision',
-      text: 'En matkultur där människor vet exakt var maten kommer ifrån, där bina skyddas och där traditionellt hantverk har en hållbar framtid.',
+      text: 'Vi tror på en framtid där människor känner till ursprunget bakom det de äter och uppskattar hantverket bakom varje produkt. En framtid där naturen och bina värnas, små producenter får möjlighet att fortsätta sitt arbete och traditionell kunskap kan leva vidare i generationer.',
     },
     values: {
       eyebrow: 'Det vi står för',
       title: 'Fyra löften i varje burk',
       items: [
         {
-          title: '100 % naturligt & rent',
-          text: 'Inga tillsatser, inga konserveringsmedel, ingen värmebehandling. Bara ren natur, precis som naturen avsett.',
+          title: '100 % naturligt och rent',
+          text: 'Inga onödiga tillsatser eller genvägar. Bara noggrant utvalda produkter som får behålla sin naturliga smak, arom och karaktär.',
         },
         {
-          title: 'Hållbar biodling',
-          text: 'Våra producenter bedriver etisk vandringsbiodling som skyddar bisamhällena och landskapen de är beroende av.',
+          title: 'Biodling med respekt för naturen',
+          text: 'Vi samarbetar med små biodlarfamiljer som följer naturens rytm och för traditionen med vandringsbiodling vidare. Ett varsamt arbetssätt med respekt för bina, landskapet och årstidernas skiftningar.',
         },
         {
-          title: 'Äkta ursprung',
-          text: 'Varje produkt kan spåras till en enda region och en namngiven producent. Naturlig kristallisering bevisar att vår honung är rå.',
+          title: 'Tydligt ursprung',
+          text: 'Bakom varje produkt finns en plats, en producent och en historia. Vi väljer produkter med tydligt ursprung och naturlig karaktär, så att du kan veta mer om det du har i burken.',
         },
         {
-          title: 'Rättvisa partnerskap',
-          text: 'Vi köper direkt från små familjeproducenter, så att mer av varje krona stannar hos dem som skapar produkterna.',
+          title: 'Nära samarbeten',
+          text: 'Vi arbetar direkt med små familjeproducenter och bygger relationer som grundar sig i förtroende, respekt och uppskattning för deras hantverk. På så sätt kommer vi närmare både människorna och traditionerna bakom varje produkt.',
         },
       ],
     },
@@ -580,63 +581,66 @@ const sv = {
     ],
     process: {
       eyebrow: 'Från kupa till hem',
-      title: 'Långsamt av naturen, noggrant i varje steg',
-      text: 'Vandringsbiodling innebär att följa blomningen: kuporna flyttas från kustens timjan till bergens granskogar när årstiderna skiftar. Resultatet är honung med verklig karaktär.',
+      title: 'Naturen får bestämma takten',
+      text: 'Vandringsbiodling följer naturens egen rytm. När årstiderna skiftar flyttas bikuporna mellan olika landskap och blomningar, från vild timjan till ek och gran. På så sätt får varje honung sin egen smak, arom och karaktär från platsen och tiden då den skapades.',
       steps: [
         {
-          title: 'Följ blomningen',
-          text: 'Kuporna flyttas med årstiderna över Thessalien och Olympen – från vild timjan till ek och gran.',
+          title: 'Följer blomningen',
+          text: 'Bikuporna flyttas mellan utvalda områden i Grekland i takt med årstidernas blomning. Bina får följa naturens växlingar mellan vild timjan, ek, gran och andra växter som präglar landskapet.',
         },
         {
-          title: 'Skördas för hand',
-          text: 'Ramarna skördas först när honungen är helt mogen och slungas sedan varsamt utan värme.',
+          title: 'Skördas med omsorg',
+          text: 'Honungen skördas när den har nått rätt mognad. Därefter slungas den varsamt för att bevara så mycket som möjligt av dess naturliga smak, arom och karaktär.',
         },
         {
-          title: 'Tappas utan värme',
-          text: 'Aldrig värmd eller ultrafiltrerad, så att enzymer, pollen och arom förblir intakta.',
+          title: 'Varsamt hanterad',
+          text: 'Vår råhonung utsätts inte för den höga uppvärmning som ofta används vid industriell bearbetning. Den hanteras så varsamt som möjligt för att bevara honungen nära sitt naturliga tillstånd.',
         },
         {
-          title: 'Levereras från Stockholm',
-          text: 'Beställningar lämnar vårt lager i Stockholm, oftast inom 1–2 arbetsdagar.',
+          title: 'Från Stockholm till ditt hem',
+          text: 'Din beställning packas med omsorg på vårt lager i Stockholm och skickas vanligtvis inom 1 till 2 arbetsdagar.',
         },
       ],
     },
     producers: {
       eyebrow: 'Våra producenter',
-      title: 'Biodlarna från södra Olympen',
-      text: 'Varje ákesis-burk bär namnet på familjen Vassiliou-Kontos – vandringsbiodlare vars kupor följer årstiderna från Thessaliens slätter till ekskogarna ovanför Kalabaka, i skuggan av Meteora.',
+      title: 'Människorna bakom honungen',
+      paragraphs: [
+        'Bakom varje burk ákesis står familjen Vassiliou Kontos, en familj av biodlare som för kunskap och traditioner vidare från generation till generation. Genom vandringsbiodling flyttar de sina bikupor mellan olika delar av Grekland och följer årstidernas blomning.',
+        'Från vilda örter och blommande landskap till skogar av ek och gran formas varje honung av platsen där bina samlar sin nektar. Det är ett arbete som kräver tid, erfarenhet och en nära förståelse för naturens rytm.',
+      ],
       points: [
-        'Vandringsbiodling, säsong för säsong',
-        'Skördar från havsnivå till 1 200 meter',
-        'Honung som kristalliseras naturligt',
+        'Vandringsbiodling i takt med årstiderna',
+        'Skördar från olika delar av det grekiska landskapet',
+        'Honung med naturlig variation i smak och konsistens',
       ],
       caption: 'Kalabaka & Meteora, Thessalien',
     },
     trust: {
       eyebrow: 'Därför litar kunderna på oss',
-      title: 'Ärliga produkter, ärligt sålda',
+      title: 'Omsorg i både produkt och service',
       items: [
         {
-          title: 'Transparent ursprung',
-          text: 'Vi berättar exakt var varje produkt kommer ifrån – regionen, höjden och familjen bakom den.',
+          title: 'Tydligt ursprung',
+          text: 'Vi vill att du ska veta mer om det du väljer. Därför berättar vi om produkternas ursprung, producenterna bakom dem och de platser och traditioner som ger dem sin unika karaktär.',
         },
         {
           title: 'Ett svenskt företag',
-          text: 'Drivs av Pasver AB i Stockholm (org.nr 559053-2486), med fullt svenskt konsumentskydd.',
+          text: 'Mattheos Selections drivs av Pasver AB i Stockholm, org.nr 559053-2486. Du handlar från ett svenskt företag med tydliga villkor och personlig service.',
         },
         {
-          title: 'Säker kassa',
-          text: 'Krypterade betalningar, tydliga köpvillkor och 14 dagars retur på oöppnade produkter.',
+          title: 'Trygg betalning',
+          text: 'Vi erbjuder säkra betalningar och tydliga köpvillkor, så att du kan känna dig trygg genom hela ditt köp.',
         },
         {
           title: 'Personlig service',
-          text: 'Frågor om en honung? Du pratar med människor som känner varje produkt personligen.',
+          text: 'Undrar du över en honung eller någon av våra andra produkter? Hos oss får du personlig hjälp av människor som känner till sortimentet och gärna hjälper dig att hitta rätt.',
         },
       ],
     },
     cta: {
-      title: 'Smaka skillnaden själv',
-      text: 'Börja med en enda burk eller utforska hela det grekiska skafferiet – levererat från Stockholm.',
+      title: 'Upptäck smakerna själv',
+      text: 'Börja med en burk honung eller utforska fler noggrant utvalda smaker från den grekiska naturen. Allt packas med omsorg och skickas från Stockholm.',
       primary: 'Upptäck kollektionen',
       secondary: 'Kontakta oss',
     },
@@ -680,8 +684,8 @@ const sv = {
   contact: {
     hero: {
       eyebrow: 'Kontakta oss',
-      title: 'Vi vill gärna höra från dig',
-      text: 'Frågor om en beställning, en honung eller en företagsgåva? Vårt team i Stockholm hjälper gärna till – mejla oss så svarar vi på alla meddelanden inom 24 timmar.',
+      title: 'Vi hjälper dig gärna',
+      text: 'Har du frågor om din beställning, våra honungssorter eller gåvor till företag? Vårt team i Stockholm finns här för att hjälpa dig. Skicka ett mejl till oss så återkommer vi inom 24 timmar.',
     },
     info: {
       email: 'E-post',
@@ -724,8 +728,8 @@ const sv = {
       },
     },
     wholesale: {
-      title: 'Grossist & företagsgåvor',
-      text: 'Letar du efter Naturbox-presentset till ditt team eller dina kunder, eller vill du sälja våra produkter i din butik? Vi tar gärna fram ett skräddarsytt erbjudande.',
+      title: 'Grossist och företagsgåvor',
+      text: 'Vill du ge bort Naturbox presentset till medarbetare eller kunder, eller erbjuda våra produkter i din butik? Vi hjälper dig gärna att hitta en lösning som passar dina behov och tar fram ett personligt erbjudande för just ditt företag.',
       cta: 'Mejla vårt team',
     },
     social: {
@@ -738,36 +742,36 @@ const sv = {
       text: 'Allt du behöver veta om vår honung och hur vi arbetar.',
       items: [
         {
-          q: 'Vad gör er honung annorlunda?',
-          a: 'Vår honung väljs ut direkt från små biodlarfamiljer i Grekland som arbetar nära naturen och årstiderna. Varje sort speglar sitt ursprung, från vild timjan och ekskogar till Greklands granklädda berg. Vi väljer honung för dess karaktär, renhet och särpräglade smak.',
+          q: 'Vad gör vår honung speciell?',
+          a: 'Vår honung kommer från små biodlarfamiljer runt om i Grekland, där biodlingen följer naturens rytm och årstidernas skiftningar. Varje honung bär på smaken och karaktären från platsen den kommer ifrån, från vild timjan och lummiga ekskogar till Greklands granklädda berg. Vi väljer varje sort med stor omsorg och med fokus på naturlig renhet, tydligt ursprung och en smak som får tala för sig själv.',
         },
         {
-          q: 'Är er honung verkligen rå?',
-          a: 'Ja. Vår råhonung hålls så nära sitt naturliga tillstånd som möjligt och utsätts inte för den höga värme som är vanlig vid industriell bearbetning. Det hjälper till att bevara dess naturliga arom, smak och karaktär.',
+          q: 'Är vår honung verkligen rå?',
+          a: 'Ja. Vår råhonung hanteras varsamt för att bevara den så nära sitt naturliga tillstånd som möjligt. Den utsätts inte för den höga uppvärmning som ofta används vid industriell bearbetning. På så sätt bevaras honungens naturliga arom, smak och unika karaktär.',
         },
         {
-          q: 'Var kommer er honung ifrån?',
-          a: 'Vår honung kommer från noga utvalda regioner i hela Grekland. Vi arbetar med små biodlarfamiljer vars kupor följer olika landskap och säsongens blomning, vilket ger varje honung dess egen särpräglade karaktär.',
+          q: 'Var kommer vår honung ifrån?',
+          a: 'Vår honung kommer från noggrant utvalda områden runt om i Grekland. Vi samarbetar med små biodlarfamiljer som låter bina följa naturens rytm och säsongernas blomning. Från berg och skogar till platser där vilda örter och blommor växer fritt får varje honung sin egen smak, arom och karaktär, präglad av landskapet den kommer ifrån.',
         },
         {
           q: 'Varför har min honung kristalliserats?',
-          a: 'Kristallisering är helt naturligt och ofta ett tecken på att honungen har förblivit nära sitt naturliga tillstånd. När det sker varierar beroende på blomkälla och den naturliga sockersammansättningen. Om du föredrar den flytande kan du försiktigt värma burken i ljummet vatten.',
+          a: 'Kristallisering är en helt naturlig process och en del av honungens naturliga karaktär. Hur snabbt honungen kristalliseras varierar mellan olika sorter och beror bland annat på vilka blommor bina har hämtat nektar från och honungens naturliga sammansättning. Kristalliseringen påverkar inte honungens kvalitet eller smak. Om du föredrar honungen flytande kan du försiktigt värma burken i ljummet vatten tills den återfår önskad konsistens.',
         },
         {
           q: 'Hur ska jag förvara min honung?',
-          a: 'Förvara honungen väl tillsluten i rumstemperatur på en torr plats, skyddad från direkt solljus och stark värme. Den behöver inte förvaras i kylskåp.',
+          a: 'Förvara honungen väl tillsluten i rumstemperatur, på en torr plats och skyddad från direkt solljus och stark värme. Honung trivs bäst i en jämn temperatur och behöver inte förvaras i kylskåp. Med rätt förvaring bevaras dess smak, arom och naturliga karaktär på bästa sätt.',
         },
         {
           q: 'Vad är vandringsbiodling?',
-          a: 'Vandringsbiodling är en traditionell metod där biodlarna flyttar sina kupor under året och följer säsongens blomning och olika landskap. Det låter bina söka föda där naturen är som bäst och ger varje honung dess särpräglade ursprung och karaktär.',
+          a: 'Vandringsbiodling är en traditionell metod där biodlarna flyttar sina bikupor mellan olika områden under året och följer naturens skiftningar och säsongernas blomning. På så sätt får bina tillgång till olika växter, örter och träd när de står i blom. Det är en metod som följer naturens egen rytm och bidrar till att ge varje honung sin unika smak, arom och karaktär från platsen den kommer ifrån.',
         },
         {
-          q: 'Vad kan jag använda er honung till?',
-          a: 'Njut av den som den är, eller ha den i yoghurt, på frukt, i te och till frukosten. Den passar också utmärkt till ost och kan användas i dressingar, marinader, bakning och matlagning. Olika sorter ger olika smak, så det finns mycket att upptäcka.',
+          q: 'Vad kan jag använda vår honung till?',
+          a: 'Honung kan avnjutas precis som den är eller användas på många olika sätt i köket. Ringla den över yoghurt, frukt eller frukost, rör ner den i te eller servera den tillsammans med ost. Den passar också fint i dressingar, marinader, bakning och matlagning. Varje honungssort har sin egen smak och karaktär, vilket gör det spännande att hitta nya kombinationer och favoriter.',
         },
         {
-          q: 'Innehåller er honung tillsatt socker eller sirap?',
-          a: 'Nej. Vår honung innehåller inget tillsatt socker, ingen sirap och inga andra ingredienser. Det som finns i burken är helt enkelt honung, producerad av bina och utvald av oss för sitt ursprung, sin kvalitet och sin karaktär.',
+          q: 'Innehåller vår honung tillsatt socker eller sirap?',
+          a: 'Nej. Vår honung innehåller varken tillsatt socker, sirap eller andra ingredienser. I burken finns endast ren honung, skapad av bina och varsamt hanterad för att bevara sin naturliga smak och karaktär. Varje sort väljs ut med stor omsorg utifrån sitt ursprung, sin kvalitet och sin unika smakprofil.',
         },
       ],
       shipping: {
@@ -785,7 +789,7 @@ const sv = {
   },
 
   footer: {
-    about: 'Personligt utvalt från Grekland, med djup respekt för ursprunget, naturen och människorna som för traditionerna vidare.',
+    about: 'Omsorgsfullt utvalt från Grekland, med respekt för naturen, ursprunget och människorna som håller traditionerna levande.',
     shopTitle: 'Butik',
     companyTitle: 'Företaget',
     supportTitle: 'Kundservice',

@@ -23,6 +23,10 @@
   color: var(--ms-muted);
 }
 
+.text + .text {
+  margin-top: 1rem;
+}
+
 .points {
   display: flex;
   flex-direction: column;

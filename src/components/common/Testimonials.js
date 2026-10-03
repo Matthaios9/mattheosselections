@@ -48,7 +48,7 @@ export default function Testimonials({ className = 'bg-sand' }) {
               {items.map((item) => (
                 <Carousel.Item key={item.name}>
                   <figure className={styles.slide}>
-                    <blockquote className={styles.quote}>“{item.quote}”</blockquote>
+                    <blockquote className={styles.quote}>{item.quote}</blockquote>
                     <figcaption className={styles.author}>
                       <span className={styles.avatar} aria-hidden="true">
                         {item.name.charAt(0)}

@@ -490,17 +490,17 @@ const en = {
       text: 'The greatest compliment is when someone comes back for another jar. Here are a few words shared with us by customers who discovered something different in our honey.',
       items: [
         {
-          quote: 'The fir honey is one of the most unique things I’ve ever tasted. I had never experienced honey like it before. It has become the one I keep coming back for.',
+          quote: '“The fir honey is one of the most unique things I’ve ever tasted. I had never experienced honey like it before. It has become the one I keep coming back for.”',
           name: 'Sofia',
           location: 'Stockholm',
         },
         {
-          quote: 'The honey is fantastic. I haven’t found anything like it in Sweden, and even in Greece, this isn’t the kind of honey you normally find in supermarkets.',
+          quote: '“The honey is fantastic. I haven’t found anything like it in Sweden, and even in Greece, this isn’t the kind of honey you normally find in supermarkets.”',
           name: 'Malin',
           location: 'Uppsala',
         },
         {
-          quote: 'The thyme honey is unlike anything I’ve found in Swedish supermarkets. We’re already on our third jar.',
+          quote: '“The thyme honey is unlike anything I’ve found in Swedish supermarkets. We’re already on our third jar.”',
           name: 'David',
           location: 'Stockholm',
         },
@@ -538,7 +538,7 @@ const en = {
         'After settling in Stockholm, I could not find anything that tasted like home. So I went back to the source: small producers in Greece who work the way their families always have — patiently, sustainably and without shortcuts.',
         'What started as a few jars for friends has grown into Mattheos Selections: a curated collection of raw honey, cold-pressed olive oil, superfoods and natural skincare that we are proud to share with you.',
       ],
-      quote: 'Real honey does not need anything added. Our job is simply to protect what nature has already perfected.',
+      quote: '“Real honey does not need anything added. Our job is simply to protect what nature has already perfected.”',
       signature: 'Mattheos Tasios',
       role: 'Founder, Mattheos Selections',
     },
@@ -604,7 +604,9 @@ const en = {
     producers: {
       eyebrow: 'Our producers',
       title: 'The beekeepers of Southern Olympus',
-      text: 'Every ákesis jar carries the name of the Vassiliou-Kontos family — nomadic beekeepers whose hives follow the seasons from the plains of Thessaly to the oak forests above Kalabaka, in the shadow of Meteora.',
+      paragraphs: [
+        'Every ákesis jar carries the name of the Vassiliou-Kontos family — nomadic beekeepers whose hives follow the seasons from the plains of Thessaly to the oak forests above Kalabaka, in the shadow of Meteora.',
+      ],
       points: [
         'Nomadic beekeeping, season by season',
         'Harvests from sea level to 1,200 metres',
