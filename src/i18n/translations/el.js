@@ -806,7 +806,7 @@ const el = {
     office: 'Έδρα της εταιρείας. Δεν εξυπηρετεί επισκέψεις.',
     country: 'Σουηδία',
     copyright: '© {year} Mattheos Selections. Με επιφύλαξη παντός δικαιώματος.',
-    legal: 'Pasver AB, Αρ. εταιρείας 559053 2486',
+    legal: 'Pasver AB · Αρ. εταιρείας 559053 2486',
     secure: 'Ασφαλείς πληρωμές με SSL',
     languageLabel: 'Γλώσσα',
     followUs: 'Ακολουθήστε μας',
